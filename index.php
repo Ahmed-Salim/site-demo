@@ -9,7 +9,7 @@ include './header.php';
         <div class="col-8 text-white mx-auto py-5">
             <h1 class="display-3 fw-bold">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ipsum nisi tincidunt ac arcu a.</h1>
             <p class="my-4">Curabitur ultricies risus at libero tristique, molestie vestibulum odio posuere.</p>
-            <a class="btn btn-light btn-lg" href="#" role="button">REGISTER NOW</a>
+            <a class="btn btn-light btn-lg" href="./register" role="button">REGISTER NOW</a>
         </div>
     </div>
 </div>

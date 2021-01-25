@@ -26,7 +26,7 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="<?php __DIR__ ?>/ahmed/codeditors/demo-site/login">Enter</a></li>
-                        <li><a class="dropdown-item" href="#">Register</a></li>
+                        <li><a class="dropdown-item" href="<?php __DIR__ ?>/ahmed/codeditors/demo-site/register">Register</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
