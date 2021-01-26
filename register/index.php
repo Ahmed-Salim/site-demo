@@ -1,5 +1,5 @@
 <?php
-include './../header.php';
+include '../header.php';
 ?>
 
 <link rel="stylesheet" href="./index.css">
@@ -36,5 +36,5 @@ include './../header.php';
 <script src="./index.js"></script>
 
 <?php
-include './../footer.php';
+include '../footer.php';
 ?>

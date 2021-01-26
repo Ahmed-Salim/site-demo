@@ -21,12 +21,12 @@
                         <i class="bi bi-list"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="<?php __DIR__ ?>/ahmed/codeditors/demo-site"><i class="bi bi-person-fill me-2"></i>ABC</a></li>
+                        <li><a class="dropdown-item" href="/demo-site"><i class="bi bi-person-fill me-2"></i>ABC</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="<?php __DIR__ ?>/ahmed/codeditors/demo-site/login">Enter</a></li>
-                        <li><a class="dropdown-item" href="<?php __DIR__ ?>/ahmed/codeditors/demo-site/register">Register</a></li>
+                        <li><a class="dropdown-item" href="/demo-site/login">Enter</a></li>
+                        <li><a class="dropdown-item" href="/demo-site/register">Register</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -35,14 +35,14 @@
                     </ul>
                 </li>
             </ul>
-            <a class="navbar-brand" href="<?php __DIR__ ?>/ahmed/codeditors/demo-site">Navbar</a>
+            <a class="navbar-brand" href="/demo-site">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link btn btn-light" aria-current="page" href="<?php __DIR__ ?>/ahmed/codeditors/demo-site/login">ENTER</a>
+                        <a class="nav-link btn btn-light" aria-current="page" href="/demo-site/login">ENTER</a>
                     </li>
                 </ul>
             </div>
