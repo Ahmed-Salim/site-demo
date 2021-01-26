@@ -31,7 +31,7 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="#">Ranking</a></li>
-                        <li><a class="dropdown-item" href="#">Help</a></li>
+                        <li><a class="dropdown-item" href="/demo-site/help/">Help</a></li>
                     </ul>
                 </li>
             </ul>
