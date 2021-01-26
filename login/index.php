@@ -11,13 +11,15 @@ include '../header.php';
             <div class="flex-grow-1">
                 <h1>Login</h1>
                 <form>
-                    <div class="mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">LOGIN</button>
+                    <fieldset id="login-fieldset">
+                        <div class="mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password" class="form-control" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">LOGIN</button>
+                    </fieldset>
                 </form>
             </div>
         </div>
