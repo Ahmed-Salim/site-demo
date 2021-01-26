@@ -30,7 +30,7 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Ranking</a></li>
+                        <li><a class="dropdown-item" href="/demo-site/ranking/">Ranking</a></li>
                         <li><a class="dropdown-item" href="/demo-site/help/">Help</a></li>
                     </ul>
                 </li>
