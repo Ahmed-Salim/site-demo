@@ -6,7 +6,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="/demo-site/help/">SUPPORT</a></li>
                         <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="/demo-site/terms/">TERMS</a></li>
-                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="#">PRIVACY</a></li>
+                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="/demo-site/privacy/">PRIVACY</a></li>
                         <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="#">ABOUT US</a></li>
                     </ol>
                 </nav>
