@@ -1,3 +1,23 @@
+<?php
+
+session_start();
+
+if (isset($_SESSION['id'])) {
+    if (str_contains(getcwd(), 'dashboard')) {
+    } else {
+        header("Location: /demo-site/dashboard/");
+        die();
+    }
+} else {
+    if (str_contains(getcwd(), 'demo-site')) {
+    } else {
+        header("Location: /demo-site/php-apis/logout.php");
+        die();
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -11,22 +11,24 @@ include '../header.php';
             <div class="flex-grow-1">
                 <h1>Register</h1>
                 <form>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Username">
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="First Name">
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Last Name">
-                    </div>
-                    <div class="mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">REGISTER</button>
+                    <fieldset id="register-fieldset">
+                        <div class="mb-3">
+                            <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" name="firstname" class="form-control" placeholder="First Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" name="lastname" class="form-control" placeholder="Last Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">REGISTER</button>
+                    </fieldset>
                 </form>
             </div>
         </div>
