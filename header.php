@@ -78,7 +78,7 @@ if (isset($_SESSION['id'])) {
                             </li>
                             <li><a class="dropdown-item" href="/demo-site/dashboard/profile/">Profile</a></li>
                             <li><a class="dropdown-item" href="/demo-site/ranking/">Ranking</a></li>
-                            <li><a class="dropdown-item" href="#">Refer Friends</a></li>
+                            <li><a class="dropdown-item" href="/demo-site/dashboard/refer/">Refer Friends</a></li>
                             <li><a class="dropdown-item" href="/demo-site/help/">Help</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -133,7 +133,7 @@ if (isset($_SESSION['id'])) {
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="/demo-site/dashboard/notifications/"><i class="bi bi-bell-fill"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#">REFER FRIENDS</a>
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="/demo-site/dashboard/refer/">REFER FRIENDS</a>
                         </li>
 
                     <?php
