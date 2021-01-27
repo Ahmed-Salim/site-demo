@@ -14,14 +14,16 @@ include '../../header.php';
             </div>
             <div class="modal-body">
                 <form id="change-password-form">
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="currentPassword" placeholder="Current Password" required>
-                        <label for="currentPassword">Current Password</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="password" class="form-control" id="newPassword" placeholder="New Password" required>
-                        <label for="newPassword">New Password</label>
-                    </div>
+                    <fieldset>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Current Password" required>
+                            <label for="currentPassword">Current Password</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password" required>
+                            <label for="newPassword">New Password</label>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
             <div class="modal-footer">
