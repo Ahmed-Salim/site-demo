@@ -3,16 +3,16 @@
 session_start();
 
 if (isset($_SESSION['id'])) {
-    if (str_contains(getcwd(), 'dashboard')) {
-    } else {
+    if (str_contains(getcwd(), '\login') || str_contains(getcwd(), '\register') || str_contains(substr(getcwd(), -10), '\demo-site')) {
         header("Location: /demo-site/dashboard/");
         die();
+    } else {
     }
 } else {
-    if (str_contains(getcwd(), 'demo-site')) {
-    } else {
+    if (str_contains(getcwd(), '\dashboard')) {
         header("Location: /demo-site/php-apis/logout.php");
         die();
+    } else {
     }
 }
 
@@ -45,25 +45,101 @@ if (isset($_SESSION['id'])) {
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/demo-site/login">Enter</a></li>
-                        <li><a class="dropdown-item" href="/demo-site/register">Register</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="/demo-site/ranking/">Ranking</a></li>
-                        <li><a class="dropdown-item" href="/demo-site/help/">Help</a></li>
+
+                        <?php
+
+                        if (isset($_SESSION['id'])) {
+
+                        ?>
+
+                            <li><a class="dropdown-item" href="/demo-site/dashboard">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="#">Find Opponent</a></li>
+                            <li><a class="dropdown-item" href="#">Challenges</a></li>
+                            <li><a class="dropdown-item" href="#">Tournaments</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Deposits</a></li>
+                            <li><a class="dropdown-item" href="#">Withdraw</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="/demo-site/ranking/">Ranking</a></li>
+                            <li><a class="dropdown-item" href="#">Refer Friends</a></li>
+                            <li><a class="dropdown-item" href="/demo-site/help/">Help</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/demo-site/php-apis/logout.php">Logout</a></li>
+
+                        <?php
+
+                        } else {
+
+                        ?>
+
+                            <li><a class="dropdown-item" href="/demo-site/login">Enter</a></li>
+                            <li><a class="dropdown-item" href="/demo-site/register">Register</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/demo-site/ranking/">Ranking</a></li>
+                            <li><a class="dropdown-item" href="/demo-site/help/">Help</a></li>
+
+                        <?php
+
+                        }
+
+                        ?>
+
                     </ul>
                 </li>
             </ul>
-            <a class="navbar-brand" href="/demo-site">Navbar</a>
+            <a class="navbar-brand" href="/demo-site">ABC</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-light" aria-current="page" href="/demo-site/login">ENTER</a>
-                    </li>
+
+                    <?php
+
+                    if (isset($_SESSION['id'])) {
+
+                    ?>
+
+                        <li class="nav-item">
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#">
+                                <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#"><i class="bi bi-person-circle"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#"><i class="bi bi-bell-fill"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#">REFER FRIENDS</a>
+                        </li>
+
+                    <?php
+
+                    } else {
+
+                    ?>
+
+                        <li class="nav-item">
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="/demo-site/login/">ENTER</a>
+                        </li>
+
+                    <?php
+
+                    }
+
+                    ?>
+
                 </ul>
             </div>
         </div>
