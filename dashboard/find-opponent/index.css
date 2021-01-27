@@ -1,0 +1,8 @@
+.hero {
+    background-image: url('https://picsum.photos/2000/300');
+    min-height: 225px;
+}
+
+.challenge-box {
+    min-height: 500px;
+}

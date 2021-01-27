@@ -65,7 +65,7 @@ if (isset($_SESSION['id'])) {
                         ?>
 
                             <li><a class="dropdown-item" href="/demo-site/dashboard">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="#">Find Opponent</a></li>
+                            <li><a class="dropdown-item" href="/demo-site/dashboard/find-opponent/">Find Opponent</a></li>
                             <li><a class="dropdown-item" href="#">Challenges</a></li>
                             <li><a class="dropdown-item" href="#">Tournaments</a></li>
                             <li>
