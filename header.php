@@ -130,7 +130,7 @@ if (isset($_SESSION['id'])) {
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="/demo-site/dashboard/profile/"><i class="bi bi-person-circle"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#"><i class="bi bi-bell-fill"></i></a>
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="/demo-site/dashboard/notifications/"><i class="bi bi-bell-fill"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#">REFER FRIENDS</a>
