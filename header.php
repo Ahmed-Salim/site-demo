@@ -3,17 +3,29 @@
 session_start();
 
 if (isset($_SESSION['id'])) {
-    if (str_contains(getcwd(), '\login') || str_contains(getcwd(), '\register') || str_contains(substr(getcwd(), -10), '\demo-site')) {
+    if (strpos(getcwd(), '\login') !== false  || strpos(getcwd(), '\register') !== false || strpos(getcwd(), '\demo-site', -10) !== false) {
         header("Location: /demo-site/dashboard/");
         die();
     } else {
     }
+
+    // if (str_contains(getcwd(), '\login') || str_contains(getcwd(), '\register') || str_contains(substr(getcwd(), -10), '\demo-site')) {
+    //     header("Location: /demo-site/dashboard/");
+    //     die();
+    // } else {
+    // }
 } else {
-    if (str_contains(getcwd(), '\dashboard')) {
+    if (strpos(getcwd(), '\dashboard') !== false) {
         header("Location: /demo-site/php-apis/logout.php");
         die();
     } else {
     }
+
+    // if (str_contains(getcwd(), '\dashboard')) {
+    //     header("Location: /demo-site/php-apis/logout.php");
+    //     die();
+    // } else {
+    // }
 }
 
 ?>
