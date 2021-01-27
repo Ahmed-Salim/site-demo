@@ -76,7 +76,7 @@ if (isset($_SESSION['id'])) {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="/demo-site/dashboard/profile/">Profile</a></li>
                             <li><a class="dropdown-item" href="/demo-site/ranking/">Ranking</a></li>
                             <li><a class="dropdown-item" href="#">Refer Friends</a></li>
                             <li><a class="dropdown-item" href="/demo-site/help/">Help</a></li>
@@ -122,12 +122,12 @@ if (isset($_SESSION['id'])) {
                     ?>
 
                         <li class="nav-item">
-                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#">
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="/demo-site/dashboard/profile/">
                                 <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#"><i class="bi bi-person-circle"></i></a>
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="/demo-site/dashboard/profile/"><i class="bi bi-person-circle"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="#"><i class="bi bi-bell-fill"></i></a>
