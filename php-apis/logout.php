@@ -3,5 +3,5 @@
 session_start();
 session_destroy();
 
-header("Location: /demo-site/");
+header("Location: ../");
 die();
