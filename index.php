@@ -23,12 +23,12 @@ include './header.php';
             </div>
         </div>
         <div class="col d-flex align-items-center justify-content-center">
-            <img src="https://picsum.photos/300?random=1" alt="...">
+            <img src="https://venturebeat.com/wp-content/uploads/2018/09/imageShare.img_.jpg?fit=1280%2C720&strip=all" class="box1" alt="...">
         </div>
     </div>
     <div class="row my-5">
         <div class="col d-flex align-items-center justify-content-center">
-            <img src="https://picsum.photos/300?random=2" alt="...">
+            <img src="https://frontiersinblog.files.wordpress.com/2020/04/frontiers-human-neuroscience-action-strategy-gaming-attentional-resources-blink-study.jpg?w=1200" class="box1" alt="...">
         </div>
         <div class="col d-flex align-items-center justify-content-center">
             <div>
@@ -45,7 +45,7 @@ include './header.php';
             </div>
         </div>
         <div class="col d-flex align-items-center justify-content-center">
-            <img src="https://picsum.photos/300?random=3" alt="...">
+            <img src="https://hub.packtpub.com/wp-content/uploads/2018/06/AI-game-characters-696x392.jpg" class="box1" alt="...">
         </div>
     </div>
 </div>
