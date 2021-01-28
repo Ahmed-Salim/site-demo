@@ -10,7 +10,7 @@ $user_password = mysqli_real_escape_string($conn, clean_input($_POST["password"]
 
 $response_msg = array();
 
-if (isset($email) && isset($user_password)) {
+if (!empty($email) && !empty($user_password)) {
     $sql = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
 

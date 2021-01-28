@@ -13,7 +13,7 @@ $user_password = password_hash(mysqli_real_escape_string($conn, clean_input($_PO
 
 $response_msg = array();
 
-if (isset($username) && isset($firstname) && isset($lastname) && isset($email) && isset($user_password)) {
+if (!empty($username) && !empty($firstname) && !empty($lastname) && !empty($email) && !empty($user_password)) {
     $sql = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
 
