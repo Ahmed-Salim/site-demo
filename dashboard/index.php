@@ -19,7 +19,7 @@ include '../header.php';
 <div class="container my-5">
     <div class="row">
         <div class="col">
-            <h3 class="mb-5"><i class="bi bi-star-fill me-3"></i>Star playing</h3>
+            <h3 class="mb-5"><i class="bi bi-star-fill me-3"></i>Star Playing</h3>
             <a class="btn btn-outline-secondary border-0" href="./find-opponent/" role="button">FIND OPPONENT</a>
             <a class="btn btn-outline-secondary border-0" href="#" role="button">CHALLENGES</a>
             <a class="btn btn-outline-secondary border-0" href="#" role="button">TOURNAMENTS</a>
@@ -29,7 +29,7 @@ include '../header.php';
             <a class="btn btn-outline-secondary border-0" href="#" role="button">DISPUTES</a>
         </div>
         <div class="col">
-            <h3 class="mb-5"><i class="bi bi-wallet-fill me-3"></i>Fund your account</h3>
+            <h3 class="mb-5"><i class="bi bi-wallet-fill me-3"></i>Fund Your Account</h3>
             <a class="btn btn-outline-secondary border-0" href="#" role="button">MAKE DEPOSIT</a>
             <a class="btn btn-outline-secondary border-0" href="#" role="button">WITHDRAWAL</a>
         </div>
