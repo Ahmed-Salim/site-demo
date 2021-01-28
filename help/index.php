@@ -14,12 +14,12 @@ include '../header.php';
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            Accordion Item #1
+                            How do I open an account?
                         </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum tortor vel eros vulputate rutrum. Aenean fermentum neque ac hendrerit placerat. Cras vitae orci tortor.
+                            Comming Soon
                         </div>
                     </div>
                 </div>
@@ -29,12 +29,12 @@ include '../header.php';
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Accordion Item #2
+                            How do I fund my account?
                         </button>
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample2">
                         <div class="accordion-body">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum tortor vel eros vulputate rutrum. Aenean fermentum neque ac hendrerit placerat. Cras vitae orci tortor.
+                            Coming Soon
                         </div>
                     </div>
                 </div>
@@ -44,12 +44,12 @@ include '../header.php';
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Accordion Item #3
+                            Who is/owns Challange Site
                         </button>
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample3">
                         <div class="accordion-body">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum tortor vel eros vulputate rutrum. Aenean fermentum neque ac hendrerit placerat. Cras vitae orci tortor.
+                            Coming Soon.
                         </div>
                     </div>
                 </div>
