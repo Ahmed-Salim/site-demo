@@ -20,12 +20,12 @@ include '../header.php';
     <div class="row">
         <div class="col">
             <h3 class="mb-5"><i class="bi bi-star-fill me-3"></i>Star Playing</h3>
-            <a class="btn btn-outline-secondary border-0" href="./find-opponent/" role="button">FIND OPPONENT</a>
+            <a class="btn btn-outline-secondary border-0" href="./find-opponent" role="button">FIND OPPONENT</a>
             <a class="btn btn-outline-secondary border-0" href="#" role="button">CHALLENGES</a>
             <a class="btn btn-outline-secondary border-0" href="#" role="button">TOURNAMENTS</a>
             <hr />
-            <a class="btn btn-outline-secondary border-0" href="../help/" role="button">HELP</a>
-            <a class="btn btn-outline-secondary border-0" href="../ranking/" role="button">RANKING</a>
+            <a class="btn btn-outline-secondary border-0" href="../help" role="button">HELP</a>
+            <a class="btn btn-outline-secondary border-0" href="../ranking" role="button">RANKING</a>
             <a class="btn btn-outline-secondary border-0" href="#" role="button">DISPUTES</a>
         </div>
         <div class="col">

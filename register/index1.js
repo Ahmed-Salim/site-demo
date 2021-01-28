@@ -19,7 +19,7 @@ registerForm.addEventListener('submit', (event) => {
 
         if (responseMsg.status.includes('success')) {
             registerForm.reset();
-            window.location.href = "/demo-site/dashboard/";
+            window.location.href = "../dashboard";
         } else {
         }
 

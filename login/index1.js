@@ -17,7 +17,7 @@ loginForm.addEventListener('submit', (event) => {
 
         if (responseMsg.status.includes('success')) {
             loginForm.reset();
-            window.location.href = "/demo-site/dashboard/";
+            window.location.href = "../dashboard";
         } else {
             alert(responseMsg.description);
         }

@@ -44,12 +44,12 @@ include '../header.php';
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Who is/owns Challange Site
+                            Who is/owns Challange Site?
                         </button>
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample3">
                         <div class="accordion-body">
-                            Coming Soon.
+                            Coming Soon
                         </div>
                     </div>
                 </div>

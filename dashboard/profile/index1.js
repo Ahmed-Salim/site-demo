@@ -24,7 +24,7 @@ changePassForm.addEventListener('submit', (event) => {
 
     //     // if (responseMsg.status.includes('success')) {
     //     //     changePassForm.reset();
-    //     //     //window.location.href = "/demo-site/dashboard/";
+    //     //     //window.location.href = "../dashboard";
     //     // } else {
     //     //     alert(responseMsg.description);
     //     // }
