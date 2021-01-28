@@ -4,10 +4,62 @@
             <div class="col">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="/demo-site/help/">SUPPORT</a></li>
-                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="/demo-site/terms/">TERMS</a></li>
-                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="/demo-site/privacy/">PRIVACY</a></li>
-                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="/demo-site/about/">ABOUT US</a></li>
+                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="
+                        <?php
+
+                        if (basename(getcwd()) === basename(__DIR__)) {
+                            echo './help';
+                        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            echo '../help';
+                        } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            echo '../../help';
+                        } else {
+                        }
+
+                        ?>
+                        ">SUPPORT</a></li>
+                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="
+                        <?php
+
+                        if (basename(getcwd()) === basename(__DIR__)) {
+                            echo './terms';
+                        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            echo '../terms';
+                        } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            echo '../../terms';
+                        } else {
+                        }
+
+                        ?>
+                        ">TERMS</a></li>
+                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="
+                        <?php
+
+                        if (basename(getcwd()) === basename(__DIR__)) {
+                            echo './privacy';
+                        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            echo '../privacy';
+                        } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            echo '../../privacy';
+                        } else {
+                        }
+
+                        ?>
+                        ">PRIVACY</a></li>
+                        <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="
+                        <?php
+
+                        if (basename(getcwd()) === basename(__DIR__)) {
+                            echo './about';
+                        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            echo '../about';
+                        } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            echo '../../about';
+                        } else {
+                        }
+
+                        ?>
+                        ">ABOUT US</a></li>
                     </ol>
                 </nav>
             </div>
