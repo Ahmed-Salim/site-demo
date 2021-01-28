@@ -26,7 +26,7 @@ include '../header.php';
     </div>
 </div>
 
-<script src="./index.js"></script>
+<script src="./index1.js"></script>
 
 <?php
 include '../footer.php';
