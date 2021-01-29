@@ -14,6 +14,7 @@
                         } elseif (basename(dirname(getcwd())) === 'dashboard') {
                             echo '../../help';
                         } else {
+                            echo '../../../help';
                         }
 
                         ?>
@@ -28,6 +29,7 @@
                         } elseif (basename(dirname(getcwd())) === 'dashboard') {
                             echo '../../terms';
                         } else {
+                            echo '../../../terms';
                         }
 
                         ?>
@@ -42,6 +44,7 @@
                         } elseif (basename(dirname(getcwd())) === 'dashboard') {
                             echo '../../privacy';
                         } else {
+                            echo '../../../privacy';
                         }
 
                         ?>
@@ -56,6 +59,7 @@
                         } elseif (basename(dirname(getcwd())) === 'dashboard') {
                             echo '../../about';
                         } else {
+                            echo '../../../about';
                         }
 
                         ?>

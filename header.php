@@ -14,6 +14,8 @@ if (isset($_SESSION['id'])) {
             header("Location: ../../dashboard");
             die();
         } else {
+            header("Location: ../../../dashboard");
+            die();
         }
     } else {
     }
@@ -29,6 +31,8 @@ if (isset($_SESSION['id'])) {
             header("Location: ../../php-apis/logout.php");
             die();
         } else {
+            header("Location: ../../../dashboard");
+            die();
         }
     } else {
     }
@@ -70,6 +74,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../';
                             } else {
+                                echo '../../../';
                             }
 
                             ?>
@@ -95,6 +100,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard';
                             } else {
+                                echo '../../../dashboard';
                             }
 
                             ?>
@@ -109,6 +115,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/find-opponent';
                             } else {
+                                echo '../../../dashboard/find-opponent';
                             }
 
                             ?>
@@ -123,6 +130,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/challenges';
                             } else {
+                                echo '../../../dashboard/challenges';
                             }
 
                             ?>
@@ -137,6 +145,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/tournaments';
                             } else {
+                                echo '../../../dashboard/tournaments';
                             }
 
                             ?>
@@ -154,6 +163,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/deposits/';
                             } else {
+                                echo '../../../dashboard/deposits/';
                             }
 
                             ?>
@@ -168,6 +178,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/withdrawal/';
                             } else {
+                                echo '../../../dashboard/withdrawal/';
                             }
 
                             ?>
@@ -185,6 +196,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/profile';
                             } else {
+                                echo '../../../dashboard/profile';
                             }
 
                             ?>
@@ -199,6 +211,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../ranking';
                             } else {
+                                echo '../../../ranking';
                             }
 
                             ?>
@@ -213,6 +226,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/refer';
                             } else {
+                                echo '../../../dashboard/refer';
                             }
 
                             ?>
@@ -227,6 +241,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../help';
                             } else {
+                                echo '../../../help';
                             }
 
                             ?>
@@ -244,6 +259,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../php-apis/logout.php';
                             } else {
+                                echo '../../../php-apis/logout.php';
                             }
 
                             ?>
@@ -265,6 +281,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../login';
                             } else {
+                                echo '../../../login';
                             }
 
                             ?>
@@ -279,6 +296,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../register';
                             } else {
+                                echo '../../../register';
                             }
 
                             ?>
@@ -296,6 +314,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../ranking';
                             } else {
+                                echo '../../../ranking';
                             }
 
                             ?>
@@ -310,6 +329,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../help';
                             } else {
+                                echo '../../../help';
                             }
 
                             ?>
@@ -334,6 +354,7 @@ if (isset($_SESSION['id'])) {
             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                 echo '../../';
             } else {
+                echo '../../../';
             }
 
             ?>
@@ -361,6 +382,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/profile';
                             } else {
+                                echo '../../../dashboard/profile';
                             }
 
                             ?>
@@ -379,6 +401,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/profile';
                             } else {
+                                echo '../../../dashboard/profile';
                             }
 
                             ?>
@@ -395,6 +418,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/notifications';
                             } else {
+                                echo '../../../dashboard/notifications';
                             }
 
                             ?>
@@ -411,6 +435,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../dashboard/refer';
                             } else {
+                                echo '../../../dashboard/refer';
                             }
 
                             ?>
@@ -434,6 +459,7 @@ if (isset($_SESSION['id'])) {
                             } elseif (basename(dirname(getcwd())) === 'dashboard') {
                                 echo '../../login';
                             } else {
+                                echo '../../../login';
                             }
 
                             ?>
