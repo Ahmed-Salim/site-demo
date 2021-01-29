@@ -26,7 +26,7 @@ include '../header.php';
             <hr />
             <a class="btn btn-outline-secondary border-0" href="../help" role="button">HELP</a>
             <a class="btn btn-outline-secondary border-0" href="../ranking" role="button">RANKING</a>
-            <a class="btn btn-outline-secondary border-0" href="#" role="button">DISPUTES</a>
+            <a class="btn btn-outline-secondary border-0" href="./disputes/" role="button">DISPUTES</a>
         </div>
         <div class="col">
             <h3 class="mb-5"><i class="bi bi-wallet-fill me-3"></i>Fund Your Account</h3>
