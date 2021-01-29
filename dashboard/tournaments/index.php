@@ -18,7 +18,7 @@ include '../../header.php';
     </div>
 </div>
 
-<div class="container mt-3">
+<div class="container my-5">
     <div class="row">
         <div class="col">
             <h2>0</h2>
