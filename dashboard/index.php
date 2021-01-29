@@ -22,7 +22,7 @@ include '../header.php';
             <h3 class="mb-5"><i class="bi bi-star-fill me-3"></i>Star Playing</h3>
             <a class="btn btn-outline-secondary border-0" href="./find-opponent" role="button">FIND OPPONENT</a>
             <a class="btn btn-outline-secondary border-0" href="./challenges/" role="button">CHALLENGES</a>
-            <a class="btn btn-outline-secondary border-0" href="#" role="button">TOURNAMENTS</a>
+            <a class="btn btn-outline-secondary border-0" href="./tournaments/" role="button">TOURNAMENTS</a>
             <hr />
             <a class="btn btn-outline-secondary border-0" href="../help" role="button">HELP</a>
             <a class="btn btn-outline-secondary border-0" href="../ranking" role="button">RANKING</a>

@@ -127,7 +127,20 @@ if (isset($_SESSION['id'])) {
 
                             ?>
                             ">Challenges</a></li>
-                            <li><a class="dropdown-item" href="#">Tournaments</a></li>
+                            <li><a class="dropdown-item" href="
+                            <?php
+
+                            if (basename(getcwd()) === basename(__DIR__)) {
+                                echo './dashboard/tournaments';
+                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                                echo '../dashboard/tournaments';
+                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                                echo '../../dashboard/tournaments';
+                            } else {
+                            }
+
+                            ?>
+                            ">Tournaments</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
