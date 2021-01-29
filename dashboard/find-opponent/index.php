@@ -4,8 +4,6 @@ include '../../header.php';
 
 <link rel="stylesheet" href="./index.css">
 
-</div>
-
 <div class="hero container-fluid bg-dark position-relative">
     <div class="row">
         <div class="col">
