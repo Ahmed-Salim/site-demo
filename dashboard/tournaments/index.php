@@ -12,7 +12,7 @@ include '../../header.php';
     <div class="row">
         <div class="col d-flex mx-4">
             <a class="btn btn-dark text-uppercase" href="../find-opponent" role="button">Find Opponent</a>
-            <a class="btn btn-dark text-uppercase" href="#" role="button">History</a>
+            <a class="btn btn-dark text-uppercase" href="./history/" role="button">History</a>
             <button type="button" class="btn btn-light ms-auto text-uppercase">Create</button>
         </div>
     </div>
