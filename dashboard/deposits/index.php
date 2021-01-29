@@ -17,7 +17,7 @@ include '../../header.php';
                     Deposit
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Paypal</a></li>
+                    <li><a class="dropdown-item" href="./paypal/">Paypal</a></li>
                     <li><a class="dropdown-item" href="#">Neteller</a></li>
                     <li><a class="dropdown-item" href="#">Skrill</a></li>
                 </ul>
