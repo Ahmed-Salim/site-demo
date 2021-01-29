@@ -30,8 +30,8 @@ include '../header.php';
         </div>
         <div class="col">
             <h3 class="mb-5"><i class="bi bi-wallet-fill me-3"></i>Fund Your Account</h3>
-            <a class="btn btn-outline-secondary border-0" href="#" role="button">MAKE DEPOSIT</a>
-            <a class="btn btn-outline-secondary border-0" href="#" role="button">WITHDRAWAL</a>
+            <a class="btn btn-outline-secondary border-0" href="./deposits/" role="button">MAKE DEPOSIT</a>
+            <a class="btn btn-outline-secondary border-0" href="./withdrawal/" role="button">WITHDRAWAL</a>
         </div>
     </div>
 </div>

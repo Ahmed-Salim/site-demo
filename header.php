@@ -144,8 +144,34 @@ if (isset($_SESSION['id'])) {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Deposits</a></li>
-                            <li><a class="dropdown-item" href="#">Withdraw</a></li>
+                            <li><a class="dropdown-item" href="
+                            <?php
+
+                            if (basename(getcwd()) === basename(__DIR__)) {
+                                echo './dashboard/deposits/';
+                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                                echo '../dashboard/deposits/';
+                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                                echo '../../dashboard/deposits/';
+                            } else {
+                            }
+
+                            ?>
+                            ">Deposits</a></li>
+                            <li><a class="dropdown-item" href="
+                            <?php
+
+                            if (basename(getcwd()) === basename(__DIR__)) {
+                                echo './dashboard/withdrawal/';
+                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                                echo '../dashboard/withdrawal/';
+                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                                echo '../../dashboard/withdrawal/';
+                            } else {
+                            }
+
+                            ?>
+                            ">Withdraw</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
