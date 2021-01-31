@@ -38,25 +38,31 @@ if (isset($_SESSION['id'])) {
     } else {
     }
 } else {
-    if (basename(getcwd()) === 'dashboard' || basename(dirname(getcwd())) === 'dashboard') {
+    if (strpos(getcwd(), 'dashboard') === false) {
+    } else {
         header("Location: " . urlPrefix() . "php-apis/logout.php");
         die();
-
-        // if (basename(getcwd()) === basename(__DIR__)) {
-        //     header("Location: ./php-apis/logout.php");
-        //     die();
-        // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-        //     header("Location: ../php-apis/logout.php");
-        //     die();
-        // } elseif (basename(dirname(getcwd())) === 'dashboard') {
-        //     header("Location: ../../php-apis/logout.php");
-        //     die();
-        // } else {
-        //     header("Location: ../../../dashboard");
-        //     die();
-        // }
-    } else {
     }
+
+    // if (basename(getcwd()) === 'dashboard' || basename(dirname(getcwd())) === 'dashboard') {
+    //     header("Location: " . urlPrefix() . "php-apis/logout.php");
+    //     die();
+
+    //     // if (basename(getcwd()) === basename(__DIR__)) {
+    //     //     header("Location: ./php-apis/logout.php");
+    //     //     die();
+    //     // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+    //     //     header("Location: ../php-apis/logout.php");
+    //     //     die();
+    //     // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+    //     //     header("Location: ../../php-apis/logout.php");
+    //     //     die();
+    //     // } else {
+    //     //     header("Location: ../../../dashboard");
+    //     //     die();
+    //     // }
+    // } else {
+    // }
 }
 
 ?>
