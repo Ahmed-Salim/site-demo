@@ -2,38 +2,59 @@
 
 session_start();
 
+function urlPrefix()
+{
+    if (basename(getcwd()) === basename(__DIR__)) {
+        return './';
+    } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+        return '../';
+    } elseif (basename(dirname(dirname(getcwd()))) === basename(__DIR__)) {
+        return '../../';
+    } elseif (basename(dirname(dirname(dirname(getcwd())))) === basename(__DIR__)) {
+        return '../../../';
+    } else {
+        return './';
+    }
+}
+
 if (isset($_SESSION['id'])) {
     if (basename(getcwd()) === 'login'  || basename(getcwd()) === 'register'  || basename(getcwd()) === basename(__DIR__)) {
-        if (basename(getcwd()) === basename(__DIR__)) {
-            header("Location: ./dashboard");
-            die();
-        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-            header("Location: ../dashboard");
-            die();
-        } elseif (basename(dirname(getcwd())) === 'dashboard') {
-            header("Location: ../../dashboard");
-            die();
-        } else {
-            header("Location: ../../../dashboard");
-            die();
-        }
+        header("Location: " . urlPrefix() . "dashboard/");
+        die();
+
+        // if (basename(getcwd()) === basename(__DIR__)) {
+        //     header("Location: ./dashboard");
+        //     die();
+        // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+        //     header("Location: ../dashboard");
+        //     die();
+        // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+        //     header("Location: ../../dashboard");
+        //     die();
+        // } else {
+        //     header("Location: ../../../dashboard");
+        //     die();
+        // }
     } else {
     }
 } else {
     if (basename(getcwd()) === 'dashboard' || basename(dirname(getcwd())) === 'dashboard') {
-        if (basename(getcwd()) === basename(__DIR__)) {
-            header("Location: ./php-apis/logout.php");
-            die();
-        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-            header("Location: ../php-apis/logout.php");
-            die();
-        } elseif (basename(dirname(getcwd())) === 'dashboard') {
-            header("Location: ../../php-apis/logout.php");
-            die();
-        } else {
-            header("Location: ../../../dashboard");
-            die();
-        }
+        header("Location: " . urlPrefix() . "php-apis/logout.php");
+        die();
+
+        // if (basename(getcwd()) === basename(__DIR__)) {
+        //     header("Location: ./php-apis/logout.php");
+        //     die();
+        // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+        //     header("Location: ../php-apis/logout.php");
+        //     die();
+        // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+        //     header("Location: ../../php-apis/logout.php");
+        //     die();
+        // } else {
+        //     header("Location: ../../../dashboard");
+        //     die();
+        // }
     } else {
     }
 }
@@ -67,15 +88,17 @@ if (isset($_SESSION['id'])) {
                             <a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../';
-                            } else {
-                                echo '../../../';
-                            }
+                            echo urlPrefix();
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../';
+                            // } else {
+                            //     echo '../../../';
+                            // }
 
                             ?>
                             "><i class="bi bi-person-fill me-2"></i>Home</a>
@@ -93,60 +116,68 @@ if (isset($_SESSION['id'])) {
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard';
-                            } else {
-                                echo '../../../dashboard';
-                            }
+                            echo urlPrefix() . 'dashboard/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard';
+                            // } else {
+                            //     echo '../../../dashboard';
+                            // }
 
                             ?>
                             ">Dashboard</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/find-opponent';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/find-opponent';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/find-opponent';
-                            } else {
-                                echo '../../../dashboard/find-opponent';
-                            }
+                            echo urlPrefix() . 'dashboard/find-opponent/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/find-opponent';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/find-opponent';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/find-opponent';
+                            // } else {
+                            //     echo '../../../dashboard/find-opponent';
+                            // }
 
                             ?>
                             ">Find Opponent</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/challenges';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/challenges';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/challenges';
-                            } else {
-                                echo '../../../dashboard/challenges';
-                            }
+                            echo urlPrefix() . 'dashboard/challenges/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/challenges';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/challenges';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/challenges';
+                            // } else {
+                            //     echo '../../../dashboard/challenges';
+                            // }
 
                             ?>
                             ">Challenges</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/tournaments';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/tournaments';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/tournaments';
-                            } else {
-                                echo '../../../dashboard/tournaments';
-                            }
+                            echo urlPrefix() . 'dashboard/tournaments/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/tournaments';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/tournaments';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/tournaments';
+                            // } else {
+                            //     echo '../../../dashboard/tournaments';
+                            // }
 
                             ?>
                             ">Tournaments</a></li>
@@ -156,30 +187,34 @@ if (isset($_SESSION['id'])) {
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/deposits/';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/deposits/';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/deposits/';
-                            } else {
-                                echo '../../../dashboard/deposits/';
-                            }
+                            echo urlPrefix() . 'dashboard/deposits/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/deposits/';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/deposits/';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/deposits/';
+                            // } else {
+                            //     echo '../../../dashboard/deposits/';
+                            // }
 
                             ?>
                             ">Deposits</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/withdrawal/';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/withdrawal/';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/withdrawal/';
-                            } else {
-                                echo '../../../dashboard/withdrawal/';
-                            }
+                            echo urlPrefix() . 'dashboard/withdrawal/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/withdrawal/';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/withdrawal/';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/withdrawal/';
+                            // } else {
+                            //     echo '../../../dashboard/withdrawal/';
+                            // }
 
                             ?>
                             ">Withdraw</a></li>
@@ -189,60 +224,68 @@ if (isset($_SESSION['id'])) {
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/profile';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/profile';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/profile';
-                            } else {
-                                echo '../../../dashboard/profile';
-                            }
+                            echo urlPrefix() . 'dashboard/profile/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/profile';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/profile';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/profile';
+                            // } else {
+                            //     echo '../../../dashboard/profile';
+                            // }
 
                             ?>
                             ">Profile</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './ranking';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../ranking';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../ranking';
-                            } else {
-                                echo '../../../ranking';
-                            }
+                            echo urlPrefix() . 'ranking/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './ranking';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../ranking';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../ranking';
+                            // } else {
+                            //     echo '../../../ranking';
+                            // }
 
                             ?>
                             ">Ranking</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/refer';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/refer';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/refer';
-                            } else {
-                                echo '../../../dashboard/refer';
-                            }
+                            echo urlPrefix() . 'dashboard/refer/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/refer';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/refer';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/refer';
+                            // } else {
+                            //     echo '../../../dashboard/refer';
+                            // }
 
                             ?>
                             ">Refer Friends</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './help';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../help';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../help';
-                            } else {
-                                echo '../../../help';
-                            }
+                            echo urlPrefix() . 'help/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './help';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../help';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../help';
+                            // } else {
+                            //     echo '../../../help';
+                            // }
 
                             ?>
                             ">Help</a></li>
@@ -252,15 +295,17 @@ if (isset($_SESSION['id'])) {
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './php-apis/logout.php';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../php-apis/logout.php';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../php-apis/logout.php';
-                            } else {
-                                echo '../../../php-apis/logout.php';
-                            }
+                            echo urlPrefix() . 'php-apis/logout.php';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './php-apis/logout.php';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../php-apis/logout.php';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../php-apis/logout.php';
+                            // } else {
+                            //     echo '../../../php-apis/logout.php';
+                            // }
 
                             ?>
                             ">Logout</a></li>
@@ -274,30 +319,34 @@ if (isset($_SESSION['id'])) {
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './login';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../login';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../login';
-                            } else {
-                                echo '../../../login';
-                            }
+                            echo urlPrefix() . 'login/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './login';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../login';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../login';
+                            // } else {
+                            //     echo '../../../login';
+                            // }
 
                             ?>
                             ">Enter</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './register';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../register';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../register';
-                            } else {
-                                echo '../../../register';
-                            }
+                            echo urlPrefix() . 'register/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './register';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../register';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../register';
+                            // } else {
+                            //     echo '../../../register';
+                            // }
 
                             ?>
                             ">Register</a></li>
@@ -307,30 +356,34 @@ if (isset($_SESSION['id'])) {
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './ranking';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../ranking';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../ranking';
-                            } else {
-                                echo '../../../ranking';
-                            }
+                            echo urlPrefix() . 'ranking/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './ranking';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../ranking';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../ranking';
+                            // } else {
+                            //     echo '../../../ranking';
+                            // }
 
                             ?>
                             ">Ranking</a></li>
                             <li><a class="dropdown-item" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './help';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../help';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../help';
-                            } else {
-                                echo '../../../help';
-                            }
+                            echo urlPrefix() . 'help/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './help';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../help';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../help';
+                            // } else {
+                            //     echo '../../../help';
+                            // }
 
                             ?>
                             ">Help</a></li>
@@ -347,15 +400,17 @@ if (isset($_SESSION['id'])) {
             <a class="navbar-brand" href="
             <?php
 
-            if (basename(getcwd()) === basename(__DIR__)) {
-                echo './';
-            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                echo '../';
-            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                echo '../../';
-            } else {
-                echo '../../../';
-            }
+            echo urlPrefix();
+
+            // if (basename(getcwd()) === basename(__DIR__)) {
+            //     echo './';
+            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+            //     echo '../';
+            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+            //     echo '../../';
+            // } else {
+            //     echo '../../../';
+            // }
 
             ?>
             ">Challenge Site</a>
@@ -375,15 +430,17 @@ if (isset($_SESSION['id'])) {
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/profile';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/profile';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/profile';
-                            } else {
-                                echo '../../../dashboard/profile';
-                            }
+                            echo urlPrefix() . 'dashboard/profile/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/profile';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/profile';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/profile';
+                            // } else {
+                            //     echo '../../../dashboard/profile';
+                            // }
 
                             ?>
                             ">
@@ -394,15 +451,17 @@ if (isset($_SESSION['id'])) {
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/profile';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/profile';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/profile';
-                            } else {
-                                echo '../../../dashboard/profile';
-                            }
+                            echo urlPrefix() . 'dashboard/profile/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/profile';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/profile';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/profile';
+                            // } else {
+                            //     echo '../../../dashboard/profile';
+                            // }
 
                             ?>
                             "><i class="bi bi-person-circle"></i></a>
@@ -411,15 +470,17 @@ if (isset($_SESSION['id'])) {
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/notifications';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/notifications';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/notifications';
-                            } else {
-                                echo '../../../dashboard/notifications';
-                            }
+                            echo urlPrefix() . 'dashboard/notifications/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/notifications';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/notifications';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/notifications';
+                            // } else {
+                            //     echo '../../../dashboard/notifications';
+                            // }
 
                             ?>
                             "><i class="bi bi-bell-fill"></i></a>
@@ -428,15 +489,17 @@ if (isset($_SESSION['id'])) {
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './dashboard/refer';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../dashboard/refer';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../dashboard/refer';
-                            } else {
-                                echo '../../../dashboard/refer';
-                            }
+                            echo urlPrefix() . 'dashboard/refer/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './dashboard/refer';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../dashboard/refer';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../dashboard/refer';
+                            // } else {
+                            //     echo '../../../dashboard/refer';
+                            // }
 
                             ?>
                             ">REFER FRIENDS</a>
@@ -452,15 +515,17 @@ if (isset($_SESSION['id'])) {
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="
                             <?php
 
-                            if (basename(getcwd()) === basename(__DIR__)) {
-                                echo './login';
-                            } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                                echo '../login';
-                            } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                                echo '../../login';
-                            } else {
-                                echo '../../../login';
-                            }
+                            echo urlPrefix() . 'login/';
+
+                            // if (basename(getcwd()) === basename(__DIR__)) {
+                            //     echo './login';
+                            // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                            //     echo '../login';
+                            // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                            //     echo '../../login';
+                            // } else {
+                            //     echo '../../../login';
+                            // }
 
                             ?>
                             ">ENTER</a>

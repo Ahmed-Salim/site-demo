@@ -7,60 +7,68 @@
                         <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="
                         <?php
 
-                        if (basename(getcwd()) === basename(__DIR__)) {
-                            echo './help';
-                        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                            echo '../help';
-                        } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                            echo '../../help';
-                        } else {
-                            echo '../../../help';
-                        }
+                        echo urlPrefix() . 'help/';
+
+                        // if (basename(getcwd()) === basename(__DIR__)) {
+                        //     echo './help';
+                        // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                        //     echo '../help';
+                        // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                        //     echo '../../help';
+                        // } else {
+                        //     echo '../../../help';
+                        // }
 
                         ?>
                         ">SUPPORT</a></li>
                         <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="
                         <?php
 
-                        if (basename(getcwd()) === basename(__DIR__)) {
-                            echo './terms';
-                        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                            echo '../terms';
-                        } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                            echo '../../terms';
-                        } else {
-                            echo '../../../terms';
-                        }
+                        echo urlPrefix() . 'terms/';
+
+                        // if (basename(getcwd()) === basename(__DIR__)) {
+                        //     echo './terms';
+                        // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                        //     echo '../terms';
+                        // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                        //     echo '../../terms';
+                        // } else {
+                        //     echo '../../../terms';
+                        // }
 
                         ?>
                         ">TERMS</a></li>
                         <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="
                         <?php
 
-                        if (basename(getcwd()) === basename(__DIR__)) {
-                            echo './privacy';
-                        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                            echo '../privacy';
-                        } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                            echo '../../privacy';
-                        } else {
-                            echo '../../../privacy';
-                        }
+                        echo urlPrefix() . 'privacy/';
+
+                        // if (basename(getcwd()) === basename(__DIR__)) {
+                        //     echo './privacy';
+                        // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                        //     echo '../privacy';
+                        // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                        //     echo '../../privacy';
+                        // } else {
+                        //     echo '../../../privacy';
+                        // }
 
                         ?>
                         ">PRIVACY</a></li>
                         <li class="breadcrumb-item"><a class="btn btn-outline-secondary border-0" href="
                         <?php
 
-                        if (basename(getcwd()) === basename(__DIR__)) {
-                            echo './about';
-                        } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
-                            echo '../about';
-                        } elseif (basename(dirname(getcwd())) === 'dashboard') {
-                            echo '../../about';
-                        } else {
-                            echo '../../../about';
-                        }
+                        echo urlPrefix() . 'about/';
+
+                        // if (basename(getcwd()) === basename(__DIR__)) {
+                        //     echo './about';
+                        // } elseif (basename(dirname(getcwd())) === basename(__DIR__)) {
+                        //     echo '../about';
+                        // } elseif (basename(dirname(getcwd())) === 'dashboard') {
+                        //     echo '../../about';
+                        // } else {
+                        //     echo '../../../about';
+                        // }
 
                         ?>
                         ">ABOUT US</a></li>
