@@ -5,3 +5,7 @@
     background-size: cover;
     min-height: 275px;
 }
+
+#create-challenge-form textarea {
+    height: 150px;
+}
