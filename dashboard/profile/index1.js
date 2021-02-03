@@ -1,48 +1,55 @@
 const changePassForm = document.querySelector('#change-password-form');
 const changePassFieldset = document.querySelector('#change-password-form > fieldset');
 const changePassButton = document.querySelector('button[form="change-password-form"]');
+const passwordModal = document.querySelector('#passwordModal');
+const currentPasswordField = document.querySelector('#currentPassword');
 
-document.querySelector('#passwordModal').addEventListener('hidden.bs.modal', (event) => {
+passwordModal.addEventListener('hidden.bs.modal', (event) => {
     changePassForm.reset();
 });
+
+passwordModal.addEventListener('shown.bs.modal', function (event) {
+    currentPasswordField.focus();
+});
+
 
 changePassForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    // Bind the FormData object and the form element
-    // const FD = new FormData(changePassForm);
+    //Bind the FormData object and the form element
+    const FD = new FormData(changePassForm);
 
-    // changePassFieldset.disabled = true;
-    // changePassButton.disabled = true;
+    changePassFieldset.disabled = true;
+    changePassButton.disabled = true;
 
-    // const XHR = new XMLHttpRequest();
+    const XHR = new XMLHttpRequest();
 
-    // // Define what happens on successful data submission
-    // XHR.addEventListener("load", function (event) {
-    //     console.log(event.target.responseText);
-    //     // let responseMsg = JSON.parse(event.target.responseText);
+    // Define what happens on successful data submission
+    XHR.addEventListener("load", function (event) {
+        let responseMsg = JSON.parse(event.target.responseText);
+        alert(responseMsg.description);
 
-    //     // if (responseMsg.status.includes('success')) {
-    //     //     changePassForm.reset();
-    //     //     //window.location.href = "../dashboard";
-    //     // } else {
-    //     //     alert(responseMsg.description);
-    //     // }
+        if (responseMsg.status.includes('success')) {
+            bootstrap.Modal.getInstance(passwordModal).hide();
+        } else {
+        }
 
-    //     changePassFieldset.disabled = false;
-    //     changePassButton.disabled = false;
-    // });
+        changePassFieldset.disabled = false;
+        changePassButton.disabled = false;
 
-    // // Define what happens in case of error
-    // XHR.addEventListener("error", function (event) {
-    //     alert('Oops! Something went wrong.');
-    //     changePassFieldset.disabled = false;
-    //     changePassButton.disabled = false;
-    // });
+        currentPasswordField.focus();
+    });
 
-    // // Set up our request
-    // XHR.open("POST", "../../php-apis/change-password.php");
+    // Define what happens in case of error
+    XHR.addEventListener("error", function (event) {
+        alert('Oops! Something went wrong.');
+        changePassFieldset.disabled = false;
+        changePassButton.disabled = false;
+    });
 
-    // // The data sent is what the user provided in the form
-    // XHR.send(FD);
+    // Set up our request
+    XHR.open("POST", "../../php-apis/change-password.php");
+
+    // The data sent is what the user provided in the form
+    XHR.send(FD);
 });
