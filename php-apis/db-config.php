@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "codeditors_demo_site";
+$dbname = "codeditors_challenge_site";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
