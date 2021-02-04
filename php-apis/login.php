@@ -21,10 +21,6 @@ if (!empty($email) && !empty($user_password)) {
                 $response_msg['description'] = 'Login successfull!';
 
                 $_SESSION['id'] = $row['id'];
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['firstname'] = $row['first_name'];
-                $_SESSION['lastname'] = $row['last_name'];
-                $_SESSION['email'] = $row['email'];
             } else {
                 $response_msg['status'] = 'error';
                 $response_msg['description'] = 'Invalid Email or Password';

@@ -112,7 +112,25 @@ if (isset($_SESSION['id'])) {
 
                         <li class="nav-item">
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="<?php echo urlPrefix() . 'dashboard/profile/'; ?>">
-                                <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>
+                                <?php
+
+                                include_once urlPrefix() . 'php-apis/db-config.php';
+
+                                $user_id = $_SESSION['id'];
+
+                                $sql = "SELECT * FROM users WHERE id=$user_id";
+                                $result = mysqli_query($conn, $sql);
+
+                                if (mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo $row['first_name'] . ' ' . $row['last_name'];
+                                    }
+                                } else {
+                                    header("Location: " . urlPrefix() . "php-apis/logout.php");
+                                    die();
+                                }
+
+                                ?>
                             </a>
                         </li>
                         <li class="nav-item">

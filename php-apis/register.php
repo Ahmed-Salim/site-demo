@@ -30,10 +30,6 @@ if (!empty($username) && !empty($firstname) && !empty($lastname) && !empty($emai
             $response_msg['description'] = 'New record created successfully!';
 
             $_SESSION['id'] = mysqli_insert_id($conn);
-            $_SESSION['username'] = $username;
-            $_SESSION['firstname'] = $firstname;
-            $_SESSION['lastname'] = $lastname;
-            $_SESSION['email'] = $email;
         } else {
             $response_msg['status'] = 'error';
             $response_msg['description'] = mysqli_error($conn);

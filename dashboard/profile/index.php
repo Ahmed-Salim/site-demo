@@ -35,7 +35,23 @@ include '../../header.php';
 
 <div class="hero bg-dark d-flex align-items-end px-5">
     <h1 class="text-white display-5 fw-bold">
-        <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>
+
+        <?php
+
+        include_once '../../php-apis/db-config.php';
+
+        $user_id = $_SESSION['id'];
+
+        $sql = "SELECT * FROM users WHERE id=$user_id";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+
+        ?>
+
+                <?php echo $row['first_name'] . ' ' . $row['last_name']; ?>
+
     </h1>
 </div>
 
@@ -49,19 +65,30 @@ include '../../header.php';
                     <tr>
                         <th scope="row">Name</th>
                         <td>
-                            <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?>
+                            <?php echo $row['first_name'] . ' ' . $row['last_name']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Username</th>
                         <td>
-                            <?php echo $_SESSION['username']; ?>
+                            <?php echo $row['username']; ?>
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Email</th>
                         <td>
-                            <?php echo $_SESSION['email']; ?>
+                            <?php echo $row['email']; ?>
+
+                    <?php
+
+                }
+            } else {
+                header("Location: ../../php-apis/logout.php");
+                die();
+            }
+
+                    ?>
+
                         </td>
                     </tr>
                 </tbody>
