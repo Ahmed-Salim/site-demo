@@ -134,7 +134,7 @@ include '../../header.php';
 
                     <?php
 
-                    $sql2 = "SELECT * FROM deposit_log WHERE deposit_by = $user_id ORDER BY server_timestamp DESc";
+                    $sql2 = "SELECT * FROM deposit_log WHERE deposit_by = $user_id ORDER BY server_timestamp DESC";
                     $result2 = mysqli_query($conn, $sql2);
 
                     if (mysqli_num_rows($result2) > 0) {
