@@ -70,7 +70,7 @@ include '../../header.php';
                 <ul class="dropdown-menu">
                     <li>
                         <!-- Button trigger modal -->
-                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#depositModal">Dummy Entry</button>
+                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#depositModal">Dummy Deposit</button>
                     </li>
                     <li><a class="dropdown-item" href="./paypal">Paypal</a></li>
                     <li><a class="dropdown-item" href="#">Neteller</a></li>
