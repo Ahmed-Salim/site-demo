@@ -20,27 +20,33 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 $depositAmout = mysqli_real_escape_string($conn, clean_input($_POST["deposit-amout"]));
-                $newAmount = $depositAmout + $row['balance'];
 
-                $sql2 = "UPDATE users SET balance=$newAmount WHERE id=$user_id";
+                if ($depositAmout >= 10) {
+                    $newAmount = $depositAmout + $row['balance'];
 
-                if (mysqli_query($conn, $sql2)) {
-                    $response_msg['status'] = 'success';
-                    $response_msg['description'] = 'Balance Updated Successfully!';
+                    $sql2 = "UPDATE users SET balance=$newAmount WHERE id=$user_id";
 
-                    $method = 'Dummy Deposit';
-                    $clientTime = mysqli_real_escape_string($conn, clean_input($_POST["client-time"]));
+                    if (mysqli_query($conn, $sql2)) {
+                        $response_msg['status'] = 'success';
+                        $response_msg['description'] = 'Balance Updated Successfully!';
 
-                    $sql3 = "INSERT INTO deposit_log (deposit_by, method, amount, client_date) VALUES ($user_id, '$method', $depositAmout, '$clientTime')";
+                        $method = 'Dummy Deposit';
+                        $clientTime = mysqli_real_escape_string($conn, clean_input($_POST["client-time"]));
 
-                    if (mysqli_query($conn, $sql3)) {
-                        //echo "Log created successfully";
+                        $sql3 = "INSERT INTO deposit_log (deposit_by, method, amount, client_date) VALUES ($user_id, '$method', $depositAmout, '$clientTime')";
+
+                        if (mysqli_query($conn, $sql3)) {
+                            //echo "Log created successfully";
+                        } else {
+                            //echo "Error: " . mysqli_error($conn);
+                        }
                     } else {
-                        //echo "Error: " . mysqli_error($conn);
+                        $response_msg['status'] = 'error';
+                        $response_msg['description'] = "Error updating record: " . mysqli_error($conn);
                     }
                 } else {
                     $response_msg['status'] = 'error';
-                    $response_msg['description'] = "Error updating record: " . mysqli_error($conn);
+                    $response_msg['description'] = 'Minimum $10 Deposit Required!';
                 }
             }
         } else {
