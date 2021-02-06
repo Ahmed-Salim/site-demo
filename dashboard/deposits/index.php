@@ -18,7 +18,7 @@ include '../../header.php';
                         <legend>Deposit Amount</legend>
                         <div class="input-group has-validation">
                             <span class="input-group-text">$</span>
-                            <input type="number" min="10" step="any" class="form-control" id="deposit-amout" name="deposit-amout" aria-label="Amount (to the nearest dollar)" required>
+                            <input type="number" min="10" step="any" class="form-control" id="deposit-amount" name="deposit-amount" aria-label="Amount (to the nearest dollar)" required>
                             <span class="input-group-text">.00</span>
                             <div class="invalid-feedback">Minimum $10 Required</div>
                         </div>

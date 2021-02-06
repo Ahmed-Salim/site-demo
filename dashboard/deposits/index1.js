@@ -1,11 +1,11 @@
 const depositForm = document.querySelector('#deposit-form');
 const depositModal = document.getElementById('depositModal');
-const depositAmoutField = document.getElementById('deposit-amout');
+const depositAmountField = document.getElementById('deposit-amount');
 const depositFieldset = document.querySelector('#deposit-form > fieldset');
 const depositButton = document.querySelector('button[form="deposit-form"]');
 
 depositModal.addEventListener('shown.bs.modal', function (event) {
-    depositAmoutField.focus();
+    depositAmountField.focus();
 });
 
 depositModal.addEventListener('hidden.bs.modal', function (event) {
@@ -45,7 +45,9 @@ depositModal.addEventListener('hidden.bs.modal', function (event) {
                     depositFieldset.disabled = false;
                     depositButton.disabled = false;
 
-                    depositAmoutField.focus();
+                    depositForm.classList.remove('was-validated');
+
+                    depositAmountField.focus();
                 }
             });
 
@@ -55,7 +57,7 @@ depositModal.addEventListener('hidden.bs.modal', function (event) {
                 depositFieldset.disabled = false;
                 depositButton.disabled = false;
 
-                depositAmoutField.focus();
+                depositAmountField.focus();
             });
 
             // Set up our request
