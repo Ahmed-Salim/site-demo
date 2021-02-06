@@ -44,6 +44,7 @@ include '../../header.php';
                 <?php
 
                 include_once '../../php-apis/db-config.php';
+                include_once '../../php-apis/clean-input.php';
 
                 $user_id = $_SESSION['id'];
 
@@ -108,10 +109,10 @@ include '../../header.php';
                     Report
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">Last Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                    <li><a class="dropdown-item" href="#">All</a></li>
+                    <li><a class="dropdown-item" href="./?report-filter=current-month">This Month</a></li>
+                    <li><a class="dropdown-item" href="./?report-filter=previous-month">Last Month</a></li>
+                    <li><a class="dropdown-item" href="./?report-filter=current-year">This Year</a></li>
+                    <li><a class="dropdown-item" href="./?report-filter=all">All</a></li>
                 </ul>
             </div>
         </div>
@@ -121,6 +122,7 @@ include '../../header.php';
 <div class="container my-5">
     <div class="row">
         <div class="col">
+            <h2 class="text-capitalize"><?php echo (isset($_GET['report-filter']) && !empty($_GET['report-filter'])) ? (str_replace("-", " ", mysqli_real_escape_string($conn, clean_input($_GET['report-filter'])))) : ("All") ?> Records</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -134,7 +136,29 @@ include '../../header.php';
 
                     <?php
 
-                    $sql2 = "SELECT * FROM deposit_log WHERE deposit_by = $user_id ORDER BY server_timestamp DESC";
+                    if (isset($_GET['report-filter']) && !empty($_GET['report-filter'])) {
+                        $reportFilter = mysqli_real_escape_string($conn, clean_input($_GET["report-filter"]));
+
+                        switch ($reportFilter) {
+                            case "current-month":
+                                $sql2 = "SELECT * FROM deposit_log WHERE MONTH(server_timestamp) = MONTH(CURRENT_DATE()) AND YEAR(server_timestamp) = YEAR(CURRENT_DATE()) AND deposit_by = $user_id ORDER BY server_timestamp DESC";
+                                break;
+                            case "previous-month":
+                                $sql2 = "SELECT * FROM deposit_log WHERE YEAR(server_timestamp) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH) AND MONTH(server_timestamp) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH) AND deposit_by = $user_id ORDER BY server_timestamp DESC";
+                                break;
+                            case "current-year":
+                                $sql2 = "SELECT * FROM deposit_log WHERE YEAR(server_timestamp) = YEAR(CURRENT_DATE()) AND deposit_by = $user_id ORDER BY server_timestamp DESC";
+                                break;
+                            case "all":
+                                $sql2 = "SELECT * FROM deposit_log WHERE deposit_by = $user_id ORDER BY server_timestamp DESC";
+                                break;
+                            default:
+                                $sql2 = "SELECT * FROM deposit_log WHERE deposit_by = $user_id ORDER BY server_timestamp DESC";
+                        }
+                    } else {
+                        $sql2 = "SELECT * FROM deposit_log WHERE deposit_by = $user_id ORDER BY server_timestamp DESC";
+                    }
+
                     $result2 = mysqli_query($conn, $sql2);
 
                     if (mysqli_num_rows($result2) > 0) {
