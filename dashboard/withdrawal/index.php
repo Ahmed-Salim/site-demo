@@ -127,6 +127,7 @@ include '../../header.php';
             <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Method</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Date</th>
@@ -174,6 +175,7 @@ include '../../header.php';
                                 <td><?php echo $row2['method']; ?></td>
                                 <td><?php echo '$' . number_format($row2['amount'], 2, '.', ''); ?></td>
                                 <td><?php echo $row2['client_date']; ?></td>
+                                <td><?php echo $row2['status']; ?></td>
                             </tr>
 
                         <?php
