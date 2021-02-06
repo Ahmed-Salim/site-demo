@@ -36,7 +36,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                 $method = 'Dummy Withdrawal';
                                 $clientTime = mysqli_real_escape_string($conn, clean_input($_POST["client-time"]));
 
-                                $sql3 = "INSERT INTO withdrawal_log (withdrawal_by, method, amount, client_date) VALUES ($user_id, '$method', $withdrawalAmount, '$clientTime')";
+                                $sql3 = "INSERT INTO withdrawal_log (withdrawal_by, method, amount, withdrawal_status, client_date) VALUES ($user_id, '$method', $withdrawalAmount, 'Success', '$clientTime')";
 
                                 if (mysqli_query($conn, $sql3)) {
                                     //echo "Log created successfully";

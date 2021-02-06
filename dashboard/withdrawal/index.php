@@ -175,7 +175,7 @@ include '../../header.php';
                                 <td><?php echo $row2['method']; ?></td>
                                 <td><?php echo '$' . number_format($row2['amount'], 2, '.', ''); ?></td>
                                 <td><?php echo $row2['client_date']; ?></td>
-                                <td><?php echo $row2['status']; ?></td>
+                                <td><?php echo $row2['withdrawal_status']; ?></td>
                             </tr>
 
                         <?php
