@@ -1,5 +1,12 @@
 const createChallengeForm = document.querySelector('#create-challenge-form');
-var createChallengeModal = document.getElementById('createChallengeModal');
+const createChallengeFieldset = document.querySelector('#create-challenge-form > fieldset');
+const createChallengeButton = document.querySelector('button[form="create-challenge-form"]');
+const createChallengeModal = document.getElementById('createChallengeModal');
+const challengeGameSelect = document.querySelector('#challenge-game');
+
+createChallengeModal.addEventListener('shown.bs.modal', function (event) {
+    challengeGameSelect.focus();
+});
 
 createChallengeModal.addEventListener('hidden.bs.modal', function (event) {
     createChallengeForm.reset();
@@ -17,8 +24,50 @@ createChallengeModal.addEventListener('hidden.bs.modal', function (event) {
         } else {
             event.preventDefault();
             event.stopPropagation();
+
+            //Bind the FormData object and the form element
+            const FD = new FormData(createChallengeForm);
+            FD.append('client-date', new Date());
+
+            createChallengeFieldset.disabled = true;
+            createChallengeButton.disabled = true;
+
+            const XHR = new XMLHttpRequest();
+
+            // Define what happens on successful data submission
+            XHR.addEventListener("load", function (event) {
+                //console.log(event.target.responseText);
+                let responseMsg = JSON.parse(event.target.responseText);
+                alert(responseMsg.description);
+
+                if (responseMsg.status.includes('success')) {
+                    location.reload();
+                } else {
+                    createChallengeFieldset.disabled = false;
+                    createChallengeButton.disabled = false;
+
+                    createChallengeForm.classList.remove('was-validated');
+
+                    challengeGameSelect.focus();
+                }
+            });
+
+            // Define what happens in case of error
+            XHR.addEventListener("error", function (event) {
+                alert('Oops! Something went wrong.');
+                createChallengeFieldset.disabled = false;
+                createChallengeButton.disabled = false;
+
+                challengeGameSelect.focus();
+            });
+
+            // Set up our request
+            XHR.open("POST", "../../php-apis/create-challenge.php");
+
+            // The data sent is what the user provided in the form
+            XHR.send(FD);
         }
 
-        createChallengeForm.classList.add('was-validated')
+        createChallengeForm.classList.add('was-validated');
     }, false);
 })()

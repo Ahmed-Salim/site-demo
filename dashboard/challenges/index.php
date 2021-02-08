@@ -17,7 +17,7 @@ include '../../header.php';
                     <fieldset>
                         <div class="row mb-3">
                             <div class="col">
-                                <select class="form-select" aria-label="Default select example" name="challenge-game" required>
+                                <select class="form-select" aria-label="Default select example" id="challenge-game" name="challenge-game" required>
                                     <option value="">Select Game</option>
                                     <option value="fifa">FIFA 21</option>
                                     <option value="fortnite">FortNite</option>
@@ -37,8 +37,8 @@ include '../../header.php';
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="challenge-amount" name="challenge-amount" placeholder="Amount" required>
-                            <div class="invalid-feedback">Required Field</div>
+                            <input type="number" min="10" step="any" class="form-control" id="challenge-amount" name="challenge-amount" placeholder="Amount" required>
+                            <div class="invalid-feedback">Minimum $10 Required</div>
                             <label class="text-uppercase" for="challenge-amount">Amount</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -77,16 +77,81 @@ include '../../header.php';
 <div class="container my-5">
     <div class="row">
         <div class="col">
-            <h2>0</h2>
-            <h2>Open</h2>
+            <p class="fs-1">
+
+                <?php
+
+                include_once '../../php-apis/db-config.php';
+                include_once '../../php-apis/clean-input.php';
+
+                $user_id = $_SESSION['id'];
+
+                $sql = "SELECT COUNT(*) AS open_count FROM challenges_log WHERE challenge_by=$user_id AND status='open'";
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo $row['open_count'];
+                    }
+                } else {
+                    echo '0';
+                }
+
+                ?>
+
+                Open
+            </p>
         </div>
         <div class="col">
-            <h2>0</h2>
-            <h2>Confirm</h2>
+            <p class="fs-1">
+
+                <?php
+
+                include_once '../../php-apis/db-config.php';
+                include_once '../../php-apis/clean-input.php';
+
+                $user_id = $_SESSION['id'];
+
+                $sql2 = "SELECT COUNT(*) AS confirmed_count FROM challenges_log WHERE challenge_by=$user_id AND status='confirmed'";
+                $result2 = mysqli_query($conn, $sql2);
+
+                if (mysqli_num_rows($result2) > 0) {
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        echo $row2['confirmed_count'];
+                    }
+                } else {
+                    echo '0';
+                }
+
+                ?>
+
+                Confirmed
+            </p>
         </div>
         <div class="col">
-            <h2>0</h2>
-            <h2>Report</h2>
+            <p class="fs-1">
+
+                <?php
+
+                include_once '../../php-apis/db-config.php';
+
+                $user_id = $_SESSION['id'];
+
+                $sql3 = "SELECT COUNT(*) AS reported_count FROM challenges_log WHERE challenge_by=$user_id AND status='reported'";
+                $result3 = mysqli_query($conn, $sql3);
+
+                if (mysqli_num_rows($result3) > 0) {
+                    while ($row3 = mysqli_fetch_assoc($result3)) {
+                        echo $row3['reported_count'];
+                    }
+                } else {
+                    echo '0';
+                }
+
+                ?>
+
+                Reported
+            </p>
         </div>
     </div>
 </div>
