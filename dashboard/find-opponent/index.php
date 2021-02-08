@@ -37,23 +37,39 @@ include '../../header.php';
     </div>
 </div>
 
-<div class="challenge-box container mt-5">
+<div class="container-fluid my-5 px-5">
     <div class="row">
         <div class="col">
-            <button type="button" class="btn btn-outline-secondary border-0">MY CHALLENGES</button>
+            <a class="btn btn-light shadow-sm text-uppercase" href="../challenges" role="button">My Challenges</a>
+            <!-- <div class="pt-3 fs-5">
+                <div class="p-3 border">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold">FIFA 21 PS4</span>
+                        <div>
+                            <span class="fw-bold">$10</span>
+                            <button class="btn btn-light shadow-sm text-uppercase">Accept</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <i class="bi bi-person-circle fs-3"></i>
+                        <span class="fw-bold">Player 1</span>
+                    </div>
+                    <div class="">
+                        <button class="btn btn-light shadow-sm text-uppercase">Details</button>
+                        <small>Created: 12-12-12</small>
+                    </div>
+                </div>
+            </div> -->
         </div>
         <div class="col">
             <h3>Shoutbox</h3>
-        </div>
-    </div>
-</div>
-
-<div class="container mb-5">
-    <div class="row">
-        <div class="col-6 ms-auto">
-            <form class="d-flex">
-                <input class="form-control form-control-lg" type="text" placeholder="Type Here">
-                <button type="button" class="btn btn-lg btn-outline-secondary border-0 ms-3">Submit</button>
+            <form class="row">
+                <div class="col-9">
+                    <input class="form-control form-control-lg" type="text" placeholder="Type Here">
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-lg btn-outline-secondary border-0">Submit</button>
+                </div>
             </form>
         </div>
     </div>
