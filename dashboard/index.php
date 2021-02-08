@@ -11,7 +11,30 @@ include '../header.php';
 <div class="container-fluid bg-dark py-2 px-5">
     <div class="row">
         <div class="col">
-            <h3 class="text-white fw-bold">Balance: $ 0.00</h3>
+            <h3 class="text-white fw-bold">Balance:
+
+                <?php
+
+                include_once '../php-apis/db-config.php';
+                include_once '../php-apis/clean-input.php';
+
+                $user_id = $_SESSION['id'];
+
+                $sql3 = "SELECT * FROM users WHERE id=$user_id";
+                $result3 = mysqli_query($conn, $sql3);
+
+                if (mysqli_num_rows($result3) > 0) {
+                    while ($row3 = mysqli_fetch_assoc($result3)) {
+                        echo '$' . number_format($row3['balance'], 2, '.', '');
+                    }
+                } else {
+                    header("Location: ../php-apis/logout.php");
+                    die();
+                }
+
+                ?>
+
+            </h3>
         </div>
     </div>
 </div>
