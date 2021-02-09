@@ -51,7 +51,28 @@ include '../../header.php';
                         </a>
                     </li>
                     <li class="nav-item mx-2" role="presentation">
-                        <a class="nav-link text-uppercase text-nowrap" id="pills-tournaments-tab" data-bs-toggle="pill" href="#pills-tournaments" role="tab" aria-controls="pills-tournaments" aria-selected="false">Tournaments</a>
+                        <a class="nav-link text-uppercase text-nowrap" id="pills-tournaments-tab" data-bs-toggle="pill" href="#pills-tournaments" role="tab" aria-controls="pills-tournaments" aria-selected="false">
+                            <?php
+
+                            include_once '../../php-apis/db-config.php';
+                            include_once '../../php-apis/clean-input.php';
+
+                            $user_id = $_SESSION['id'];
+
+                            $sql = "SELECT COUNT(*) AS total_tournaments FROM tournaments_log WHERE tournament_by <> $user_id";
+                            $result = mysqli_query($conn, $sql);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo $row['total_tournaments'];
+                                }
+                            } else {
+                                echo "0";
+                            }
+
+                            ?>
+                            Tournaments
+                        </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link text-uppercase text-nowrap" id="pills-players-tab" data-bs-toggle="pill" href="#pills-players" role="tab" aria-controls="pills-players" aria-selected="false">Players</a>
@@ -80,7 +101,7 @@ include '../../header.php';
 
                     <?php
 
-                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id";
+                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id ORDER BY challenges_log.server_timestamp DESC";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -121,19 +142,45 @@ include '../../header.php';
 
                 <div class="tab-pane fade" id="pills-tournaments" role="tabpanel" aria-labelledby="pills-tournaments-tab">
                     <a class="btn btn-light shadow-sm text-uppercase mb-3" href="../tournaments" role="button">My Tournaments</a>
-                    <div class="card">
-                        <div class="card-header">
-                            Featured
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            2 days ago
-                        </div>
-                    </div>
+
+                    <?php
+
+                    $sql = "SELECT * FROM users INNER JOIN tournaments_log ON users.id = tournaments_log.tournament_by WHERE tournaments_log.tournament_by <> $user_id ORDER BY tournaments_log.server_timestamp DESC";
+                    $result = mysqli_query($conn, $sql);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+
+                    ?>
+
+                            <div class="card mb-3">
+                                <h4 class="card-header">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <?php echo (($row['game'] === 'fifa') ? (strtoupper($row['game'])) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <?php echo '$' . $row['amount']; ?>
+                                            <button type="button" class="btn btn-primary text-uppercase ms-2">Enter</button>
+                                        </div>
+                                    </div>
+                                </h4>
+                                <div class="card-body d-flex align-items-center justify-content-between">
+                                    <h5 class="card-title"><i class="bi bi-file-person-fill"></i><?php echo ucwords($row['username']); ?></h5>
+                                    <button type="button" class="btn btn-primary text-uppercase">Details</button>
+                                </div>
+                                <div class="card-footer text-muted"><?php echo 'Created: ' . $row['client_date']; ?></div>
+                            </div>
+
+                    <?php
+
+                        }
+                    } else {
+                        echo "<p class='fs-4 text-danger'>No Tournaments Available!</p>";
+                    }
+
+                    ?>
+
                 </div>
 
                 <div class="tab-pane fade" id="pills-players" role="tabpanel" aria-labelledby="pills-players-tab">
