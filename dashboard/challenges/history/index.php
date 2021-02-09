@@ -53,13 +53,13 @@ include '../../../header.php';
 
                             <tr>
                                 <th scope="row"><?php echo $count; ?></th>
-                                <td class="text-capitalize"><?php echo $row['game']; ?></td>
-                                <td class="text-uppercase"><?php echo $row['console']; ?></td>
-                                <td class="text-capitalize"><?php echo '$' . $row['amount']; ?></td>
+                                <td><?php echo (($row['game'] === 'fifa') ? (strtoupper($row['game'])) : (ucwords(str_replace("_", " ", $row['game'])))); ?></td>
+                                <td><?php echo (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?></td>
+                                <td><?php echo '$' . $row['amount']; ?></td>
                                 <td class="text-capitalize"><?php echo $row['game_mode']; ?></td>
                                 <td><?php echo $row['rules']; ?></td>
                                 <td class="text-capitalize"><?php echo $row['status']; ?></td>
-                                <td class="text-capitalize"><?php echo $row['client_date']; ?></td>
+                                <td><?php echo $row['client_date']; ?></td>
                             </tr>
 
                         <?php
@@ -71,7 +71,7 @@ include '../../../header.php';
                         ?>
 
                         <tr>
-                            <td colspan="8" class="text-danger">No Challenges Found</td>
+                            <td colspan="8" class="text-center text-danger">No Challenges Found</td>
                         </tr>
 
                     <?php } ?>

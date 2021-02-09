@@ -36,7 +36,6 @@ createChallengeModal.addEventListener('hidden.bs.modal', function (event) {
 
             // Define what happens on successful data submission
             XHR.addEventListener("load", function (event) {
-                //console.log(event.target.responseText);
                 let responseMsg = JSON.parse(event.target.responseText);
                 alert(responseMsg.description);
 
