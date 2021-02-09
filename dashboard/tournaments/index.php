@@ -17,11 +17,11 @@ include '../../header.php';
                     <fieldset>
                         <div class="row mb-3">
                             <div class="col">
-                                <select class="form-select" aria-label="Default select example" name="tourney-game" required>
+                                <select class="form-select" aria-label="Default select example" id="tourney-game" name="tourney-game" required>
                                     <option value="">Select Game</option>
                                     <option value="fifa">FIFA 21</option>
-                                    <option value="fortnite">FortNite</option>
-                                    <option value="clashofclawns">Clash of Clawns</option>
+                                    <option value="fortnite">Fortnite</option>
+                                    <option value="clash_of_clans">Clash of Clans</option>
                                 </select>
                                 <div class="invalid-feedback">Required Field</div>
                             </div>
@@ -37,13 +37,13 @@ include '../../header.php';
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="tourney-players" name="tourney-players" placeholder="# Players" required>
-                            <div class="invalid-feedback">Required Field</div>
-                            <label class="text-uppercase" for="tourney-players"># Players</label>
+                            <input type="number" min="2" class="form-control" id="tourney-players" name="tourney-players" placeholder="# of Players" required>
+                            <div class="invalid-feedback">Minimum 2 Players Required</div>
+                            <label class="text-uppercase" for="tourney-players"># of Players</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="tourney-amount" name="tourney-amount" placeholder="Amount" required>
-                            <div class="invalid-feedback">Required Field</div>
+                            <input type="number" min="10" step="any" class="form-control" id="tourney-amount" name="tourney-amount" placeholder="Amount" required>
+                            <div class="invalid-feedback">Minimum $10 Required</div>
                             <label class="text-uppercase" for="tourney-amount">Amount</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -82,16 +82,81 @@ include '../../header.php';
 <div class="container my-5">
     <div class="row">
         <div class="col">
-            <h2>0</h2>
-            <h2>Open</h2>
+            <p class="fs-1">
+
+                <?php
+
+                include_once '../../php-apis/db-config.php';
+                include_once '../../php-apis/clean-input.php';
+
+                $user_id = $_SESSION['id'];
+
+                $sql = "SELECT COUNT(*) AS open_count FROM tournaments_log WHERE tournament_by=$user_id AND status='open'";
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo $row['open_count'];
+                    }
+                } else {
+                    echo '0';
+                }
+
+                ?>
+
+                Open
+            </p>
         </div>
         <div class="col">
-            <h2>0</h2>
-            <h2>Confirm</h2>
+            <p class="fs-1">
+
+                <?php
+
+                include_once '../../php-apis/db-config.php';
+                include_once '../../php-apis/clean-input.php';
+
+                $user_id = $_SESSION['id'];
+
+                $sql2 = "SELECT COUNT(*) AS confirmed_count FROM tournaments_log WHERE tournament_by=$user_id AND status='confirmed'";
+                $result2 = mysqli_query($conn, $sql2);
+
+                if (mysqli_num_rows($result2) > 0) {
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        echo $row2['confirmed_count'];
+                    }
+                } else {
+                    echo '0';
+                }
+
+                ?>
+
+                Confirmed
+            </p>
         </div>
         <div class="col">
-            <h2>0</h2>
-            <h2>Report</h2>
+            <p class="fs-1">
+
+                <?php
+
+                include_once '../../php-apis/db-config.php';
+
+                $user_id = $_SESSION['id'];
+
+                $sql3 = "SELECT COUNT(*) AS reported_count FROM tournaments_log WHERE tournament_by=$user_id AND status='reported'";
+                $result3 = mysqli_query($conn, $sql3);
+
+                if (mysqli_num_rows($result3) > 0) {
+                    while ($row3 = mysqli_fetch_assoc($result3)) {
+                        echo $row3['reported_count'];
+                    }
+                } else {
+                    echo '0';
+                }
+
+                ?>
+
+                Reported
+            </p>
         </div>
     </div>
 </div>
