@@ -53,7 +53,7 @@ include '../../../header.php';
 
                             <tr>
                                 <th scope="row"><?php echo $count; ?></th>
-                                <td><?php echo (($row['game'] === 'fifa') ? (strtoupper($row['game'])) : (ucwords(str_replace("_", " ", $row['game'])))); ?></td>
+                                <td><?php echo (($row['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row['game']))) : (ucwords(str_replace("_", " ", $row['game'])))); ?></td>
                                 <td><?php echo (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?></td>
                                 <td><?php echo '$' . $row['amount']; ?></td>
                                 <td class="text-capitalize"><?php echo $row['game_mode']; ?></td>

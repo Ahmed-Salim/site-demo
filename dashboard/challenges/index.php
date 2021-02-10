@@ -19,7 +19,7 @@ include '../../header.php';
                             <div class="col">
                                 <select class="form-select" aria-label="Default select example" id="challenge-game" name="challenge-game" required>
                                     <option value="">Select Game</option>
-                                    <option value="fifa">FIFA 21</option>
+                                    <option value="fifa_21">FIFA 21</option>
                                     <option value="fortnite">Fortnite</option>
                                     <option value="clash_of_clans">Clash of Clans</option>
                                 </select>

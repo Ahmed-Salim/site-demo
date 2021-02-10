@@ -10,17 +10,17 @@ include '../../header.php';
             <div class="d-flex bg-white shadow py-3 mt-3">
                 <select class="form-select mx-3" aria-label=".form-select-lg example">
                     <option selected>All</option>
-                    <option value="1">FIFA 21</option>
-                    <option value="2">FortNite</option>
-                    <option value="3">Clash of Clawns</option>
+                    <option value="fifa_21">FIFA 21</option>
+                    <option value="fortnite">Fortnite</option>
+                    <option value="clash_of_clans">Clash of Clans</option>
                 </select>
 
                 <select class="form-select mx-3" aria-label=".form-select-lg example">
                     <option selected>All</option>
-                    <option value="1">PS4</option>
-                    <option value="2">PC</option>
-                    <option value="3">Xbox</option>
-                    <option value="4">Nintendo</option>
+                    <option value="ps4">PS4</option>
+                    <option value="pc">PC</option>
+                    <option value="xbox">Xbox</option>
+                    <option value="nintendo">Nintendo</option>
                 </select>
 
                 <ul class="nav nav-pills nav-justified flex-nowrap mx-3" id="pills-tab" role="tablist">
@@ -113,7 +113,7 @@ include '../../header.php';
                                 <h4 class="card-header">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <?php echo (($row['game'] === 'fifa') ? (strtoupper($row['game'])) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?>
+                                            <?php echo (($row['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row['game']))) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <?php echo '$' . $row['amount']; ?>
@@ -157,7 +157,7 @@ include '../../header.php';
                                 <h4 class="card-header">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <?php echo (($row['game'] === 'fifa') ? (strtoupper($row['game'])) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?>
+                                            <?php echo (($row['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row['game']))) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <?php echo '$' . $row['amount']; ?>
