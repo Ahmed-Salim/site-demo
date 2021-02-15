@@ -27,7 +27,6 @@ createChallengeModal.addEventListener('hidden.bs.modal', function (event) {
 
             //Bind the FormData object and the form element
             const FD = new FormData(createChallengeForm);
-            FD.append('client-date', new Date());
 
             createChallengeFieldset.disabled = true;
             createChallengeButton.disabled = true;

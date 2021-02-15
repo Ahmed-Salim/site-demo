@@ -51,7 +51,7 @@ include '../../header.php';
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <input type="time" class="form-control" id="challenge-time" name="challenge-time" placeholder="Challenge Time" required>
+                                    <input type="time" step="1" class="form-control" id="challenge-time" name="challenge-time" placeholder="Challenge Time" required>
                                     <label for="challenge-time">Challenge Time</label>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@ include '../../header.php';
 
                             $user_id = $_SESSION['id'];
 
-                            $sql = "SELECT COUNT(*) AS total_challenges FROM challenges_log WHERE challenge_by <> $user_id";
+                            $sql = "SELECT COUNT(*) AS total_challenges FROM challenges_log WHERE challenge_by <> $user_id AND status = 'open'";
                             $result = mysqli_query($conn, $sql);
 
                             if (mysqli_num_rows($result) > 0) {
@@ -164,7 +164,7 @@ include '../../header.php';
 
                     <?php
 
-                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id ORDER BY challenges_log.server_timestamp DESC";
+                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id AND status = 'open' ORDER BY challenges_log.created_timestamp DESC";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -177,8 +177,8 @@ include '../../header.php';
                                 'Amount' => '$' . $row['amount'],
                                 'Game Mode' => ucwords($row['game_mode']),
                                 'Rules' => ucwords($row['rules']),
-                                'Created Date' => date_format(date_create($row['server_timestamp']), 'l d F Y h:i:s A'),
-                                'min_date' => date_format(date_add(date_create($row['server_timestamp']), new DateInterval('P1D')), 'Y-m-d'),
+                                'Created Date' => date_format(date_create($row['created_timestamp']), 'l d F Y h:i:s A'),
+                                'min_date' => date_format(date_add(date_create($row['created_timestamp']), new DateInterval('P1D')), 'Y-m-d'),
                             );
                             $challenge_details_json = json_encode($challenge_details_object);
 
@@ -206,7 +206,7 @@ include '../../header.php';
                                         Details
                                     </button>
                                 </div>
-                                <div class="card-footer text-muted"><?php echo 'Created: ' . $row['client_date']; ?></div>
+                                <div class="card-footer text-muted"><?php echo 'Created: ' . $row['created_timestamp']; ?></div>
                             </div>
 
                     <?php

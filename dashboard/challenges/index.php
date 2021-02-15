@@ -86,7 +86,7 @@ include '../../header.php';
 
                 $user_id = $_SESSION['id'];
 
-                $sql = "SELECT COUNT(*) AS open_count FROM challenges_log WHERE challenge_by=$user_id AND status='open'";
+                $sql = "SELECT COUNT(*) AS open_count FROM challenges_log WHERE challenge_by = $user_id AND status = 'open'";
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
@@ -112,7 +112,7 @@ include '../../header.php';
 
                 $user_id = $_SESSION['id'];
 
-                $sql2 = "SELECT COUNT(*) AS confirmed_count FROM challenges_log WHERE challenge_by=$user_id AND status='confirmed'";
+                $sql2 = "SELECT COUNT(*) AS confirmed_count FROM challenges_log WHERE challenge_by = $user_id AND status = 'confirmed'";
                 $result2 = mysqli_query($conn, $sql2);
 
                 if (mysqli_num_rows($result2) > 0) {
@@ -137,7 +137,7 @@ include '../../header.php';
 
                 $user_id = $_SESSION['id'];
 
-                $sql3 = "SELECT COUNT(*) AS reported_count FROM challenges_log WHERE challenge_by=$user_id AND status='reported'";
+                $sql3 = "SELECT COUNT(*) AS reported_count FROM challenges_log WHERE challenge_by = $user_id AND status = 'reported'";
                 $result3 = mysqli_query($conn, $sql3);
 
                 if (mysqli_num_rows($result3) > 0) {

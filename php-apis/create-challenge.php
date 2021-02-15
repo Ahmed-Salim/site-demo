@@ -35,9 +35,8 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                             $challenge_console = mysqli_real_escape_string($conn, clean_input($_POST["challenge-console"]));
                             $challenge_game_mode = mysqli_real_escape_string($conn, clean_input($_POST["challenge-game-mode"]));
                             $challenge_rules = mysqli_real_escape_string($conn, clean_input($_POST["challenge-rules"]));
-                            $client_date = mysqli_real_escape_string($conn, clean_input($_POST["client-date"]));
 
-                            $sql3 = "INSERT INTO challenges_log (challenge_by, game, console, amount, game_mode, rules, client_date) VALUES ($user_id, '$challenge_game', '$challenge_console', '$challengeAmount', '$challenge_game_mode', '$challenge_rules', '$client_date')";
+                            $sql3 = "INSERT INTO challenges_log (challenge_by, game, console, amount, game_mode, rules) VALUES ($user_id, '$challenge_game', '$challenge_console', '$challengeAmount', '$challenge_game_mode', '$challenge_rules')";
 
                             if (mysqli_query($conn, $sql3)) {
                                 $response_msg['description'] .= "\nChallenge Created Successfully";
