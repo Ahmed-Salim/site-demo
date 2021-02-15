@@ -71,6 +71,7 @@ acceptChallengeForm.addEventListener('submit', (event) => {
 
     // Bind the FormData object and the form element
     const FD = new FormData(acceptChallengeForm);
+    let challengeId = FD.get('challenge-id');
 
     acceptChallengeFieldset.disabled = true;
     acceptChallengeButton.disabled = true;
@@ -79,8 +80,7 @@ acceptChallengeForm.addEventListener('submit', (event) => {
     XHR.addEventListener("load", function (event) {
         alert(event.target.responseText);
 
-        acceptChallengeFieldset.disabled = false;
-        acceptChallengeButton.disabled = false;
+        window.location.href = "../challenges/challenge/?challenge-id=" + challengeId;
     });
 
     // Define what happens in case of error
