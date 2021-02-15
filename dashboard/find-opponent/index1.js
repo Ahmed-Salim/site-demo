@@ -56,8 +56,44 @@ acceptChallengeModal.addEventListener('show.bs.modal', function (event) {
 
     document.querySelector('#accept-challenge-modal .amount-warning').textContent = 'You Need To Have Atleast ' + challengeDetails['Amount'] + ' In Your Balance. ' + challengeDetails['Amount'] + ' Will Be Deducted From Your Balance';
     document.querySelector('#accept-challenge-form input[type="date"]').setAttribute('min', challengeDetails['min_date']);
+    document.querySelector('#accept-challenge-form input[name="challenge-id"]').setAttribute('value', challengeDetails['challenge_id']);
 });
+
+acceptChallengeModal.addEventListener('hidden.bs.modal', function (event) {
+    acceptChallengeForm.reset();
+});
+
 
 acceptChallengeForm.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    const XHR = new XMLHttpRequest();
+
+    // Bind the FormData object and the form element
+    const FD = new FormData(acceptChallengeForm);
+
+    acceptChallengeFieldset.disabled = true;
+    acceptChallengeButton.disabled = true;
+
+    // Define what happens on successful data submission
+    XHR.addEventListener("load", function (event) {
+        alert(event.target.responseText);
+
+        acceptChallengeFieldset.disabled = false;
+        acceptChallengeButton.disabled = false;
+    });
+
+    // Define what happens in case of error
+    XHR.addEventListener("error", function (event) {
+        alert('Oops! Something went wrong.');
+
+        acceptChallengeFieldset.disabled = false;
+        acceptChallengeButton.disabled = false;
+    });
+
+    // Set up our request
+    XHR.open("POST", "../../php-apis/accept-challenge.php");
+
+    // The data sent is what the user provided in the form
+    XHR.send(FD);
 });

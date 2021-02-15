@@ -41,6 +41,7 @@ include '../../header.php';
                 <hr />
                 <form id="accept-challenge-form">
                     <fieldset>
+                        <input type="hidden" name="challenge-id" required>
                         <div class="row">
                             <div class="col">
                                 <div class="form-floating">
@@ -51,7 +52,7 @@ include '../../header.php';
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <input type="time" step="1" class="form-control" id="challenge-time" name="challenge-time" placeholder="Challenge Time" required>
+                                    <input type="time" class="form-control" id="challenge-time" name="challenge-time" placeholder="Challenge Time" required>
                                     <label for="challenge-time">Challenge Time</label>
                                 </div>
                             </div>
