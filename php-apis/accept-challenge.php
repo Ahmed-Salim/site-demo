@@ -27,7 +27,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                     $response_msg['description'] = 'Error: You Cannot Accept Your Own Challenge!';
                 } else {
                     if ($row['status'] === 'open') {
-                        if ($challenge_date > date_format(date_create($row['created_timestamp']), 'Y-m-d')) {
+                        if ($challenge_date > date("Y-m-d")) {
                             $sql2 = "SELECT * FROM users WHERE id = $accept_by_id";
                             $result2 = mysqli_query($conn, $sql2);
 

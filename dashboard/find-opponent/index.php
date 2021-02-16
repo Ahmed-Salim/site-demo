@@ -47,7 +47,7 @@ include '../../header.php';
                                 <div class="form-floating">
                                     <input type="date" class="form-control" id="challenge-date" name="challenge-date" placeholder="Challenge Date" required>
                                     <label for="challenge-date">Challenge Date</label>
-                                    <div class="form-text">Date Should Be Greater Than Created Date</div>
+                                    <div class="form-text">Date Should Be Greater Than Today</div>
                                 </div>
                             </div>
                             <div class="col">

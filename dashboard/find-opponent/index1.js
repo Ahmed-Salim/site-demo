@@ -55,8 +55,11 @@ acceptChallengeModal.addEventListener('show.bs.modal', function (event) {
     }
 
     document.querySelector('#accept-challenge-modal .amount-warning').textContent = 'You Need To Have Atleast ' + challengeDetails['Amount'] + ' In Your Balance. ' + challengeDetails['Amount'] + ' Will Be Deducted From Your Balance';
-    document.querySelector('#accept-challenge-form input[type="date"]').setAttribute('min', challengeDetails['min_date']);
     document.querySelector('#accept-challenge-form input[name="challenge-id"]').setAttribute('value', challengeDetails['challenge_id']);
+
+    let challengeMinDate = new Date();
+    challengeMinDate.setDate(challengeMinDate.getDate() + 1);
+    document.querySelector('#accept-challenge-form input[type="date"]').setAttribute('min', challengeMinDate.toISOString().split("T")[0]);
 });
 
 acceptChallengeModal.addEventListener('hidden.bs.modal', function (event) {
