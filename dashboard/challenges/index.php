@@ -1,6 +1,4 @@
-<?php
-include '../../header.php';
-?>
+<?php include '../../header.php'; ?>
 
 <link rel="stylesheet" href="./index.css">
 
@@ -77,7 +75,7 @@ include '../../header.php';
 <div class="container my-5">
     <div class="row">
         <div class="col">
-            <p class="fs-1">
+            <h1 class="text-center">
 
                 <?php
 
@@ -100,10 +98,63 @@ include '../../header.php';
                 ?>
 
                 Open
-            </p>
+            </h1>
+
+            <?php
+
+            $sql4 = "SELECT * FROM challenges_log WHERE challenge_by = $user_id AND status = 'open'";
+            $result4 = mysqli_query($conn, $sql4);
+
+            if (mysqli_num_rows($result4) > 0) {
+                while ($row4 = mysqli_fetch_assoc($result4)) {
+
+            ?>
+
+                    <div class="card my-3">
+                        <div class="card-header">
+                            Challenge ID: <?php echo $row4['challenge_id']; ?>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <?php echo (($row4['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row4['game']))) : (ucwords(str_replace("_", " ", $row4['game'])))) . ' - ' . (($row4['console'] === 'ps4' || $row4['console'] === 'pc') ? (strtoupper($row4['console'])) : (ucwords($row4['console']))); ?>
+                            </h5>
+                            <p class="card-text">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Amount</th>
+                                        <td><?php echo '$' . $row4['amount']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Game Mode</th>
+                                        <td><?php echo $row4['game_mode']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Rules</th>
+                                        <td><?php echo $row4['rules']; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Date Created: <?php echo $row4['created_timestamp']; ?>
+                        </div>
+                    </div>
+
+            <?php
+
+                }
+            } else {
+                echo "<h2 class='text-center my-3'>No Open Challenges!</h2>";
+            }
+
+            ?>
+
         </div>
+
         <div class="col">
-            <p class="fs-1">
+            <h1 class="text-center">
 
                 <?php
 
@@ -112,12 +163,12 @@ include '../../header.php';
 
                 $user_id = $_SESSION['id'];
 
-                $sql2 = "SELECT COUNT(*) AS confirmed_count FROM challenges_log WHERE challenge_by = $user_id AND status = 'confirmed'";
+                $sql2 = "SELECT COUNT(*) AS accepted_count FROM challenges_log WHERE (challenge_by = $user_id OR accepted_by = $user_id) AND status = 'accepted'";
                 $result2 = mysqli_query($conn, $sql2);
 
                 if (mysqli_num_rows($result2) > 0) {
                     while ($row2 = mysqli_fetch_assoc($result2)) {
-                        echo $row2['confirmed_count'];
+                        echo $row2['accepted_count'];
                     }
                 } else {
                     echo '0';
@@ -125,11 +176,117 @@ include '../../header.php';
 
                 ?>
 
-                Confirmed
-            </p>
+                Accepted
+            </h1>
+
+            <?php
+
+            $sql5 = "SELECT * FROM challenges_log WHERE (challenge_by = $user_id OR accepted_by = $user_id) AND status = 'accepted'";
+            $result5 = mysqli_query($conn, $sql5);
+
+            if (mysqli_num_rows($result5) > 0) {
+                while ($row5 = mysqli_fetch_assoc($result5)) {
+
+            ?>
+
+                    <div class="card my-3">
+                        <div class="card-header">
+                            Challenge ID: <?php echo $row5['challenge_id']; ?>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <?php echo (($row5['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row5['game']))) : (ucwords(str_replace("_", " ", $row5['game'])))) . ' - ' . (($row5['console'] === 'ps4' || $row5['console'] === 'pc') ? (strtoupper($row5['console'])) : (ucwords($row5['console']))); ?>
+                            </h5>
+                            <p class="card-text">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Created By</th>
+                                        <td>
+                                            <?php
+
+                                            $challenge_by = $row5['challenge_by'];
+
+                                            $sql6 = "SELECT * FROM users WHERE id = $challenge_by";
+                                            $result6 = mysqli_query($conn, $sql6);
+
+                                            if (mysqli_num_rows($result6) > 0) {
+                                                while ($row6 = mysqli_fetch_assoc($result6)) {
+                                                    echo $row6['username'];
+                                                }
+                                            } else {
+                                                echo "<p class='text-danger'>User Not Found!</p>";
+                                            }
+
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Accepted By</th>
+                                        <td>
+                                            <?php
+
+                                            $accepted_by = $row5['accepted_by'];
+
+                                            $sql7 = "SELECT * FROM users WHERE id = $accepted_by";
+                                            $result7 = mysqli_query($conn, $sql7);
+
+                                            if (mysqli_num_rows($result7) > 0) {
+                                                while ($row7 = mysqli_fetch_assoc($result7)) {
+                                                    echo $row7['username'];
+                                                }
+                                            } else {
+                                                echo "<p class='text-danger'>User Not Found!</p>";
+                                            }
+
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Amount</th>
+                                        <td><?php echo '$' . $row5['amount']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Game Mode</th>
+                                        <td><?php echo $row5['game_mode']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Rules</th>
+                                        <td><?php echo $row5['rules']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Challenge Date</th>
+                                        <td><?php echo $row5['challenge_date']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Challenge Time</th>
+                                        <td><?php echo $row5['challenge_time']; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </p>
+                            <a href="./challenge/?challenge-id=<?php echo $row5['challenge_id']; ?>" class="btn btn-primary stretched-link">Details</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Date Created: <?php echo $row5['created_timestamp']; ?>
+                            <br />
+                            Date Accepted: <?php echo $row5['accepted_timestamp']; ?>
+                        </div>
+                    </div>
+
+            <?php
+
+                }
+            } else {
+                echo "<h2 class='text-center my-3'>No Accepted Challenges!</h2>";
+            }
+
+            ?>
+
         </div>
+
         <div class="col">
-            <p class="fs-1">
+            <h1 class="text-center">
 
                 <?php
 
@@ -137,12 +294,12 @@ include '../../header.php';
 
                 $user_id = $_SESSION['id'];
 
-                $sql3 = "SELECT COUNT(*) AS reported_count FROM challenges_log WHERE challenge_by = $user_id AND status = 'reported'";
+                $sql3 = "SELECT COUNT(*) AS disputed_count FROM challenges_log WHERE challenge_by = $user_id AND status = 'disputed'";
                 $result3 = mysqli_query($conn, $sql3);
 
                 if (mysqli_num_rows($result3) > 0) {
                     while ($row3 = mysqli_fetch_assoc($result3)) {
-                        echo $row3['reported_count'];
+                        echo $row3['disputed_count'];
                     }
                 } else {
                     echo '0';
@@ -150,14 +307,12 @@ include '../../header.php';
 
                 ?>
 
-                Reported
-            </p>
+                Disputed
+            </h1>
         </div>
     </div>
 </div>
 
 <script src="./index1.js"></script>
 
-<?php
-include '../../footer.php';
-?>
+<?php include '../../footer.php'; ?>
