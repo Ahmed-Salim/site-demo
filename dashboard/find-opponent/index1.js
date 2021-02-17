@@ -82,8 +82,11 @@ acceptChallengeForm.addEventListener('submit', (event) => {
     // Define what happens on successful data submission
     XHR.addEventListener("load", function (event) {
         alert(event.target.responseText);
+        if (JSON.parse(event.target.responseText).status === 'success') {
+            window.location.href = "../challenges/challenge/?challenge-id=" + challengeId;
+        } else {
 
-        window.location.href = "../challenges/challenge/?challenge-id=" + challengeId;
+        }
     });
 
     // Define what happens in case of error
