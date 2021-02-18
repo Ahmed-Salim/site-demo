@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2021 at 12:54 PM
+-- Generation Time: Feb 18, 2021 at 12:59 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -54,7 +54,7 @@ CREATE TABLE `challenges_log` (
 --
 
 INSERT INTO `challenges_log` (`challenge_id`, `challenge_by`, `game`, `console`, `amount`, `game_mode`, `rules`, `status`, `created_timestamp`, `accepted_by`, `accepted_timestamp`, `challenge_date`, `challenge_time`, `challenge_by_start_timestamp`, `accepted_by_start_timestamp`, `challenge_by_claimed_result`, `accepted_by_claimed_result`, `challenge_by_claim_timestamp`, `accepted_by_claim_timestamp`) VALUES
-(1, 5, 'fifa_21', 'pc', 10, 'Test', 'Test', 'open', '2021-02-08 08:16:32', NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(1, 5, 'fifa_21', 'pc', 10, 'Test', 'Test', 'no_result', '2021-02-08 08:16:32', 6, '2021-02-18 11:05:30', '2021-02-17', '16:05:00', NULL, NULL, '', '', NULL, NULL),
 (2, 5, 'fifa_21', 'ps4', 15, '', '', 'disputed', '2021-02-08 09:44:22', 11, '2021-02-17 04:35:59', '2021-02-18', '09:35:00', '2021-02-17 07:16:03', '2021-02-17 04:36:42', 'win', 'win', '2021-02-17 11:40:41', '2021-02-17 11:41:17'),
 (3, 5, 'fortnite', 'xbox', 15, 'Test123', 'Test123', 'no_result', '2021-02-08 11:52:23', 6, '2021-02-16 06:53:36', '2021-02-17', '11:53:00', '2021-02-16 11:51:28', NULL, '', '', NULL, NULL),
 (4, 6, 'clash_of_clans', 'xbox', 20, 'Test', 'Test', 'no_result', '2021-02-09 06:17:29', 5, '2021-02-15 11:49:00', '2021-02-16', '16:48:00', NULL, '2021-02-16 11:24:34', '', '', NULL, NULL),
@@ -66,7 +66,12 @@ INSERT INTO `challenges_log` (`challenge_id`, `challenge_by`, `game`, `console`,
 (10, 11, 'fifa_21', 'ps4', 10, 'test', 'test', 'accepted', '2021-02-17 04:35:20', 12, '2021-02-17 05:00:16', '2021-02-18', '10:00:00', '2021-02-17 05:01:35', '2021-02-17 05:02:27', '', '', NULL, NULL),
 (11, 12, 'fifa_21', 'ps4', 10, 'test', 'test', 'open', '2021-02-17 04:59:29', NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL),
 (12, 5, 'fortnite', 'nintendo', 25, 'test', 'test', 'completed', '2021-02-17 07:19:49', 6, '2021-02-17 07:20:07', '2021-02-18', '12:20:00', '2021-02-17 07:21:41', '2021-02-17 07:20:42', 'win', 'lose', '2021-02-17 11:43:56', '2021-02-17 11:44:33'),
-(13, 5, 'clash_of_clans', 'pc', 15, 'test', 'test', 'completed', '2021-02-17 11:48:18', 6, '2021-02-17 11:48:44', '2021-02-18', '16:48:00', '2021-02-17 11:49:07', '2021-02-17 11:49:20', 'win', 'lose', '2021-02-17 11:49:36', '2021-02-17 11:49:47');
+(13, 5, 'clash_of_clans', 'pc', 15, 'test', 'test', 'completed', '2021-02-17 11:48:18', 6, '2021-02-17 11:48:44', '2021-02-18', '16:48:00', '2021-02-17 11:49:07', '2021-02-17 11:49:20', 'win', 'lose', '2021-02-17 11:49:36', '2021-02-17 11:49:47'),
+(14, 5, 'fortnite', 'ps4', 10, 'test123', 'test123', 'completed', '2021-02-18 10:47:43', 6, '2021-02-18 10:48:19', '2021-02-19', '15:48:00', '2021-02-18 10:49:47', '2021-02-18 10:50:18', 'win', 'lose', '2021-02-18 10:50:42', '2021-02-18 10:51:06'),
+(15, 5, 'clash_of_clans', 'ps4', 10, 'test234', 'test234', 'completed', '2021-02-18 11:01:41', 6, '2021-02-18 11:02:00', '2021-02-19', '16:01:00', '2021-02-18 11:02:34', '2021-02-18 11:03:00', 'lose', 'win', '2021-02-18 11:03:14', '2021-02-18 11:03:26'),
+(16, 6, 'fifa_21', 'ps4', 10, 'asd', 'ghsgd', 'completed', '2021-02-18 11:08:49', 5, '2021-02-18 11:09:35', '2021-02-19', '16:09:00', '2021-02-18 11:09:49', '2021-02-18 11:09:41', 'win', 'lose', '2021-02-18 11:09:52', '2021-02-18 11:09:58'),
+(17, 5, 'fifa_21', 'ps4', 10, 'asd', 'asd', 'no_result', '2021-02-18 11:10:50', 6, '2021-02-18 11:11:22', '2021-02-17', '16:11:00', NULL, NULL, '', '', NULL, NULL),
+(18, 5, 'fifa_21', 'pc', 15, 'sadhj', 'kasjhdkj', 'accepted', '2021-02-18 11:58:25', 6, '2021-02-18 11:58:46', '2021-02-19', '16:58:00', NULL, NULL, '', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -114,6 +119,63 @@ INSERT INTO `deposit_log` (`deposit_id`, `deposit_by`, `method`, `amount`, `clie
 (24, 5, 'Dummy Deposit', '10.000000000000000000000000000000', 'Mon Feb 15 2021 11:15:28 GMT+0500 (Pakistan Standard Time)', '2021-02-15 06:15:28'),
 (25, 11, 'Dummy Deposit', '100.000000000000000000000000000000', 'Wed Feb 17 2021 09:33:41 GMT+0500 (Pakistan Standard Time)', '2021-02-17 04:33:41'),
 (26, 12, 'Dummy Deposit', '100.000000000000000000000000000000', 'Wed Feb 17 2021 09:58:06 GMT+0500 (Pakistan Standard Time)', '2021-02-17 04:58:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `notif_id` int(11) NOT NULL,
+  `notif_for` int(11) NOT NULL,
+  `notif_msg` text NOT NULL,
+  `notif_status` varchar(255) NOT NULL DEFAULT 'unread',
+  `notif_create_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `notif_read_timestamp` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`notif_id`, `notif_for`, `notif_msg`, `notif_status`, `notif_create_timestamp`, `notif_read_timestamp`) VALUES
+(1, 5, 'USER 6 has accepted your Challenge! Challenge ID: 14.', 'read', '2021-02-18 10:48:19', NULL),
+(2, 6, 'USER 6 have started the Challenge! Challenge ID: 14.', 'unread', '2021-02-18 10:49:47', NULL),
+(3, 5, 'USER 5 have started the Challenge! Challenge ID: 14.', 'read', '2021-02-18 10:50:18', NULL),
+(4, 6, 'USER 6 have claimed their result for Challenge ID: 14.', 'unread', '2021-02-18 10:50:42', NULL),
+(5, 5, 'USER 5 have claimed their result for Challenge ID: 14.', 'read', '2021-02-18 10:51:06', NULL),
+(6, 5, 'Challenge ID: 14 has ended successfully.', 'read', '2021-02-18 10:51:06', NULL),
+(7, 6, 'Challenge ID: 14 has ended successfully.', 'unread', '2021-02-18 10:51:06', NULL),
+(8, 5, 'USER 6 has accepted your Challenge! Challenge ID: 15.', 'read', '2021-02-18 11:02:00', NULL),
+(9, 6, 'USER 6 have started the Challenge! Challenge ID: 15.', 'unread', '2021-02-18 11:02:34', NULL),
+(10, 5, 'USER 5 have started the Challenge! Challenge ID: 15.', 'read', '2021-02-18 11:03:00', NULL),
+(11, 6, 'USER 6 have claimed their result for Challenge ID: 15.', 'unread', '2021-02-18 11:03:14', NULL),
+(12, 5, 'USER 5 have claimed their result for Challenge ID: 15.', 'read', '2021-02-18 11:03:26', NULL),
+(13, 5, 'Challenge ID: 15 has ended successfully.', 'read', '2021-02-18 11:03:26', NULL),
+(14, 6, 'Challenge ID: 15 has ended successfully.', 'unread', '2021-02-18 11:03:26', NULL),
+(15, 5, '$20 awarded to the winning player for winning Challenge ID: 15.', 'read', '2021-02-18 11:03:26', NULL),
+(16, 6, '$20 awarded to the winning player for winning Challenge ID: 15.', 'unread', '2021-02-18 11:03:26', NULL),
+(17, 5, 'USER 6 has accepted your Challenge! Challenge ID: 1.', 'read', '2021-02-18 11:05:30', NULL),
+(18, 5, 'Both players failed to start the Challenge in time! Challenge ID: 1 has ended with No Result!', 'read', '2021-02-18 11:06:03', NULL),
+(19, 6, 'Both players failed to start the Challenge in time! Challenge ID: 1 has ended with No Result!', 'unread', '2021-02-18 11:06:03', NULL),
+(20, 5, 'Since Challenge ID: 1 ended with No Result, the Challenge amount, $10, has been refunded to both players', 'read', '2021-02-18 11:06:03', NULL),
+(21, 6, 'Since Challenge ID: 1 ended with No Result, the Challenge amount, $10, has been refunded to both players', 'unread', '2021-02-18 11:06:03', NULL),
+(22, 6, 'USER 5 has accepted your Challenge! Challenge ID: 16.', 'unread', '2021-02-18 11:09:35', NULL),
+(23, 6, 'USER 6 have started the Challenge! Challenge ID: 16.', 'read', '2021-02-18 11:09:41', NULL),
+(24, 5, 'USER 5 have started the Challenge! Challenge ID: 16.', 'read', '2021-02-18 11:09:49', NULL),
+(25, 5, 'USER 5 have claimed their result for Challenge ID: 16.', 'read', '2021-02-18 11:09:52', NULL),
+(26, 6, 'USER 6 have claimed their result for Challenge ID: 16.', 'unread', '2021-02-18 11:09:58', NULL),
+(27, 6, 'Challenge ID: 16 has ended successfully.', 'read', '2021-02-18 11:09:58', NULL),
+(28, 5, 'Challenge ID: 16 has ended successfully.', 'read', '2021-02-18 11:09:58', NULL),
+(29, 6, '$20 awarded to the winning player for winning Challenge ID: 16.', 'unread', '2021-02-18 11:09:58', NULL),
+(30, 5, '$20 awarded to the winning player for winning Challenge ID: 16.', 'read', '2021-02-18 11:09:58', NULL),
+(31, 5, 'USER 6 has accepted your Challenge! Challenge ID: 17.', 'read', '2021-02-18 11:11:22', NULL),
+(32, 5, 'Both players failed to start the Challenge in time! Challenge ID: 17 has ended with No Result!', 'read', '2021-02-18 11:11:55', NULL),
+(33, 6, 'Both players failed to start the Challenge in time! Challenge ID: 17 has ended with No Result!', 'read', '2021-02-18 11:11:55', NULL),
+(34, 5, 'Since Challenge ID: 17 ended with No Result, the Challenge amount, $10, has been refunded to both players', 'read', '2021-02-18 11:11:56', NULL),
+(35, 6, 'Since Challenge ID: 17 ended with No Result, the Challenge amount, $10, has been refunded to both players', 'read', '2021-02-18 11:11:56', NULL),
+(36, 5, 'USER 6 has accepted your Challenge! Challenge ID: 18.', 'read', '2021-02-18 11:58:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -173,8 +235,8 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `user
 (2, 'user 2', 'first 2', 'last 2', 'test2@email.com', '$2y$10$T/OyHhWYm9zB/ACaTdmamOEZeOTmTPvRho0VQc4xhd8cOzdJgQutK', '0.000000000000000000000000000000'),
 (3, 'user 3', 'first 3', 'last 3', 'test3@email.com', '$2y$10$FVoMLEU/M0SVFTw2BU6d9Oineo4RobFNTIelJ3HQcBkGWsVw3Vo5y', '85.000000000000000000000000000000'),
 (4, 'user 4', 'first 4', 'last 4', 'test4@email.com', '$2y$10$4a3OLSUtHmewGhh/siaIyuY/CgajvwrsIJ5yf5R.Ch4a/73RaV43e', '25.000000000000000000000000000000'),
-(5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '1086.452222900000000000000000000000'),
-(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '150.456789900000000000000000000000'),
+(5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '1051.452222900000000000000000000000'),
+(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '145.456789900000000000000000000000'),
 (7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$0yitpzEV6ofiGi9npHatYO7RbbtWTN.HBaMABQK/kjNMu4U9cwfcy', '905.000000000000000000000000000000'),
 (8, 'user 8', 'first 8', 'last 8', 'test07@email.com', '$2y$10$5KKCpf7ER6wMP.lRIZIC5u/HSwldm80iTORIIU0rdIvvNZ/oe7hK6', '0.000000000000000000000000000000'),
 (10, 'user new', 'first', 'last', 'new@email.com', '$2y$10$AE0y6PiCn3m/e2iu71rh6.QqGC/665Zkx8t3FeVoSL/FsULmTzusW', '0.000000000000000000000000000000'),
@@ -234,6 +296,12 @@ ALTER TABLE `deposit_log`
   ADD PRIMARY KEY (`deposit_id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`notif_id`);
+
+--
 -- Indexes for table `tournaments_log`
 --
 ALTER TABLE `tournaments_log`
@@ -259,13 +327,19 @@ ALTER TABLE `withdrawal_log`
 -- AUTO_INCREMENT for table `challenges_log`
 --
 ALTER TABLE `challenges_log`
-  MODIFY `challenge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `challenge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `deposit_log`
 --
 ALTER TABLE `deposit_log`
   MODIFY `deposit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `tournaments_log`
