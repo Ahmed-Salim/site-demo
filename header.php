@@ -137,7 +137,25 @@ if (isset($_SESSION['id'])) {
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="<?php echo urlPrefix() . 'dashboard/profile/'; ?>"><i class="bi bi-person-circle"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="<?php echo urlPrefix() . 'dashboard/notifications/'; ?>"><i class="bi bi-bell-fill"></i></a>
+                            <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="<?php echo urlPrefix() . 'dashboard/notifications/'; ?>">
+                                <i class="bi bi-bell-fill"></i>
+                                <span class="badge bg-secondary">
+                                    <?php
+
+                                    $sql2 = "SELECT COUNT(*) AS unread_notifs FROM notifications WHERE notif_for = $user_id AND notif_status = 'unread'";
+                                    $result2 = mysqli_query($conn, $sql2);
+
+                                    if (mysqli_num_rows($result2) > 0) {
+                                        while ($row2 = mysqli_fetch_assoc($result2)) {
+                                            echo $row2['unread_notifs'];
+                                        }
+                                    } else {
+                                        echo "0";
+                                    }
+
+                                    ?>
+                                </span>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-lg btn-outline-secondary border-0" aria-current="page" href="<?php echo urlPrefix() . 'dashboard/refer/'; ?>">REFER FRIENDS</a>

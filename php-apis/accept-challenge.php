@@ -46,6 +46,17 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 
                                             if (mysqli_query($conn, $sql4)) {
                                                 $response_msg['description'] .= 'Success: Challenge Accepted Successfully!';
+
+                                                $notif_for = $row['challenge_by'];
+                                                $notif_msg = strtoupper($row2['username']) . ' has accepted your Challenge! Challenge ID: ' . $challenge_id . '.';
+
+                                                $sql5 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                                                if (mysqli_query($conn, $sql5)) {
+                                                    //echo "New record created successfully";
+                                                } else {
+                                                    //echo "Error: " . $sql5 . "<br>" . mysqli_error($conn);
+                                                }
                                             } else {
                                                 $response_msg['status'] = 'error';
                                                 $response_msg['description'] = 'Error: ' . mysqli_error($conn);

@@ -39,6 +39,27 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                 $response_msg['status'] .= 'success';
                                 $response_msg['description'] .= 'Success: Result Claimed Successfully!';
 
+                                $notif_for = ($claim_by_id === $row['challenge_by']) ? ($row['accepted_by']) : ($row['challenge_by']);
+
+                                $sql6 = "SELECT * FROM users WHERE id = $notif_for";
+                                $result6 = mysqli_query($conn, $sql6);
+
+                                if (mysqli_num_rows($result6) > 0) {
+                                    while ($row6 = mysqli_fetch_assoc($result6)) {
+                                        $notif_msg = strtoupper($row6['username']) . ' have claimed their result for Challenge ID: ' . $challenge_id . '.';
+
+                                        $sql7 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                                        if (mysqli_query($conn, $sql7)) {
+                                            //echo "New record created successfully";
+                                        } else {
+                                            //echo "Error: " . $sql5 . "<br>" . mysqli_error($conn);
+                                        }
+                                    }
+                                } else {
+                                    //echo "0 results";
+                                }
+
                                 $sql3 = "SELECT * FROM challenges_log WHERE challenge_id = $challenge_id";
                                 $result3 = mysqli_query($conn, $sql3);
 
@@ -52,6 +73,23 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 
                                                     if (mysqli_query($conn, $sql4)) {
                                                         $response_msg['description'] .= 'Error: Challenge Ended With A Dispute! Challenge Status Updated To Disputed!';
+
+                                                        $notif_for_1 = $row['challenge_by'];
+                                                        $notif_for_2 = $row['accepted_by'];
+                                                        $notif_msg = 'Challenge ID: ' . $challenge_id . ' has ended with a Dispute.';
+
+                                                        $sql8 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for_1, '$notif_msg');";
+                                                        $sql8 .= "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for_2, '$notif_msg');";
+
+                                                        if (mysqli_multi_query($conn, $sql8)) {
+                                                            //echo "New records created successfully";
+                                                        } else {
+                                                            //echo "Error: " . $sql8 . "<br>" . mysqli_error($conn);
+                                                        }
+
+                                                        while (mysqli_more_results($conn)) {
+                                                            mysqli_next_result($conn);
+                                                        }
                                                     } else {
                                                         $response_msg['description'] .= 'Error: ' . mysqli_error($conn);
                                                     }
@@ -60,6 +98,23 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 
                                                     if (mysqli_query($conn, $sql4)) {
                                                         $response_msg['description'] .= 'Success: Challenge Ended Successfully!';
+
+                                                        $notif_for_1 = $row['challenge_by'];
+                                                        $notif_for_2 = $row['accepted_by'];
+                                                        $notif_msg = 'Challenge ID: ' . $challenge_id . ' has ended successfully.';
+
+                                                        $sql9 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for_1, '$notif_msg');";
+                                                        $sql9 .= "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for_2, '$notif_msg');";
+
+                                                        if (mysqli_multi_query($conn, $sql9)) {
+                                                            //echo "New records created successfully";
+                                                        } else {
+                                                            //echo "Error: " . $sql9 . "<br>" . mysqli_error($conn);
+                                                        }
+
+                                                        while (mysqli_more_results($conn)) {
+                                                            mysqli_next_result($conn);
+                                                        }
 
                                                         $winningAmount = ($row3['amount'] * 2);
 
@@ -72,6 +127,23 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                                         $sql5 = "UPDATE users SET balance = (balance + $winningAmount) WHERE id = $challengeWonBy";
                                                         if (mysqli_query($conn, $sql5)) {
                                                             $response_msg['description'] .= 'Success: Amount Transfered To The Winning Player Successfully!';
+
+                                                            $notif_for_1 = $row['challenge_by'];
+                                                            $notif_for_2 = $row['accepted_by'];
+                                                            $notif_msg = '$' . $winningAmount . ' awarded to the winning player for winning Challenge ID: ' . $challenge_id . '.';
+
+                                                            $sql10 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for_1, '$notif_msg');";
+                                                            $sql10 .= "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for_2, '$notif_msg');";
+
+                                                            if (mysqli_multi_query($conn, $sql10)) {
+                                                                //echo "New records created successfully";
+                                                            } else {
+                                                                //echo "Error: " . $sql10 . "<br>" . mysqli_error($conn);
+                                                            }
+
+                                                            while (mysqli_more_results($conn)) {
+                                                                mysqli_next_result($conn);
+                                                            }
                                                         } else {
                                                             $response_msg['description'] .= 'Error: ' . mysqli_error($conn);
                                                         }
