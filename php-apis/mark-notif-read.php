@@ -24,7 +24,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 if ($row['notif_status'] === 'unread') {
-                    $sql2 = "UPDATE notifications SET notif_status = 'read' WHERE notif_id = $notif_id";
+                    $sql2 = "UPDATE notifications SET notif_status = 'read', notif_read_timestamp = NOW() WHERE notif_id = $notif_id";
 
                     if (mysqli_query($conn, $sql2)) {
                         $response_msg['status'] = 'success';
@@ -34,6 +34,8 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                         $response_msg['description'] .= 'Error: ' . mysqli_error($conn);
                     }
                 } else {
+                    $response_msg['status'] = 'error';
+                    $response_msg['description'] .= 'Error: Notification already read!';
                 }
             }
         } else {

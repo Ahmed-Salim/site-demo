@@ -12,10 +12,14 @@ notifButtons.forEach(function (notifButton, currentIndex) {
 
         // Define what happens on successful data submission
         XHR.addEventListener('load', function (event) {
-            if (notifButton.querySelector('i').classList.contains('bi-envelope')) {
-                notifButton.querySelector('i').classList.remove('bi-envelope');
-                notifButton.querySelector('i').classList.add('bi-envelope-open');
+            if (JSON.parse(event.target.responseText).status === 'success') {
+                if (notifButton.querySelector('i').classList.contains('bi-envelope')) {
+                    notifButton.querySelector('i').classList.remove('bi-envelope');
+                    notifButton.querySelector('i').classList.add('bi-envelope-open');
+                } else {
+                }
             } else {
+
             }
 
             notifButton.disabled = false;

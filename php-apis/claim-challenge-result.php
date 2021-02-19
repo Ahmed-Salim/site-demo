@@ -40,8 +40,9 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                 $response_msg['description'] .= 'Success: Result Claimed Successfully!';
 
                                 $notif_for = ($claim_by_id === $row['challenge_by']) ? ($row['accepted_by']) : ($row['challenge_by']);
+                                $notif_about = ($claim_by_id === $row['challenge_by']) ? ($row['challenge_by']) : ($row['accepted_by']);
 
-                                $sql6 = "SELECT * FROM users WHERE id = $notif_for";
+                                $sql6 = "SELECT * FROM users WHERE id = $notif_about";
                                 $result6 = mysqli_query($conn, $sql6);
 
                                 if (mysqli_num_rows($result6) > 0) {
