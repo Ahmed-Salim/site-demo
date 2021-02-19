@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2021 at 12:59 PM
+-- Generation Time: Feb 19, 2021 at 12:33 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -71,7 +71,9 @@ INSERT INTO `challenges_log` (`challenge_id`, `challenge_by`, `game`, `console`,
 (15, 5, 'clash_of_clans', 'ps4', 10, 'test234', 'test234', 'completed', '2021-02-18 11:01:41', 6, '2021-02-18 11:02:00', '2021-02-19', '16:01:00', '2021-02-18 11:02:34', '2021-02-18 11:03:00', 'lose', 'win', '2021-02-18 11:03:14', '2021-02-18 11:03:26'),
 (16, 6, 'fifa_21', 'ps4', 10, 'asd', 'ghsgd', 'completed', '2021-02-18 11:08:49', 5, '2021-02-18 11:09:35', '2021-02-19', '16:09:00', '2021-02-18 11:09:49', '2021-02-18 11:09:41', 'win', 'lose', '2021-02-18 11:09:52', '2021-02-18 11:09:58'),
 (17, 5, 'fifa_21', 'ps4', 10, 'asd', 'asd', 'no_result', '2021-02-18 11:10:50', 6, '2021-02-18 11:11:22', '2021-02-17', '16:11:00', NULL, NULL, '', '', NULL, NULL),
-(18, 5, 'fifa_21', 'pc', 15, 'sadhj', 'kasjhdkj', 'accepted', '2021-02-18 11:58:25', 6, '2021-02-18 11:58:46', '2021-02-19', '16:58:00', NULL, NULL, '', '', NULL, NULL);
+(18, 5, 'fifa_21', 'pc', 15, 'sadhj', 'kasjhdkj', 'completed', '2021-02-18 11:58:25', 6, '2021-02-18 11:58:46', '2021-02-19', '16:58:00', '2021-02-19 04:40:06', '2021-02-19 04:40:01', 'lose', 'win', '2021-02-19 04:40:18', '2021-02-19 04:40:14'),
+(19, 5, 'fifa_21', 'ps4', 10, 'ashdj', 'ashjdkjh', 'completed', '2021-02-19 04:57:08', 6, '2021-02-19 04:57:26', '2021-02-20', '09:57:00', '2021-02-19 04:57:37', '2021-02-19 04:57:29', 'lose', 'win', '2021-02-19 04:58:36', '2021-02-19 04:57:45'),
+(20, 5, 'clash_of_clans', 'pc', 15, 'dsf', 'sdf', 'disputed', '2021-02-19 05:14:31', 6, '2021-02-19 05:14:57', '2021-02-20', '10:14:00', '2021-02-19 05:15:07', '2021-02-19 05:15:00', 'win', 'win', '2021-02-19 05:15:11', '2021-02-19 05:15:15');
 
 -- --------------------------------------------------------
 
@@ -175,7 +177,31 @@ INSERT INTO `notifications` (`notif_id`, `notif_for`, `notif_msg`, `notif_status
 (33, 6, 'Both players failed to start the Challenge in time! Challenge ID: 17 has ended with No Result!', 'read', '2021-02-18 11:11:55', NULL),
 (34, 5, 'Since Challenge ID: 17 ended with No Result, the Challenge amount, $10, has been refunded to both players', 'read', '2021-02-18 11:11:56', NULL),
 (35, 6, 'Since Challenge ID: 17 ended with No Result, the Challenge amount, $10, has been refunded to both players', 'read', '2021-02-18 11:11:56', NULL),
-(36, 5, 'USER 6 has accepted your Challenge! Challenge ID: 18.', 'read', '2021-02-18 11:58:46', NULL);
+(36, 5, 'USER 6 has accepted your Challenge! Challenge ID: 18.', 'read', '2021-02-18 11:58:46', NULL),
+(37, 5, 'USER 5 have started the Challenge! Challenge ID: 18.', 'read', '2021-02-19 04:40:01', '2021-02-19 04:59:46'),
+(38, 6, 'USER 6 have started the Challenge! Challenge ID: 18.', 'unread', '2021-02-19 04:40:07', NULL),
+(39, 5, 'USER 5 have claimed their result for Challenge ID: 18.', 'read', '2021-02-19 04:40:14', '2021-02-19 04:59:53'),
+(40, 6, 'USER 6 have claimed their result for Challenge ID: 18.', 'unread', '2021-02-19 04:40:18', NULL),
+(41, 5, 'Challenge ID: 18 has ended successfully.', 'read', '2021-02-19 04:40:18', '2021-02-19 04:59:55'),
+(42, 6, 'Challenge ID: 18 has ended successfully.', 'read', '2021-02-19 04:40:18', '2021-02-19 05:01:21'),
+(43, 5, '$30 awarded to the winning player for winning Challenge ID: 18.', 'read', '2021-02-19 04:40:18', '2021-02-19 04:59:54'),
+(44, 6, '$30 awarded to the winning player for winning Challenge ID: 18.', 'unread', '2021-02-19 04:40:18', NULL),
+(45, 5, 'USER 6 has accepted your Challenge! Challenge ID: 19.', 'read', '2021-02-19 04:57:26', '2021-02-19 04:59:56'),
+(46, 5, 'USER 6 have started the Challenge! Challenge ID: 19.', 'read', '2021-02-19 04:57:29', '2021-02-19 04:59:57'),
+(47, 6, 'USER 5 have started the Challenge! Challenge ID: 19.', 'read', '2021-02-19 04:57:37', '2021-02-19 05:01:22'),
+(48, 5, 'USER 6 have claimed their result for Challenge ID: 19.', 'read', '2021-02-19 04:57:45', '2021-02-19 04:59:58'),
+(49, 6, 'USER 5 have claimed their result for Challenge ID: 19.', 'read', '2021-02-19 04:58:36', '2021-02-19 05:01:24'),
+(50, 5, 'Challenge ID: 19 has ended successfully.', 'read', '2021-02-19 04:58:36', '2021-02-19 04:59:59'),
+(51, 6, 'Challenge ID: 19 has ended successfully.', 'read', '2021-02-19 04:58:36', '2021-02-19 05:01:23'),
+(52, 5, '$20 awarded to the winning player for winning Challenge ID: 19.', 'read', '2021-02-19 04:58:36', '2021-02-19 04:59:58'),
+(53, 6, '$20 awarded to the winning player for winning Challenge ID: 19.', 'unread', '2021-02-19 04:58:36', NULL),
+(54, 5, 'USER 6 has accepted your Challenge! Challenge ID: 20.', 'read', '2021-02-19 05:14:57', '2021-02-19 05:31:40'),
+(55, 5, 'USER 6 have started the Challenge! Challenge ID: 20.', 'read', '2021-02-19 05:15:00', '2021-02-19 05:31:41'),
+(56, 6, 'USER 5 have started the Challenge! Challenge ID: 20.', 'unread', '2021-02-19 05:15:07', NULL),
+(57, 6, 'USER 5 have claimed their result for Challenge ID: 20.', 'unread', '2021-02-19 05:15:11', NULL),
+(58, 5, 'USER 6 have claimed their result for Challenge ID: 20.', 'read', '2021-02-19 05:15:15', '2021-02-19 05:31:42'),
+(59, 5, 'Challenge ID: 20 has ended with a Dispute.', 'read', '2021-02-19 05:15:15', '2021-02-19 05:31:42'),
+(60, 6, 'Challenge ID: 20 has ended with a Dispute.', 'unread', '2021-02-19 05:15:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -193,22 +219,35 @@ CREATE TABLE `tournaments_log` (
   `game_mode` varchar(255) NOT NULL,
   `rules` text NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT 'open',
-  `client_date` varchar(255) NOT NULL,
-  `server_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tournaments_log`
 --
 
-INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `console`, `amount`, `players`, `game_mode`, `rules`, `status`, `client_date`, `server_timestamp`) VALUES
-(1, 6, 'clash_of_clans', 'nintendo', 10, 2, 'Test 1', 'Test 1', 'open', 'Tue Feb 09 2021 15:55:31 GMT+0500 (Pakistan Standard Time)', '2021-02-09 10:55:31'),
-(2, 6, 'clash_of_clans', 'xbox', 13, 5, 'test 2', 'test2', 'open', 'Tue Feb 09 2021 15:56:30 GMT+0500 (Pakistan Standard Time)', '2021-02-09 10:56:30'),
-(3, 7, 'fifa_21', 'ps4', 10, 10, 'test1', 'test1', 'open', 'Tue Feb 09 2021 16:33:33 GMT+0500 (Pakistan Standard Time)', '2021-02-09 11:33:33'),
-(4, 7, 'fortnite', 'pc', 15, 15, 'test2', 'test2', 'open', 'Tue Feb 09 2021 16:34:17 GMT+0500 (Pakistan Standard Time)', '2021-02-09 11:34:17'),
-(5, 7, 'clash_of_clans', 'xbox', 20, 20, 'test3', 'test3', 'open', 'Tue Feb 09 2021 16:34:30 GMT+0500 (Pakistan Standard Time)', '2021-02-09 11:34:30'),
-(6, 7, 'clash_of_clans', 'nintendo', 25, 25, 'test4', 'test4', 'open', 'Tue Feb 09 2021 16:34:46 GMT+0500 (Pakistan Standard Time)', '2021-02-09 11:34:46'),
-(7, 3, 'fifa_21', 'ps4', 15, 15, 'test123', 'test123', 'open', 'Tue Feb 09 2021 16:53:03 GMT+0500 (Pakistan Standard Time)', '2021-02-09 11:53:03');
+INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `console`, `amount`, `players`, `game_mode`, `rules`, `status`, `created_timestamp`) VALUES
+(1, 5, 'fifa_21', 'ps4', 10, 5, 'sadas', 'dasd', 'open', '2021-02-19 11:30:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tourney_players`
+--
+
+CREATE TABLE `tourney_players` (
+  `serial_number` int(11) NOT NULL,
+  `tourney_id` int(11) NOT NULL,
+  `player_id` int(11) NOT NULL,
+  `enter_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tourney_players`
+--
+
+INSERT INTO `tourney_players` (`serial_number`, `tourney_id`, `player_id`, `enter_timestamp`) VALUES
+(1, 1, 5, '2021-02-19 11:30:33');
 
 -- --------------------------------------------------------
 
@@ -235,8 +274,8 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `user
 (2, 'user 2', 'first 2', 'last 2', 'test2@email.com', '$2y$10$T/OyHhWYm9zB/ACaTdmamOEZeOTmTPvRho0VQc4xhd8cOzdJgQutK', '0.000000000000000000000000000000'),
 (3, 'user 3', 'first 3', 'last 3', 'test3@email.com', '$2y$10$FVoMLEU/M0SVFTw2BU6d9Oineo4RobFNTIelJ3HQcBkGWsVw3Vo5y', '85.000000000000000000000000000000'),
 (4, 'user 4', 'first 4', 'last 4', 'test4@email.com', '$2y$10$4a3OLSUtHmewGhh/siaIyuY/CgajvwrsIJ5yf5R.Ch4a/73RaV43e', '25.000000000000000000000000000000'),
-(5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '1051.452222900000000000000000000000'),
-(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '145.456789900000000000000000000000'),
+(5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '1016.452222900000000000000000000000'),
+(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '170.456789900000000000000000000000'),
 (7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$0yitpzEV6ofiGi9npHatYO7RbbtWTN.HBaMABQK/kjNMu4U9cwfcy', '905.000000000000000000000000000000'),
 (8, 'user 8', 'first 8', 'last 8', 'test07@email.com', '$2y$10$5KKCpf7ER6wMP.lRIZIC5u/HSwldm80iTORIIU0rdIvvNZ/oe7hK6', '0.000000000000000000000000000000'),
 (10, 'user new', 'first', 'last', 'new@email.com', '$2y$10$AE0y6PiCn3m/e2iu71rh6.QqGC/665Zkx8t3FeVoSL/FsULmTzusW', '0.000000000000000000000000000000'),
@@ -308,6 +347,12 @@ ALTER TABLE `tournaments_log`
   ADD PRIMARY KEY (`tournament_id`);
 
 --
+-- Indexes for table `tourney_players`
+--
+ALTER TABLE `tourney_players`
+  ADD PRIMARY KEY (`serial_number`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -327,7 +372,7 @@ ALTER TABLE `withdrawal_log`
 -- AUTO_INCREMENT for table `challenges_log`
 --
 ALTER TABLE `challenges_log`
-  MODIFY `challenge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `challenge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `deposit_log`
@@ -339,13 +384,19 @@ ALTER TABLE `deposit_log`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `tournaments_log`
 --
 ALTER TABLE `tournaments_log`
-  MODIFY `tournament_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `tournament_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tourney_players`
+--
+ALTER TABLE `tourney_players`
+  MODIFY `serial_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
