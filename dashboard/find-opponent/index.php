@@ -227,7 +227,7 @@ include '../../header.php';
 
                     <?php
 
-                    $sql = "SELECT * FROM users INNER JOIN tournaments_log ON users.id = tournaments_log.tournament_by WHERE tournaments_log.tournament_by <> $user_id ORDER BY tournaments_log.server_timestamp DESC";
+                    $sql = "SELECT * FROM users INNER JOIN tournaments_log ON users.id = tournaments_log.tournament_by WHERE tournaments_log.tournament_by <> $user_id ORDER BY tournaments_log.created_timestamp DESC";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -248,10 +248,13 @@ include '../../header.php';
                                     </div>
                                 </h4>
                                 <div class="card-body d-flex align-items-center justify-content-between">
-                                    <h5 class="card-title"><i class="bi bi-file-person-fill"></i><?php echo ucwords($row['username']); ?></h5>
-                                    <button type="button" class="btn btn-primary text-uppercase">Details</button>
+                                    <h5 class="card-title">
+                                        <i class="bi bi-file-person-fill"></i>
+                                        <?php echo ucwords($row['username']); ?>
+                                    </h5>
+                                    <button type="button" class="btn btn-primary text-uppercase">Players</button>
                                 </div>
-                                <div class="card-footer text-muted"><?php echo 'Created: ' . $row['client_date']; ?></div>
+                                <div class="card-footer text-muted"><?php echo 'Created: ' . $row['created_timestamp']; ?></div>
                             </div>
 
                     <?php

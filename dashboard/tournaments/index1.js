@@ -27,7 +27,6 @@ createTourneyModal.addEventListener('hidden.bs.modal', function (event) {
 
             //Bind the FormData object and the form element
             const FD = new FormData(createTourneyForm);
-            FD.append('client-date', new Date());
 
             createTourneyFieldset.disabled = true;
             createTourneyButton.disabled = true;

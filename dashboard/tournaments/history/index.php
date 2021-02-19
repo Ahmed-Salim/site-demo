@@ -41,7 +41,7 @@ include '../../../header.php';
 
                     $user_id = $_SESSION['id'];
 
-                    $sql = "SELECT * FROM tournaments_log WHERE tournament_by=$user_id ORDER BY server_timestamp DESC";
+                    $sql = "SELECT * FROM tournaments_log WHERE tournament_by = $user_id ORDER BY created_timestamp DESC";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -59,7 +59,7 @@ include '../../../header.php';
                                 <td class="text-capitalize"><?php echo $row['game_mode']; ?></td>
                                 <td><?php echo $row['rules']; ?></td>
                                 <td class="text-capitalize"><?php echo $row['status']; ?></td>
-                                <td><?php echo $row['client_date']; ?></td>
+                                <td><?php echo $row['created_timestamp']; ?></td>
                             </tr>
 
                         <?php

@@ -7,14 +7,17 @@ include_once './clean-input.php';
 
 $response_msg = array();
 
+$response_msg['status'] = '';
+$response_msg['description'] = '';
+
 if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
     if (empty($_POST["tourney-game"]) || empty($_POST["tourney-console"]) || empty($_POST["tourney-amount"]) || empty($_POST["tourney-players"])) {
         $response_msg['status'] = 'error';
-        $response_msg['description'] = 'Required Fields Empty!';
+        $response_msg['description'] .= 'Required Fields Empty!';
     } else {
         $user_id = $_SESSION['id'];
 
-        $sql = "SELECT * FROM users WHERE id=$user_id";
+        $sql = "SELECT * FROM users WHERE id = $user_id";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -28,50 +31,63 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                         if ($row['balance'] >= $tourney_amount) {
                             $new_balance = $row['balance'] - $tourney_amount;
 
-                            $sql2 = "UPDATE users SET balance=$new_balance WHERE id=$user_id";
+                            $sql2 = "UPDATE users SET balance = $new_balance WHERE id = $user_id";
 
                             if (mysqli_query($conn, $sql2)) {
                                 $response_msg['status'] = 'success';
-                                $response_msg['description'] = 'Balance Updated Successfully!';
+                                $response_msg['description'] .= 'Balance Updated Successfully!';
 
                                 $tourney_game = mysqli_real_escape_string($conn, clean_input($_POST["tourney-game"]));
                                 $tourney_console = mysqli_real_escape_string($conn, clean_input($_POST["tourney-console"]));
                                 $tourney_game_mode = mysqli_real_escape_string($conn, clean_input($_POST["tourney-game-mode"]));
                                 $tourney_rules = mysqli_real_escape_string($conn, clean_input($_POST["tourney-rules"]));
-                                $client_date = mysqli_real_escape_string($conn, clean_input($_POST["client-date"]));
 
-                                $sql3 = "INSERT INTO tournaments_log (tournament_by, game, console, amount, players, game_mode, rules, client_date) VALUES ($user_id, '$tourney_game', '$tourney_console', '$tourney_amount', '$tourney_players', '$tourney_game_mode', '$tourney_rules', '$client_date')";
+                                $sql3 = "INSERT INTO tournaments_log (tournament_by, game, console, amount, players, game_mode, rules) VALUES ($user_id, '$tourney_game', '$tourney_console', '$tourney_amount', '$tourney_players', '$tourney_game_mode', '$tourney_rules')";
 
                                 if (mysqli_query($conn, $sql3)) {
+                                    $response_msg['status'] = 'success';
                                     $response_msg['description'] .= "\nTournament Created Successfully";
+
+                                    $tourney_id = mysqli_insert_id($conn);
+
+                                    $sql4 = "INSERT INTO tourney_players (tourney_id, player_id) VALUES ($tourney_id, $user_id)";
+
+                                    if (mysqli_query($conn, $sql4)) {
+                                        $response_msg['status'] = 'success';
+                                        $response_msg['description'] .= "\nTournament entered successfully!";
+                                    } else {
+                                        $response_msg['status'] = 'error';
+                                        $response_msg['description'] .= "\nError: " . mysqli_error($conn);
+                                    }
                                 } else {
+                                    $response_msg['status'] = 'error';
                                     $response_msg['description'] .= "\nError: " . mysqli_error($conn);
                                 }
                             } else {
                                 $response_msg['status'] = 'error';
-                                $response_msg['description'] = "Error updating record: " . mysqli_error($conn);
+                                $response_msg['description'] .= "Error updating record: " . mysqli_error($conn);
                             }
                         } else {
                             $response_msg['status'] = 'error';
-                            $response_msg['description'] = 'Insufficient Balance for Creating Tournament!';
+                            $response_msg['description'] .= 'Insufficient Balance for Creating Tournament!';
                         }
                     } else {
                         $response_msg['status'] = 'error';
-                        $response_msg['description'] = 'Minimum $10 Required for Creating Tournament!';
+                        $response_msg['description'] .= 'Minimum $10 Required for Creating Tournament!';
                     }
                 } else {
                     $response_msg['status'] = 'error';
-                    $response_msg['description'] = 'Minimum 2 Players Required for Creating Tournament!';
+                    $response_msg['description'] .= 'Minimum 2 Players Required for Creating Tournament!';
                 }
             }
         } else {
             $response_msg['status'] = 'error';
-            $response_msg['description'] = 'Invalid Session ID! Please login again to continue!';
+            $response_msg['description'] .= 'Invalid Session ID! Please login again to continue!';
         }
     }
 } else {
     $response_msg['status'] = 'error';
-    $response_msg['description'] = 'Session ID missing! Please login again to continue!';
+    $response_msg['description'] .= 'Session ID missing! Please login again to continue!';
 }
 
 mysqli_close($conn);
