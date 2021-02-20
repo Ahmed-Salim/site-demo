@@ -1,6 +1,4 @@
-<?php
-include '../../header.php';
-?>
+<?php include '../../header.php'; ?>
 
 <link rel="stylesheet" href="./index.css">
 
@@ -42,11 +40,23 @@ include '../../header.php';
 
         $user_id = $_SESSION['id'];
 
-        $sql = "SELECT * FROM users WHERE id=$user_id";
+        $sql = "SELECT * FROM users WHERE id = $user_id";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
+                $skill_points = $row['skill_points'];
+
+                $sql2 = "SELECT * FROM skill_levels WHERE $skill_points BETWEEN min_points AND max_points";
+                $result2 = mysqli_query($conn, $sql2);
+
+                if (mysqli_num_rows($result2) > 0) {
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        $skill_level = $row2['level_name'];
+                    }
+                } else {
+                    $skill_level = 'undefined';
+                }
 
         ?>
 
@@ -76,21 +86,27 @@ include '../../header.php';
                     </tr>
                     <tr>
                         <th scope="row">Email</th>
-                        <td>
-                            <?php echo $row['email']; ?>
-
-                    <?php
-
-                }
-            } else {
-                header("Location: ../../php-apis/logout.php");
-                die();
-            }
-
-                    ?>
-
-                        </td>
+                        <td><?php echo $row['email']; ?></td>
                     </tr>
+                    <tr>
+                        <th>Skill Level</th>
+                        <td><?php echo ucwords($skill_level); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Skill Points</th>
+                        <td><?php echo ucwords($skill_points); ?></td>
+                    </tr>
+
+            <?php
+
+            }
+        } else {
+            header("Location: ../../php-apis/logout.php");
+            die();
+        }
+
+            ?>
+
                 </tbody>
             </table>
 
@@ -121,6 +137,4 @@ include '../../header.php';
 
 <script src="./index1.js"></script>
 
-<?php
-include '../../footer.php';
-?>
+<?php include '../../footer.php'; ?>

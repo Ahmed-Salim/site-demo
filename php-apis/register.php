@@ -23,7 +23,18 @@ if (!empty($username) && !empty($firstname) && !empty($lastname) && !empty($emai
             $response_msg['description'] = 'Email already registered! Please login.';
         }
     } else {
-        $sql2 = "INSERT INTO users (username, first_name, last_name, email, user_password) VALUES ('$username', '$firstname', '$lastname', '$email', '$user_password')";
+        $sql3 = "SELECT * FROM meta_data WHERE meta_key = 'player_starting_points'";
+        $result3 = mysqli_query($conn, $sql3);
+
+        if (mysqli_num_rows($result3) > 0) {
+            while ($row3 = mysqli_fetch_assoc($result3)) {
+                $player_starting_points = intval($row3['meta_value'], 10);
+            }
+        } else {
+            $player_starting_points = 0;
+        }
+
+        $sql2 = "INSERT INTO users (username, first_name, last_name, email, user_password, skill_points) VALUES ('$username', '$firstname', '$lastname', '$email', '$user_password', $player_starting_points)";
 
         if (mysqli_query($conn, $sql2)) {
             $response_msg['status'] = 'success';
