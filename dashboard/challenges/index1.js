@@ -3,8 +3,11 @@ const createChallengeFieldset = document.querySelector('#create-challenge-form >
 const createChallengeButton = document.querySelector('button[form="create-challenge-form"]');
 const createChallengeModal = document.getElementById('createChallengeModal');
 const challengeGameSelect = document.querySelector('#challenge-game');
+const challengeDate = document.querySelector('#challenge-date');
 
 createChallengeModal.addEventListener('shown.bs.modal', function (event) {
+    let today = new Date();
+    challengeDate.setAttribute('min', new Date(today.setDate(today.getDate() + 1)).toISOString().slice(0, 10));
     challengeGameSelect.focus();
 });
 

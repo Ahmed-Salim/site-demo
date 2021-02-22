@@ -35,9 +35,26 @@
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" min="10" step="any" class="form-control" id="challenge-amount" name="challenge-amount" placeholder="Amount" required>
-                            <div class="invalid-feedback">Minimum $10 Required</div>
+                            <input type="number" min="1" step="any" class="form-control" id="challenge-amount" name="challenge-amount" placeholder="Amount" required>
+                            <div class="invalid-feedback">Minimum $1 Required</div>
                             <label class="text-uppercase" for="challenge-amount">Amount</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="challenge-date" name="challenge-date" placeholder="Challenge Date" required>
+                                    <label for="challenge-date">Challenge Date</label>
+                                    <div class="form-text">Date Should Be Greater Than Today</div>
+                                    <div class="invalid-feedback">Required Field</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="time" class="form-control" id="challenge-time" name="challenge-time" placeholder="Challenge Time" required>
+                                    <label for="challenge-time">Challenge Time</label>
+                                    <div class="invalid-feedback">Required Field</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="challenge-game-mode" name="challenge-game-mode" placeholder="SPECIFY GAME MODE (OPTIONAL)">
@@ -72,7 +89,7 @@
     </div>
 </div>
 
-<div class="container my-5">
+<div class="container-fluid my-5">
     <div class="row">
         <div class="col">
             <h1 class="text-center">
@@ -102,7 +119,7 @@
 
             <?php
 
-            $sql4 = "SELECT * FROM challenges_log WHERE challenge_by = $user_id AND status = 'open'";
+            $sql4 = "SELECT * FROM challenges_log WHERE challenge_by = $user_id AND status = 'open' ORDER BY created_timestamp DESC";
             $result4 = mysqli_query($conn, $sql4);
 
             if (mysqli_num_rows($result4) > 0) {
@@ -181,7 +198,7 @@
 
             <?php
 
-            $sql5 = "SELECT * FROM challenges_log WHERE (challenge_by = $user_id OR accepted_by = $user_id) AND status = 'accepted'";
+            $sql5 = "SELECT * FROM challenges_log WHERE (challenge_by = $user_id OR accepted_by = $user_id) AND status = 'accepted' ORDER BY accepted_timestamp DESC";
             $result5 = mysqli_query($conn, $sql5);
 
             if (mysqli_num_rows($result5) > 0) {

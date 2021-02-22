@@ -5,7 +5,14 @@ const acceptChallengeModal = document.querySelector('#accept-challenge-modal');
 const acceptChallengeTableBody = document.querySelector('#accept-challenge-modal tbody');
 const acceptChallengeForm = document.querySelector('#accept-challenge-form');
 const acceptChallengeFieldset = document.querySelector('#accept-challenge-form fieldset');
-const acceptChallengeButton = document.querySelector('button[form="accept-challenge-form"]');
+const acceptChallengeButtonOld = document.querySelector('button[form="accept-challenge-form"]');
+const acceptChallengeButtons = document.querySelectorAll('.accept-challenge-button');
+
+acceptChallengeButtons.forEach(function (acceptChallengeButton, currentIndex, listObj) {
+    acceptChallengeButton.addEventListener('click', () => {
+        alert(acceptChallengeButton.dataset.challengeId);
+    });
+});
 
 challengeDetailsModal.addEventListener('show.bs.modal', function (event) {
     // Button that triggered the modal
@@ -77,7 +84,7 @@ acceptChallengeForm.addEventListener('submit', (event) => {
     let challengeId = FD.get('challenge-id');
 
     acceptChallengeFieldset.disabled = true;
-    acceptChallengeButton.disabled = true;
+    acceptChallengeButtonOld.disabled = true;
 
     // Define what happens on successful data submission
     XHR.addEventListener("load", function (event) {
@@ -94,7 +101,7 @@ acceptChallengeForm.addEventListener('submit', (event) => {
         alert('Oops! Something went wrong.');
 
         acceptChallengeFieldset.disabled = false;
-        acceptChallengeButton.disabled = false;
+        acceptChallengeButtonOld.disabled = false;
     });
 
     // Set up our request

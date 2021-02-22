@@ -183,6 +183,19 @@ include '../../header.php';
                             );
                             $challenge_details_json = json_encode($challenge_details_object);
 
+                            $skill_points = $row['skill_points'];
+
+                            $sql1 = "SELECT * FROM skill_levels WHERE $skill_points BETWEEN min_points AND max_points";
+                            $result1 = mysqli_query($conn, $sql1);
+
+                            if (mysqli_num_rows($result1) > 0) {
+                                while ($row1 = mysqli_fetch_assoc($result1)) {
+                                    $skill_level = $row1['level_name'];
+                                }
+                            } else {
+                                $skill_level = 'undefined';
+                            }
+
                     ?>
 
                             <div class="card mb-3">
@@ -193,20 +206,45 @@ include '../../header.php';
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <?php echo '$' . $row['amount']; ?>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#accept-challenge-modal" data-bs-challenge-details='<?php echo $challenge_details_json; ?>'>
-                                                Accept
-                                            </button>
                                         </div>
                                     </div>
                                 </h4>
-                                <div class="card-body d-flex align-items-center justify-content-between">
-                                    <h5 class="card-title"><i class="bi bi-file-person-fill"></i><?php echo ucwords($row['username']); ?></h5>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#challenge-details-modal" data-bs-challenge-details='<?php echo $challenge_details_json; ?>'>
-                                        Details
-                                    </button>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Challenge By</th>
+                                                <td><?php echo ucwords($row['username']); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Skill Level</th>
+                                                <td><?php echo ucwords($skill_level); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Skill Points</th>
+                                                <td><?php echo $skill_points; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Challenge Date</th>
+                                                <td><?php echo $row['challenge_date']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Challenge Time</th>
+                                                <td><?php echo $row['challenge_time']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Game Mode</th>
+                                                <td><?php echo $row['game_mode']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Rules</th>
+                                                <td><?php echo $row['rules']; ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="accept-challenge-button btn btn-primary" data-challenge-id="<?php echo $row['challenge_id']; ?>">Accept</button>
                                 </div>
+
                                 <div class="card-footer text-muted"><?php echo 'Created: ' . $row['created_timestamp']; ?></div>
                             </div>
 
