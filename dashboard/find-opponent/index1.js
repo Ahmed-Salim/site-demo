@@ -1,112 +1,37 @@
-const challengeDetailsModal = document.querySelector('#challenge-details-modal');
-const challengeDetailsTableBody = document.querySelector('#challenge-details-modal tbody');
-
-const acceptChallengeModal = document.querySelector('#accept-challenge-modal');
-const acceptChallengeTableBody = document.querySelector('#accept-challenge-modal tbody');
-const acceptChallengeForm = document.querySelector('#accept-challenge-form');
-const acceptChallengeFieldset = document.querySelector('#accept-challenge-form fieldset');
-const acceptChallengeButtonOld = document.querySelector('button[form="accept-challenge-form"]');
 const acceptChallengeButtons = document.querySelectorAll('.accept-challenge-button');
 
 acceptChallengeButtons.forEach(function (acceptChallengeButton, currentIndex, listObj) {
     acceptChallengeButton.addEventListener('click', () => {
-        alert(acceptChallengeButton.dataset.challengeId);
+        const XHR = new XMLHttpRequest();
+        const FD = new FormData();
+
+        // Push our data into our FormData object
+        FD.append('challenge-id', acceptChallengeButton.dataset.challengeId);
+
+        acceptChallengeButton.disabled = true;
+
+        // Define what happens on successful data submission
+        XHR.addEventListener('load', function (event) {
+            alert(JSON.parse(event.target.responseText).description);
+
+            if (JSON.parse(event.target.responseText).status === 'success') {
+                window.location.href = "../challenges";
+            } else {
+                acceptChallengeButton.disabled = false;
+            }
+        });
+
+        // Define what happens in case of error
+        XHR.addEventListener(' error', function (event) {
+            alert('Oops! Something went wrong.');
+
+            acceptChallengeButton.disabled = false;
+        });
+
+        // Set up our request
+        XHR.open('POST', '../../php-apis/accept-challenge.php');
+
+        // Send our FormData object; HTTP headers are set automatically
+        XHR.send(FD);
     });
-});
-
-challengeDetailsModal.addEventListener('show.bs.modal', function (event) {
-    // Button that triggered the modal
-    let button = event.relatedTarget;
-    // Extract info from data-bs-* attributes
-    let challengeDetails = JSON.parse(button.getAttribute('data-bs-challenge-details'));
-    // Update the modal's content.
-    challengeDetailsTableBody.innerHTML = '';
-
-    for (property in challengeDetails) {
-        if (property === 'challenge_id' || property === 'min_date') {
-        } else {
-            let tr = document.createElement('tr');
-            let th = document.createElement('th');
-            th.setAttribute('scope', 'row');
-            th.textContent = property;
-            let td = document.createElement('td');
-            td.textContent = challengeDetails[property];
-            tr.appendChild(th);
-            tr.appendChild(td);
-            challengeDetailsTableBody.appendChild(tr);
-        }
-    }
-});
-
-acceptChallengeModal.addEventListener('show.bs.modal', function (event) {
-    // Button that triggered the modal
-    let button = event.relatedTarget;
-    // Extract info from data-bs-* attributes
-    let challengeDetails = JSON.parse(button.getAttribute('data-bs-challenge-details'));
-    // Update the modal's content.
-    acceptChallengeTableBody.innerHTML = '';
-
-    for (property in challengeDetails) {
-        if (property === 'challenge_id' || property === 'min_date') {
-        } else {
-            let tr = document.createElement('tr');
-            let th = document.createElement('th');
-            th.setAttribute('scope', 'row');
-            th.textContent = property;
-            let td = document.createElement('td');
-            td.textContent = challengeDetails[property];
-            tr.appendChild(th);
-            tr.appendChild(td);
-            acceptChallengeTableBody.appendChild(tr);
-        }
-    }
-
-    document.querySelector('#accept-challenge-modal .amount-warning').textContent = 'You Need To Have Atleast ' + challengeDetails['Amount'] + ' In Your Balance. ' + challengeDetails['Amount'] + ' Will Be Deducted From Your Balance';
-    document.querySelector('#accept-challenge-form input[name="challenge-id"]').setAttribute('value', challengeDetails['challenge_id']);
-
-    let challengeMinDate = new Date();
-    challengeMinDate.setDate(challengeMinDate.getDate() + 1);
-    document.querySelector('#accept-challenge-form input[type="date"]').setAttribute('min', challengeMinDate.toISOString().split("T")[0]);
-});
-
-acceptChallengeModal.addEventListener('hidden.bs.modal', function (event) {
-    acceptChallengeForm.reset();
-});
-
-
-acceptChallengeForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const XHR = new XMLHttpRequest();
-
-    // Bind the FormData object and the form element
-    const FD = new FormData(acceptChallengeForm);
-    let challengeId = FD.get('challenge-id');
-
-    acceptChallengeFieldset.disabled = true;
-    acceptChallengeButtonOld.disabled = true;
-
-    // Define what happens on successful data submission
-    XHR.addEventListener("load", function (event) {
-        alert(event.target.responseText);
-        if (JSON.parse(event.target.responseText).status === 'success') {
-            window.location.href = "../challenges/challenge/?challenge-id=" + challengeId;
-        } else {
-
-        }
-    });
-
-    // Define what happens in case of error
-    XHR.addEventListener("error", function (event) {
-        alert('Oops! Something went wrong.');
-
-        acceptChallengeFieldset.disabled = false;
-        acceptChallengeButtonOld.disabled = false;
-    });
-
-    // Set up our request
-    XHR.open("POST", "../../php-apis/accept-challenge.php");
-
-    // The data sent is what the user provided in the form
-    XHR.send(FD);
 });

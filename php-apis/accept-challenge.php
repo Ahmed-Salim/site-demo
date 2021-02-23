@@ -8,14 +8,12 @@ include_once './clean-input.php';
 $response_msg = array();
 
 if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
-    if (empty($_POST["challenge-id"]) || empty($_POST["challenge-date"]) || empty($_POST["challenge-time"])) {
+    if (empty($_POST["challenge-id"])) {
         $response_msg['status'] = 'error';
-        $response_msg['description'] = 'Required Fields Empty!';
+        $response_msg['description'] = 'Challenge ID missing!';
     } else {
         $accept_by_id = $_SESSION['id'];
         $challenge_id = mysqli_real_escape_string($conn, clean_input($_POST["challenge-id"]));
-        $challenge_date = mysqli_real_escape_string($conn, clean_input($_POST["challenge-date"]));
-        $challenge_time = mysqli_real_escape_string($conn, clean_input($_POST["challenge-time"]));
 
         $sql = "SELECT * FROM challenges_log WHERE challenge_id = $challenge_id";
         $result = mysqli_query($conn, $sql);
@@ -27,39 +25,34 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                     $response_msg['description'] = 'Error: You Cannot Accept Your Own Challenge!';
                 } else {
                     if ($row['status'] === 'open') {
-                        if ($challenge_date > date("Y-m-d")) {
-                            $sql2 = "SELECT * FROM users WHERE id = $accept_by_id";
-                            $result2 = mysqli_query($conn, $sql2);
+                        $sql2 = "SELECT * FROM users WHERE id = $accept_by_id";
+                        $result2 = mysqli_query($conn, $sql2);
 
-                            if (mysqli_num_rows($result2) > 0) {
-                                while ($row2 = mysqli_fetch_assoc($result2)) {
-                                    if ($row2['balance'] >= $row['amount']) {
-                                        $challenge_amount = $row['amount'];
+                        if (mysqli_num_rows($result2) > 0) {
+                            while ($row2 = mysqli_fetch_assoc($result2)) {
+                                if ($row2['balance'] >= $row['amount']) {
+                                    $challenge_amount = $row['amount'];
 
-                                        $sql3 = "UPDATE users SET balance = (balance - $challenge_amount) WHERE id = $accept_by_id";
+                                    $sql3 = "UPDATE users SET balance = (balance - $challenge_amount) WHERE id = $accept_by_id";
 
-                                        if (mysqli_query($conn, $sql3)) {
-                                            $response_msg['status'] = 'success';
-                                            $response_msg['description'] = 'Success: Balance Updated Successfully!';
+                                    if (mysqli_query($conn, $sql3)) {
+                                        $response_msg['status'] = 'success';
+                                        $response_msg['description'] = 'Success: Balance Updated Successfully!';
 
-                                            $sql4 = "UPDATE challenges_log SET status = 'accepted', accepted_by = $accept_by_id, accepted_timestamp = NOW(), challenge_date = '$challenge_date', challenge_time = '$challenge_time' WHERE challenge_id = $challenge_id";
+                                        $sql4 = "UPDATE challenges_log SET status = 'accepted', accepted_by = $accept_by_id, accepted_timestamp = NOW() WHERE challenge_id = $challenge_id";
 
-                                            if (mysqli_query($conn, $sql4)) {
-                                                $response_msg['description'] .= 'Success: Challenge Accepted Successfully!';
+                                        if (mysqli_query($conn, $sql4)) {
+                                            $response_msg['description'] .= ' Success: Challenge Accepted Successfully! Waiting for Challenge creator\'s confirmation!';
 
-                                                $notif_for = $row['challenge_by'];
-                                                $notif_msg = strtoupper($row2['username']) . ' has accepted your Challenge! Challenge ID: ' . $challenge_id . '.';
+                                            $notif_for = $row['challenge_by'];
+                                            $notif_msg = strtoupper($row2['username']) . ' has accepted your Challenge! Waiting for your confirmation. Challenge ID: ' . $challenge_id . '.';
 
-                                                $sql5 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+                                            $sql5 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
 
-                                                if (mysqli_query($conn, $sql5)) {
-                                                    //echo "New record created successfully";
-                                                } else {
-                                                    //echo "Error: " . $sql5 . "<br>" . mysqli_error($conn);
-                                                }
+                                            if (mysqli_query($conn, $sql5)) {
+                                                //echo "New record created successfully";
                                             } else {
-                                                $response_msg['status'] = 'error';
-                                                $response_msg['description'] = 'Error: ' . mysqli_error($conn);
+                                                //echo "Error: " . $sql5 . "<br>" . mysqli_error($conn);
                                             }
                                         } else {
                                             $response_msg['status'] = 'error';
@@ -67,16 +60,16 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                         }
                                     } else {
                                         $response_msg['status'] = 'error';
-                                        $response_msg['description'] = 'Error: Insufficient Balance for Accepting Challenge!';
+                                        $response_msg['description'] = 'Error: ' . mysqli_error($conn);
                                     }
+                                } else {
+                                    $response_msg['status'] = 'error';
+                                    $response_msg['description'] = 'Error: Insufficient Balance for Accepting Challenge!';
                                 }
-                            } else {
-                                $response_msg['status'] = 'error';
-                                $response_msg['description'] = 'Error: Invalid User ID! Please login again to continue!';
                             }
                         } else {
                             $response_msg['status'] = 'error';
-                            $response_msg['description'] = 'Error: Challenge Date Must Be Greater Than Created Date!';
+                            $response_msg['description'] = 'Error: Invalid User ID! Please login again to continue!';
                         }
                     } else {
                         $response_msg['status'] = 'error';
@@ -91,7 +84,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
     }
 } else {
     $response_msg['status'] = 'error';
-    $response_msg['description'] = 'Session ID missing! Please login again to continue!';
+    $response_msg['description'] = 'Error: Session ID missing! Please login again to continue!';
 }
 
 mysqli_close($conn);
