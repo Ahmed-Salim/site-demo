@@ -5,6 +5,54 @@ const createChallengeModal = document.getElementById('createChallengeModal');
 const challengeGameSelect = document.querySelector('#challenge-game');
 const challengeDate = document.querySelector('#challenge-date');
 
+const confirmChallengeButtons = document.querySelectorAll('button.confirm-challenge');
+const cancelChallengeButtons = document.querySelectorAll('button.cancel-challenge');
+
+confirmChallengeButtons.forEach(function (confirmChallengeButton, currentIndex, listObj) {
+    confirmChallengeButton.addEventListener('click', (event) => {
+        if (window.confirm("Are you sure you want to confirm this Challenge ?\nOnce a Challenge is confirmed it can no longer be cancelled.\nPress (OK) to confirm or (Cancel) to return back.")) {
+            const XHR = new XMLHttpRequest();
+            const FD = new FormData();
+
+            // Push our data into our FormData object
+            FD.append('challenge-id', confirmChallengeButton.dataset.challengeId);
+
+            confirmChallengeButton.disabled = true;
+
+            // Define what happens on successful data submission
+            XHR.addEventListener('load', function (event) {
+                alert(JSON.parse(event.target.responseText).description);
+
+                if (JSON.parse(event.target.responseText).status === 'success') {
+                    location.reload();
+                } else {
+                    confirmChallengeButton.disabled = false;
+                }
+            });
+
+            // Define what happens in case of error
+            XHR.addEventListener('error', function (event) {
+                alert('Oops! Something went wrong.');
+
+                confirmChallengeButton.disabled = false;
+            });
+
+            // Set up our request
+            XHR.open('POST', '../../php-apis/confirm-challenge.php');
+
+            // Send our FormData object; HTTP headers are set automatically
+            XHR.send(FD);
+        } else {
+        }
+    });
+});
+
+cancelChallengeButtons.forEach(function (cancelChallengeButton, currentIndex, listObj) {
+    cancelChallengeButton.addEventListener('click', (event) => {
+        alert(cancelChallengeButton.dataset.challengeId);
+    });
+});
+
 createChallengeModal.addEventListener('shown.bs.modal', function (event) {
     let today = new Date();
     challengeDate.setAttribute('min', new Date(today.setDate(today.getDate() + 1)).toISOString().slice(0, 10));
@@ -15,6 +63,8 @@ createChallengeModal.addEventListener('hidden.bs.modal', function (event) {
     createChallengeForm.reset();
     createChallengeForm.classList.remove('was-validated');
 });
+
+
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {

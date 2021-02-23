@@ -135,7 +135,6 @@
                             <h5 class="card-title">
                                 <?php echo (($row4['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row4['game']))) : (ucwords(str_replace("_", " ", $row4['game'])))) . ' - ' . (($row4['console'] === 'ps4' || $row4['console'] === 'pc') ? (strtoupper($row4['console'])) : (ucwords($row4['console']))); ?>
                             </h5>
-                            <p class="card-text">
                             <table class="table">
                                 <tbody>
                                     <tr>
@@ -150,9 +149,17 @@
                                         <th scope="row">Rules</th>
                                         <td><?php echo $row4['rules']; ?></td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row">Challenge Date</th>
+                                        <td><?php echo $row4['challenge_date']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Challenge Time</th>
+                                        <td><?php echo $row4['challenge_time']; ?></td>
+                                    </tr>
                                 </tbody>
                             </table>
-                            </p>
+                            <p class="card-text">Waiting For Someone To Accept Your Challenge...</p>
                         </div>
                         <div class="card-footer text-muted">
                             Date Created: <?php echo $row4['created_timestamp']; ?>
@@ -174,9 +181,6 @@
             <h1 class="text-center">
 
                 <?php
-
-                include_once '../../php-apis/db-config.php';
-                include_once '../../php-apis/clean-input.php';
 
                 $user_id = $_SESSION['id'];
 
@@ -214,7 +218,6 @@
                             <h5 class="card-title">
                                 <?php echo (($row5['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row5['game']))) : (ucwords(str_replace("_", " ", $row5['game'])))) . ' - ' . (($row5['console'] === 'ps4' || $row5['console'] === 'pc') ? (strtoupper($row5['console'])) : (ucwords($row5['console']))); ?>
                             </h5>
-                            <p class="card-text">
                             <table class="table">
                                 <tbody>
                                     <tr>
@@ -281,8 +284,18 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            </p>
-                            <a href="./challenge/?challenge-id=<?php echo $row5['challenge_id']; ?>" class="btn btn-primary stretched-link">Details</a>
+
+                            <?php if ($row5['challenge_by'] === $user_id) { ?>
+
+                                <button type="button" class="confirm-challenge btn btn-primary" data-challenge-id="<?php echo $row5['challenge_id']; ?>">Confirm</button>
+                                <button type="button" class="cancel-challenge btn btn-secondary" data-challenge-id="<?php echo $row5['challenge_id']; ?>">Cancel</button>
+
+                            <?php } else { ?>
+
+                                <p class="card-text">Waiting for the Challenge owner to confirm the Challenge...</p>
+
+                            <?php } ?>
+
                         </div>
                         <div class="card-footer text-muted">
                             Date Created: <?php echo $row5['created_timestamp']; ?>
