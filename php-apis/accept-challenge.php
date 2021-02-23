@@ -42,7 +42,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                         $sql4 = "UPDATE challenges_log SET status = 'accepted', accepted_by = $accept_by_id, accepted_timestamp = NOW() WHERE challenge_id = $challenge_id";
 
                                         if (mysqli_query($conn, $sql4)) {
-                                            $response_msg['description'] .= ' Success: Challenge Accepted Successfully! Waiting for Challenge creator\'s confirmation!';
+                                            $response_msg['description'] .= ' Success: Challenge Accepted Successfully! Waiting for Challenge owners\'s confirmation!';
 
                                             $notif_for = $row['challenge_by'];
                                             $notif_msg = strtoupper($row2['username']) . ' has accepted your Challenge! Waiting for your confirmation. Challenge ID: ' . $challenge_id . '.';
