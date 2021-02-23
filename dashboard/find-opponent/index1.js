@@ -22,7 +22,7 @@ acceptChallengeButtons.forEach(function (acceptChallengeButton, currentIndex, li
         });
 
         // Define what happens in case of error
-        XHR.addEventListener(' error', function (event) {
+        XHR.addEventListener('error', function (event) {
             alert('Oops! Something went wrong.');
 
             acceptChallengeButton.disabled = false;

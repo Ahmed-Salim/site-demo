@@ -35,7 +35,7 @@ if (document.body.contains(document.querySelector('button.start-challenge'))) {
         });
 
         // Define what happens in case of error
-        XHR.addEventListener(' error', function (event) {
+        XHR.addEventListener('error', function (event) {
             alert('Oops! Something went wrong.');
 
             startChallengeButton.disabled = false;
@@ -68,7 +68,7 @@ function claimResult(claim) {
     });
 
     // Define what happens in case of error
-    XHR.addEventListener(' error', function (event) {
+    XHR.addEventListener('error', function (event) {
         alert('Oops! Something went wrong.');
 
         startChallengeButton.disabled = false;
