@@ -36,7 +36,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                                 $now_timestamp = $row1['now_timestamp'];
                             }
                         } else {
-                            $now_timestamp = null;
+                            $now_timestamp = '0000-00-00 00:00:00';
                         }
 
                         if (($row['challenge_date'] . ' ' . $row['challenge_time']) >= $now_timestamp) {
@@ -64,9 +64,66 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                             }
                         } else {
                             $response_msg['status'] = 'error';
-                            $response_msg['description'] .= 'Error: Challenge date time has been exceeded! This Challenge can no longer be confirmed!';
+                            $response_msg['description'] .= 'Error: Challenge date time has been exceeded! This Challenge can no longer be Confirmed!';
 
-                            //refund functionality ...
+                            $sql4 = "UPDATE challenges_log SET status = 'cancelled', cancelled_timestamp = NOW(), comments = 'Challenge date time exceeded' WHERE challenge_id = $challenge_id";
+
+                            if (mysqli_query($conn, $sql4)) {
+                                $response_msg['status'] = 'error';
+                                $response_msg['description'] .= 'Error: Challenge cancelled!';
+
+                                $challenge_amount = $row['amount'];
+
+                                $sql5 = "SELECT * FROM service_fees WHERE $challenge_amount BETWEEN min_amount AND max_amount";
+                                $result5 = mysqli_query($conn, $sql5);
+
+                                if (mysqli_num_rows($result5) > 0) {
+                                    while ($row5 = mysqli_fetch_assoc($result5)) {
+                                        $service_fee = $row5['service_fee'];
+                                        $service_fee_type = $row5['service_fee_type'];
+                                    }
+                                } else {
+                                    $service_fee = 0;
+                                    $service_fee_type = 'dollar';
+                                }
+
+                                $challenge_by = $row['challenge_by'];
+                                $accepted_by = $row['accepted_by'];
+
+                                if ($service_fee_type === 'dollar') {
+                                    $refund_amount = $challenge_amount - $service_fee;
+                                    $refund_msg = 'The Challenge amount MINUS the service fee have been refunded to both players. ($' . $challenge_amount . ' - $' . $service_fee . ') = $' . $refund_amount;
+                                } else {
+                                    $refund_amount = $challenge_amount - ($challenge_amount * ($service_fee / 100));
+                                    $refund_msg = 'The Challenge amount MINUS the service fee have been refunded to both players. ($' . $challenge_amount . ' - ' . $service_fee . '%) = $' . $refund_amount;
+                                }
+
+                                $sql6 = "UPDATE users SET balance = (balance + $refund_amount) WHERE id = $challenge_by OR id = $accepted_by";
+
+                                if (mysqli_query($conn, $sql6)) {
+                                    $response_msg['status'] = 'error';
+                                    $response_msg['description'] .= $refund_msg;
+
+                                    $notif_for = $accepted_by;
+                                    $notif_msg = 'Challenge # ' . $row['challenge_id'] . ' has been Cancelled because the Challenge owner failed to Confirm the Challenge before the set Challenge date and time. The Challenge amount MINUS the service fee have been refunded to both players.';
+
+                                    $sql7 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                                    if (mysqli_query($conn, $sql7)) {
+                                        //$response_msg['status'] = 'success';
+                                        //$response_msg['description'] .= 'Success: Notification sent successfully!';
+                                    } else {
+                                        //$response_msg['status'] = 'error';
+                                        //$response_msg['description'] .= 'Error: ' . mysqli_error($conn);
+                                    }
+                                } else {
+                                    $response_msg['status'] = 'error';
+                                    $response_msg['description'] .= 'Error: ' . mysqli_error($conn);
+                                }
+                            } else {
+                                $response_msg['status'] = 'error';
+                                $response_msg['description'] .= 'Error: ' . mysqli_error($conn);
+                            }
                         }
                     } else {
                         $response_msg['status'] = 'error';

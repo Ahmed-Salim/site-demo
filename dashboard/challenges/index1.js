@@ -23,11 +23,7 @@ confirmChallengeButtons.forEach(function (confirmChallengeButton, currentIndex, 
             XHR.addEventListener('load', function (event) {
                 alert(JSON.parse(event.target.responseText).description);
 
-                if (JSON.parse(event.target.responseText).status === 'success') {
-                    location.reload();
-                } else {
-                    confirmChallengeButton.disabled = false;
-                }
+                location.reload();
             });
 
             // Define what happens in case of error

@@ -292,7 +292,7 @@
 
                             <?php } else { ?>
 
-                                <p class="card-text">Waiting for the Challenge owner to confirm the Challenge...</p>
+                                <p class="card-text">Waiting for the Challenge owner to confirm this Challenge...</p>
 
                             <?php } ?>
 
