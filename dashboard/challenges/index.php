@@ -89,7 +89,7 @@
     </div>
 </div>
 
-<div class="container-fluid my-5">
+<div class="container my-5">
     <div class="row">
         <div class="col">
             <h1 class="text-center">
@@ -129,7 +129,7 @@
 
                     <div class="card my-3">
                         <div class="card-header">
-                            Challenge ID: <?php echo $row4['challenge_id']; ?>
+                            Challenge # <?php echo $row4['challenge_id']; ?>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">
@@ -160,6 +160,7 @@
                                 </tbody>
                             </table>
                             <p class="card-text">Waiting For Someone To Accept Your Challenge...</p>
+                            <button type="button" class="cancel-challenge btn btn-secondary" data-challenge-id="<?php echo $row4['challenge_id']; ?>">Cancel</button>
                         </div>
                         <div class="card-footer text-muted">
                             Date Created: <?php echo $row4['created_timestamp']; ?>
@@ -212,7 +213,7 @@
 
                     <div class="card my-3">
                         <div class="card-header">
-                            Challenge ID: <?php echo $row5['challenge_id']; ?>
+                            Challenge # <?php echo $row5['challenge_id']; ?>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">
