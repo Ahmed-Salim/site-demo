@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2021 at 12:48 PM
+-- Generation Time: Feb 24, 2021 at 01:00 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -36,11 +36,14 @@ CREATE TABLE `challenges_log` (
   `game_mode` varchar(255) NOT NULL,
   `rules` text NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT 'open',
+  `comments` text NOT NULL,
   `created_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `accepted_by` int(11) DEFAULT NULL,
   `accepted_timestamp` timestamp NULL DEFAULT NULL,
   `challenge_date` date DEFAULT NULL,
   `challenge_time` time DEFAULT NULL,
+  `confirmed_timestamp` timestamp NULL DEFAULT NULL,
+  `cancelled_timestamp` timestamp NULL DEFAULT NULL,
   `challenge_by_start_timestamp` timestamp NULL DEFAULT NULL,
   `accepted_by_start_timestamp` timestamp NULL DEFAULT NULL,
   `challenge_by_claimed_result` varchar(255) NOT NULL,
@@ -53,28 +56,52 @@ CREATE TABLE `challenges_log` (
 -- Dumping data for table `challenges_log`
 --
 
-INSERT INTO `challenges_log` (`challenge_id`, `challenge_by`, `game`, `console`, `amount`, `game_mode`, `rules`, `status`, `created_timestamp`, `accepted_by`, `accepted_timestamp`, `challenge_date`, `challenge_time`, `challenge_by_start_timestamp`, `accepted_by_start_timestamp`, `challenge_by_claimed_result`, `accepted_by_claimed_result`, `challenge_by_claim_timestamp`, `accepted_by_claim_timestamp`) VALUES
-(1, 5, 'fifa_21', 'pc', 10, 'Test', 'Test', 'no_result', '2021-02-08 08:16:32', 6, '2021-02-18 11:05:30', '2021-02-17', '16:05:00', NULL, NULL, '', '', NULL, NULL),
-(2, 5, 'fifa_21', 'ps4', 15, '', '', 'disputed', '2021-02-08 09:44:22', 11, '2021-02-17 04:35:59', '2021-02-18', '09:35:00', '2021-02-17 07:16:03', '2021-02-17 04:36:42', 'win', 'win', '2021-02-17 11:40:41', '2021-02-17 11:41:17'),
-(3, 5, 'fortnite', 'xbox', 15, 'Test123', 'Test123', 'no_result', '2021-02-08 11:52:23', 6, '2021-02-16 06:53:36', '2021-02-17', '11:53:00', '2021-02-16 11:51:28', NULL, '', '', NULL, NULL),
-(4, 6, 'clash_of_clans', 'xbox', 20, 'Test', 'Test', 'no_result', '2021-02-09 06:17:29', 5, '2021-02-15 11:49:00', '2021-02-16', '16:48:00', NULL, '2021-02-16 11:24:34', '', '', NULL, NULL),
-(5, 7, 'fifa_21', 'ps4', 10, 'test1', 'test1', 'no_result', '2021-02-09 11:31:56', 5, '2021-02-15 11:29:23', '2021-02-15', '16:29:00', NULL, NULL, '', '', NULL, NULL),
-(6, 7, 'fortnite', 'pc', 15, 'test2', 'test2', 'no_result', '2021-02-09 11:32:32', 5, '2021-02-15 10:52:18', '2021-02-10', '15:52:00', NULL, NULL, '', '', NULL, NULL),
-(7, 7, 'clash_of_clans', 'xbox', 20, 'test3', 'test3', 'no_result', '2021-02-09 11:32:44', 5, '2021-02-15 10:56:16', '2021-02-12', '15:56:00', NULL, NULL, '', '', NULL, NULL),
-(8, 7, 'clash_of_clans', 'nintendo', 25, 'test4', 'test4', 'open', '2021-02-09 11:32:57', NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL),
-(9, 5, 'clash_of_clans', 'ps4', 10, 'testing123', 'testing123', 'accepted', '2021-02-15 06:22:27', 6, '2021-02-17 07:46:03', '2021-02-18', '12:46:00', '2021-02-17 07:52:07', '2021-02-17 07:52:19', 'win', 'win', '2021-02-17 09:33:35', '2021-02-17 09:32:51'),
-(10, 11, 'fifa_21', 'ps4', 10, 'test', 'test', 'accepted', '2021-02-17 04:35:20', 12, '2021-02-17 05:00:16', '2021-02-18', '10:00:00', '2021-02-17 05:01:35', '2021-02-17 05:02:27', '', '', NULL, NULL),
-(11, 12, 'fifa_21', 'ps4', 10, 'test', 'test', 'accepted', '2021-02-17 04:59:29', 5, '2021-02-20 08:35:07', '2021-02-23', '15:37:00', NULL, '2021-02-20 08:35:17', '', '', NULL, NULL),
-(12, 5, 'fortnite', 'nintendo', 25, 'test', 'test', 'completed', '2021-02-17 07:19:49', 6, '2021-02-17 07:20:07', '2021-02-18', '12:20:00', '2021-02-17 07:21:41', '2021-02-17 07:20:42', 'win', 'lose', '2021-02-17 11:43:56', '2021-02-17 11:44:33'),
-(13, 5, 'clash_of_clans', 'pc', 15, 'test', 'test', 'completed', '2021-02-17 11:48:18', 6, '2021-02-17 11:48:44', '2021-02-18', '16:48:00', '2021-02-17 11:49:07', '2021-02-17 11:49:20', 'win', 'lose', '2021-02-17 11:49:36', '2021-02-17 11:49:47'),
-(14, 5, 'fortnite', 'ps4', 10, 'test123', 'test123', 'completed', '2021-02-18 10:47:43', 6, '2021-02-18 10:48:19', '2021-02-19', '15:48:00', '2021-02-18 10:49:47', '2021-02-18 10:50:18', 'win', 'lose', '2021-02-18 10:50:42', '2021-02-18 10:51:06'),
-(15, 5, 'clash_of_clans', 'ps4', 10, 'test234', 'test234', 'completed', '2021-02-18 11:01:41', 6, '2021-02-18 11:02:00', '2021-02-19', '16:01:00', '2021-02-18 11:02:34', '2021-02-18 11:03:00', 'lose', 'win', '2021-02-18 11:03:14', '2021-02-18 11:03:26'),
-(16, 6, 'fifa_21', 'ps4', 10, 'asd', 'ghsgd', 'completed', '2021-02-18 11:08:49', 5, '2021-02-18 11:09:35', '2021-02-19', '16:09:00', '2021-02-18 11:09:49', '2021-02-18 11:09:41', 'win', 'lose', '2021-02-18 11:09:52', '2021-02-18 11:09:58'),
-(17, 5, 'fifa_21', 'ps4', 10, 'asd', 'asd', 'no_result', '2021-02-18 11:10:50', 6, '2021-02-18 11:11:22', '2021-02-17', '16:11:00', NULL, NULL, '', '', NULL, NULL),
-(18, 5, 'fifa_21', 'pc', 15, 'sadhj', 'kasjhdkj', 'completed', '2021-02-18 11:58:25', 6, '2021-02-18 11:58:46', '2021-02-19', '16:58:00', '2021-02-19 04:40:06', '2021-02-19 04:40:01', 'lose', 'win', '2021-02-19 04:40:18', '2021-02-19 04:40:14'),
-(19, 5, 'fifa_21', 'ps4', 10, 'ashdj', 'ashjdkjh', 'completed', '2021-02-19 04:57:08', 6, '2021-02-19 04:57:26', '2021-02-20', '09:57:00', '2021-02-19 04:57:37', '2021-02-19 04:57:29', 'lose', 'win', '2021-02-19 04:58:36', '2021-02-19 04:57:45'),
-(20, 5, 'clash_of_clans', 'pc', 15, 'dsf', 'sdf', 'disputed', '2021-02-19 05:14:31', 6, '2021-02-19 05:14:57', '2021-02-20', '10:14:00', '2021-02-19 05:15:07', '2021-02-19 05:15:00', 'win', 'win', '2021-02-19 05:15:11', '2021-02-19 05:15:15'),
-(21, 5, 'fortnite', 'ps4', 100, 'no mod', 'no rules', 'open', '2021-02-20 08:25:05', NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL);
+INSERT INTO `challenges_log` (`challenge_id`, `challenge_by`, `game`, `console`, `amount`, `game_mode`, `rules`, `status`, `comments`, `created_timestamp`, `accepted_by`, `accepted_timestamp`, `challenge_date`, `challenge_time`, `confirmed_timestamp`, `cancelled_timestamp`, `challenge_by_start_timestamp`, `accepted_by_start_timestamp`, `challenge_by_claimed_result`, `accepted_by_claimed_result`, `challenge_by_claim_timestamp`, `accepted_by_claim_timestamp`) VALUES
+(1, 5, 'fifa_21', 'pc', 10, 'Test', 'Test', 'no_result', '', '2021-02-08 08:16:32', 6, '2021-02-18 11:05:30', '2021-02-17', '16:05:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(2, 5, 'fifa_21', 'ps4', 15, '', '', 'disputed', '', '2021-02-08 09:44:22', 11, '2021-02-17 04:35:59', '2021-02-18', '09:35:00', NULL, NULL, '2021-02-17 07:16:03', '2021-02-17 04:36:42', 'win', 'win', '2021-02-17 11:40:41', '2021-02-17 11:41:17'),
+(3, 5, 'fortnite', 'xbox', 15, 'Test123', 'Test123', 'no_result', '', '2021-02-08 11:52:23', 6, '2021-02-16 06:53:36', '2021-02-17', '11:53:00', NULL, NULL, '2021-02-16 11:51:28', NULL, '', '', NULL, NULL),
+(4, 6, 'clash_of_clans', 'xbox', 20, 'Test', 'Test', 'no_result', '', '2021-02-09 06:17:29', 5, '2021-02-15 11:49:00', '2021-02-16', '16:48:00', NULL, NULL, NULL, '2021-02-16 11:24:34', '', '', NULL, NULL),
+(5, 7, 'fifa_21', 'ps4', 10, 'test1', 'test1', 'no_result', '', '2021-02-09 11:31:56', 5, '2021-02-15 11:29:23', '2021-02-15', '16:29:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(6, 7, 'fortnite', 'pc', 15, 'test2', 'test2', 'no_result', '', '2021-02-09 11:32:32', 5, '2021-02-15 10:52:18', '2021-02-10', '15:52:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(7, 7, 'clash_of_clans', 'xbox', 20, 'test3', 'test3', 'no_result', '', '2021-02-09 11:32:44', 5, '2021-02-15 10:56:16', '2021-02-12', '15:56:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(8, 7, 'clash_of_clans', 'nintendo', 25, 'test4', 'test4', 'accepted', '', '2021-02-09 11:32:57', 5, '2021-02-23 06:11:10', NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(9, 5, 'clash_of_clans', 'ps4', 10, 'testing123', 'testing123', 'accepted', '', '2021-02-15 06:22:27', 6, '2021-02-17 07:46:03', '2021-02-18', '12:46:00', NULL, NULL, '2021-02-17 07:52:07', '2021-02-17 07:52:19', 'win', 'win', '2021-02-17 09:33:35', '2021-02-17 09:32:51'),
+(10, 11, 'fifa_21', 'ps4', 10, 'test', 'test', 'accepted', '', '2021-02-17 04:35:20', 12, '2021-02-17 05:00:16', '2021-02-18', '10:00:00', NULL, NULL, '2021-02-17 05:01:35', '2021-02-17 05:02:27', '', '', NULL, NULL),
+(11, 12, 'fifa_21', 'ps4', 10, 'test', 'test', 'accepted', '', '2021-02-17 04:59:29', 5, '2021-02-20 08:35:07', '2021-02-23', '15:37:00', NULL, NULL, NULL, '2021-02-20 08:35:17', '', '', NULL, NULL),
+(12, 5, 'fortnite', 'nintendo', 25, 'test', 'test', 'completed', '', '2021-02-17 07:19:49', 6, '2021-02-17 07:20:07', '2021-02-18', '12:20:00', NULL, NULL, '2021-02-17 07:21:41', '2021-02-17 07:20:42', 'win', 'lose', '2021-02-17 11:43:56', '2021-02-17 11:44:33'),
+(13, 5, 'clash_of_clans', 'pc', 15, 'test', 'test', 'completed', '', '2021-02-17 11:48:18', 6, '2021-02-17 11:48:44', '2021-02-18', '16:48:00', NULL, NULL, '2021-02-17 11:49:07', '2021-02-17 11:49:20', 'win', 'lose', '2021-02-17 11:49:36', '2021-02-17 11:49:47'),
+(14, 5, 'fortnite', 'ps4', 10, 'test123', 'test123', 'completed', '', '2021-02-18 10:47:43', 6, '2021-02-18 10:48:19', '2021-02-19', '15:48:00', NULL, NULL, '2021-02-18 10:49:47', '2021-02-18 10:50:18', 'win', 'lose', '2021-02-18 10:50:42', '2021-02-18 10:51:06'),
+(15, 5, 'clash_of_clans', 'ps4', 10, 'test234', 'test234', 'completed', '', '2021-02-18 11:01:41', 6, '2021-02-18 11:02:00', '2021-02-19', '16:01:00', NULL, NULL, '2021-02-18 11:02:34', '2021-02-18 11:03:00', 'lose', 'win', '2021-02-18 11:03:14', '2021-02-18 11:03:26'),
+(16, 6, 'fifa_21', 'ps4', 10, 'asd', 'ghsgd', 'completed', '', '2021-02-18 11:08:49', 5, '2021-02-18 11:09:35', '2021-02-19', '16:09:00', NULL, NULL, '2021-02-18 11:09:49', '2021-02-18 11:09:41', 'win', 'lose', '2021-02-18 11:09:52', '2021-02-18 11:09:58'),
+(17, 5, 'fifa_21', 'ps4', 10, 'asd', 'asd', 'no_result', '', '2021-02-18 11:10:50', 6, '2021-02-18 11:11:22', '2021-02-17', '16:11:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(18, 5, 'fifa_21', 'pc', 15, 'sadhj', 'kasjhdkj', 'completed', '', '2021-02-18 11:58:25', 6, '2021-02-18 11:58:46', '2021-02-19', '16:58:00', NULL, NULL, '2021-02-19 04:40:06', '2021-02-19 04:40:01', 'lose', 'win', '2021-02-19 04:40:18', '2021-02-19 04:40:14'),
+(19, 5, 'fifa_21', 'ps4', 10, 'ashdj', 'ashjdkjh', 'completed', '', '2021-02-19 04:57:08', 6, '2021-02-19 04:57:26', '2021-02-20', '09:57:00', NULL, NULL, '2021-02-19 04:57:37', '2021-02-19 04:57:29', 'lose', 'win', '2021-02-19 04:58:36', '2021-02-19 04:57:45'),
+(20, 5, 'clash_of_clans', 'pc', 15, 'dsf', 'sdf', 'disputed', '', '2021-02-19 05:14:31', 6, '2021-02-19 05:14:57', '2021-02-20', '10:14:00', NULL, NULL, '2021-02-19 05:15:07', '2021-02-19 05:15:00', 'win', 'win', '2021-02-19 05:15:11', '2021-02-19 05:15:15'),
+(21, 5, 'fortnite', 'ps4', 100, 'no mod', 'no rules', 'cancelled', 'Challenge cancelled by owner', '2021-02-20 08:25:05', 6, '2021-02-23 06:09:39', NULL, NULL, NULL, '2021-02-24 10:30:38', NULL, NULL, '', '', NULL, NULL),
+(22, 6, 'fifa_21', 'pc', 10, '', '', 'cancelled', 'Challenge cancelled by owner', '2021-02-22 10:00:20', 5, '2021-02-23 06:14:57', '2021-02-23', '15:00:00', NULL, '2021-02-24 10:33:00', NULL, NULL, '', '', NULL, NULL),
+(23, 6, 'fortnite', 'ps4', 15, 'testing123', 'testing123', 'accepted', '', '2021-02-22 10:01:29', 5, '2021-02-23 06:07:20', '2021-02-26', '15:01:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(24, 5, 'clash_of_clans', 'pc', 250, 'dsas', 'dasdas', 'confirmed', '', '2021-02-22 11:01:14', 6, '2021-02-23 06:15:36', '2021-03-06', '15:59:00', '2021-02-23 11:39:32', NULL, NULL, NULL, '', '', NULL, NULL),
+(25, 5, 'fortnite', 'xbox', 15, 'daasd', 'asdasd', 'cancelled', 'Challenge cancelled by owner', '2021-02-22 11:51:08', 6, '2021-02-23 06:03:36', '2021-02-24', '16:51:00', NULL, '2021-02-24 10:34:16', NULL, NULL, '', '', NULL, NULL),
+(26, 6, 'fifa_21', 'ps4', 15, 'adasd', 'asdasd', 'cancelled', 'Challenge date time exceeded', '2021-02-23 06:15:59', 5, '2021-02-23 06:16:10', '2021-01-26', '11:15:00', NULL, '2021-02-24 11:53:56', NULL, NULL, '', '', NULL, NULL),
+(27, 5, 'fifa_21', 'pc', 25, 'ddgd', 'fgdfgd', 'confirmed', '', '2021-02-23 06:18:08', 6, '2021-02-23 06:18:22', '2021-02-27', '02:21:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(28, 6, 'fortnite', 'xbox', 10, 'asjdklj', 'kljsdlakjkl', 'cancelled', 'Challenge date time exceeded', '2021-02-23 06:20:50', 5, '2021-02-23 06:20:58', '2021-01-26', '23:20:00', NULL, '2021-02-24 06:40:36', NULL, NULL, '', '', NULL, NULL),
+(29, 5, 'fifa_21', 'pc', 10, 'dfs', 'fsdf', 'cancelled', 'Challenge date time exceeded', '2021-02-23 06:23:44', 6, '2021-02-23 06:23:49', '2021-02-12', '23:23:00', NULL, '2021-02-24 06:41:54', NULL, NULL, '', '', NULL, NULL),
+(30, 5, 'fifa_21', 'ps4', 10, 'asdasd', 'dasdas', 'cancelled', 'Challenge date time exceeded', '2021-02-23 07:05:58', NULL, NULL, '2021-01-24', '00:05:00', NULL, '2021-02-24 07:23:05', NULL, NULL, '', '', NULL, NULL),
+(31, 5, 'clash_of_clans', 'nintendo', 15, 'asdasd', 'asdas', 'cancelled', 'Challenge date time exceeded', '2021-02-23 07:06:19', 6, '2021-02-24 04:24:14', '2021-02-04', '16:10:00', NULL, '2021-02-24 06:35:58', NULL, NULL, '', '', NULL, NULL),
+(32, 6, 'fortnite', 'xbox', 15, 'dadas', 'dasda', 'cancelled', 'Challenge date time exceeded', '2021-02-23 07:08:30', NULL, NULL, '2021-01-27', '16:12:00', NULL, '2021-02-24 07:24:25', NULL, NULL, '', '', NULL, NULL),
+(33, 5, 'fortnite', 'pc', 15, 'dsadas', 'dasd', 'confirmed', '', '2021-02-23 11:46:40', 6, '2021-02-23 11:46:56', '2021-03-05', '19:49:00', '2021-02-23 11:47:34', NULL, NULL, NULL, '', '', NULL, NULL),
+(34, 5, 'fortnite', 'ps4', 15, 'asdas', 'dasdad', 'cancelled', 'Challenge date time exceeded', '2021-02-24 04:23:20', NULL, NULL, '2021-01-27', '09:23:00', NULL, '2021-02-24 07:19:15', NULL, NULL, '', '', NULL, NULL),
+(35, 5, 'fifa_21', 'nintendo', 20, 'dqwdasd', 'asdasd', 'cancelled', 'Challenge date time exceeded', '2021-02-24 04:23:34', NULL, NULL, '2021-02-07', '09:23:00', NULL, '2021-02-24 07:26:39', NULL, NULL, '', '', NULL, NULL),
+(36, 5, 'fifa_21', 'ps4', 10, 'ashdkjhasd', 'hksdhkjs', 'cancelled', 'Challenge cancelled by owner', '2021-02-24 07:58:01', NULL, NULL, '2021-02-25', '12:57:00', NULL, '2021-02-24 10:29:27', NULL, NULL, '', '', NULL, NULL),
+(37, 5, 'fortnite', 'pc', 20, 'sdajs', 'kjhsadkhjas', 'cancelled', 'Challenge cancelled by owner', '2021-02-24 07:58:18', NULL, NULL, '2021-03-06', '13:58:00', NULL, '2021-02-24 10:44:58', NULL, NULL, '', '', NULL, NULL),
+(38, 6, 'fifa_21', 'pc', 400, 'asdasd', 'asdasd', 'cancelled', 'Challenge cancelled by owner', '2021-02-24 10:37:09', NULL, NULL, '2021-02-27', '15:37:00', NULL, '2021-02-24 10:37:20', NULL, NULL, '', '', NULL, NULL),
+(39, 6, 'fortnite', 'nintendo', 250, 'sdas', 'dasdas', 'cancelled', 'Challenge cancelled by owner', '2021-02-24 10:38:38', 5, '2021-02-24 10:41:55', '2021-02-26', '03:38:00', NULL, '2021-02-24 10:43:02', NULL, NULL, '', '', NULL, NULL),
+(40, 5, 'fortnite', 'pc', 12, 'asdas', 'dasdsda', 'open', '', '2021-02-24 10:49:32', NULL, NULL, '2021-02-27', '15:49:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(41, 5, 'fortnite', 'xbox', 5, 'asdasda', 'sdasdas', 'cancelled', 'Challenge cancelled by owner', '2021-02-24 10:49:45', NULL, NULL, '2021-03-07', '15:49:00', NULL, '2021-02-24 10:49:48', NULL, NULL, '', '', NULL, NULL),
+(42, 5, 'fifa_21', 'pc', 3, 'das', 'dasdasd', 'cancelled', 'Challenge cancelled by owner', '2021-02-24 10:50:14', NULL, NULL, '2021-03-05', '15:50:00', NULL, '2021-02-24 10:50:18', NULL, NULL, '', '', NULL, NULL),
+(43, 5, 'fortnite', 'xbox', 15, 'asdasd', 'asdasd', 'cancelled', 'Challenge cancelled by owner', '2021-02-24 10:50:38', NULL, NULL, '2021-03-05', '15:50:00', NULL, '2021-02-24 11:52:58', NULL, NULL, '', '', NULL, NULL),
+(44, 6, 'fortnite', 'pc', 15, 'skjdla', 'kjsadlas', 'open', '', '2021-02-24 11:32:21', NULL, NULL, '2021-03-05', '16:32:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
+(45, 5, 'clash_of_clans', 'pc', 20, 'gshadgj', 'hjsagdj', 'cancelled', 'Challenge cancelled by owner', '2021-02-24 11:52:02', 6, '2021-02-24 11:52:18', '2021-03-06', '16:51:00', NULL, '2021-02-24 11:52:36', NULL, NULL, '', '', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -121,7 +148,8 @@ INSERT INTO `deposit_log` (`deposit_id`, `deposit_by`, `method`, `amount`, `clie
 (23, 3, 'Dummy Deposit', '100.000000000000000000000000000000', 'Tue Feb 09 2021 16:52:46 GMT+0500 (Pakistan Standard Time)', '2021-02-09 11:52:46'),
 (24, 5, 'Dummy Deposit', '10.000000000000000000000000000000', 'Mon Feb 15 2021 11:15:28 GMT+0500 (Pakistan Standard Time)', '2021-02-15 06:15:28'),
 (25, 11, 'Dummy Deposit', '100.000000000000000000000000000000', 'Wed Feb 17 2021 09:33:41 GMT+0500 (Pakistan Standard Time)', '2021-02-17 04:33:41'),
-(26, 12, 'Dummy Deposit', '100.000000000000000000000000000000', 'Wed Feb 17 2021 09:58:06 GMT+0500 (Pakistan Standard Time)', '2021-02-17 04:58:06');
+(26, 12, 'Dummy Deposit', '100.000000000000000000000000000000', 'Wed Feb 17 2021 09:58:06 GMT+0500 (Pakistan Standard Time)', '2021-02-17 04:58:06'),
+(27, 6, 'Dummy Deposit', '1000.000000000000000000000000000000', 'Tue Feb 23 2021 11:15:30 GMT+0500 (Pakistan Standard Time)', '2021-02-23 06:15:30');
 
 -- --------------------------------------------------------
 
@@ -142,7 +170,9 @@ CREATE TABLE `meta_data` (
 --
 
 INSERT INTO `meta_data` (`meta_id`, `meta_key`, `meta_value`, `created_timestamp`, `last_modified_timestamp`) VALUES
-(1, 'player_starting_points', '500', '2021-02-20 10:23:43', '2021-02-20 10:23:43');
+(1, 'player_starting_points', '500', '2021-02-20 10:23:43', '2021-02-20 10:23:43'),
+(2, 'min_challenge_amount', '1', '2021-02-22 04:57:11', '2021-02-22 04:57:11'),
+(3, 'max_challenge_amount', '500', '2021-02-22 04:57:11', '2021-02-22 04:57:11');
 
 -- --------------------------------------------------------
 
@@ -225,7 +255,38 @@ INSERT INTO `notifications` (`notif_id`, `notif_for`, `notif_msg`, `notif_status
 (59, 5, 'Challenge ID: 20 has ended with a Dispute.', 'read', '2021-02-19 05:15:15', '2021-02-19 05:31:42'),
 (60, 6, 'Challenge ID: 20 has ended with a Dispute.', 'unread', '2021-02-19 05:15:15', NULL),
 (61, 12, 'USER 5 has accepted your Challenge! Challenge ID: 11.', 'unread', '2021-02-20 08:35:07', NULL),
-(62, 12, 'USER 5 have started the Challenge! Challenge ID: 11.', 'unread', '2021-02-20 08:35:17', NULL);
+(62, 12, 'USER 5 have started the Challenge! Challenge ID: 11.', 'unread', '2021-02-20 08:35:17', NULL),
+(63, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 25.', 'unread', '2021-02-23 06:03:36', NULL),
+(64, 6, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 23.', 'unread', '2021-02-23 06:07:20', NULL),
+(65, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 21.', 'unread', '2021-02-23 06:09:39', NULL),
+(66, 7, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 8.', 'unread', '2021-02-23 06:11:10', NULL),
+(67, 6, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 22.', 'unread', '2021-02-23 06:14:57', NULL),
+(68, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 24.', 'unread', '2021-02-23 06:15:36', NULL),
+(69, 6, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 26.', 'unread', '2021-02-23 06:16:10', NULL),
+(70, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 27.', 'unread', '2021-02-23 06:18:22', NULL),
+(71, 6, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 28.', 'unread', '2021-02-23 06:20:58', NULL),
+(72, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 29.', 'unread', '2021-02-23 06:23:49', NULL),
+(73, 6, 'Challenge # 27 has been accepted by its owner. Your Challenge is set to be played on: 2021-02-27 02:21:00', 'unread', '2021-02-23 10:37:33', NULL),
+(74, 6, 'Challenge # 24 has been accepted by its owner. Your Challenge is set to be played on: 2021-03-06 15:59:00', 'unread', '2021-02-23 11:39:32', NULL),
+(75, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 33.', 'unread', '2021-02-23 11:46:56', NULL),
+(76, 6, 'Challenge # 33 has been accepted by its owner. Your Challenge is set to be played on: 2021-03-05 19:49:00', 'unread', '2021-02-23 11:47:34', NULL),
+(77, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 31.', 'unread', '2021-02-24 04:24:14', NULL),
+(78, 6, 'Challenge # 31 has been Cancelled because the Challenge owner failed to Confirm the Challenge before the set Challenge date and time. The Challenge amount MINUS the service fee have been refunded to both players.', 'unread', '2021-02-24 06:35:58', NULL),
+(79, 5, 'Challenge # 28 has been Cancelled because the Challenge owner failed to Confirm the Challenge before the set Challenge date and time. The Challenge amount MINUS the service fee have been refunded to both players.', 'unread', '2021-02-24 06:40:36', NULL),
+(80, 6, 'Challenge # 29 has been Cancelled because the Challenge owner failed to Confirm the Challenge before the set Challenge date and time. The Challenge amount MINUS the service fee have been refunded to both players.', 'unread', '2021-02-24 06:41:54', NULL),
+(81, 5, 'Challenge # 34 has been Cancelled because nobody Accepted your Challenge before the set Challenge date and time. The Challenge amount MINUS the service fee has been refunded.', 'unread', '2021-02-24 07:19:15', NULL),
+(82, 5, 'Challenge # 30 has been Cancelled because a player Accepted your Challenge after the set Challenge date and time. The Challenge amount MINUS the service fee has been refunded.', 'unread', '2021-02-24 07:23:05', NULL),
+(83, 6, 'Challenge # 32 has been Cancelled because a player Accepted your Challenge after the set Challenge date and time. The Challenge amount MINUS the service fee has been refunded.', 'unread', '2021-02-24 07:24:25', NULL),
+(84, 5, 'Challenge # 35 has been Cancelled because a player Accepted your Challenge after the set Challenge date and time. The Challenge amount MINUS the service fee has been refunded.', 'unread', '2021-02-24 07:26:39', NULL),
+(85, 6, 'Challenge # 21 has been cancelled by its owner.', 'unread', '2021-02-24 10:30:38', NULL),
+(86, 6, 'Challenge # 21 has been Cancelled by its owner. The Challenge amount MINUS the service fee have been refunded back into your Balance.', 'unread', '2021-02-24 10:30:38', NULL),
+(87, 5, 'Challenge # 22 has been Cancelled by its owner. The Challenge amount MINUS the service fee have been refunded back into your Balance.', 'unread', '2021-02-24 10:33:00', NULL),
+(88, 6, 'Challenge # 25 has been Cancelled by its owner. The Challenge amount MINUS the service fee has been refunded back into your Balance.', 'unread', '2021-02-24 10:34:16', NULL),
+(89, 6, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 39.', 'unread', '2021-02-24 10:41:55', NULL),
+(90, 5, 'Challenge # 39 has been Cancelled by its owner. The Challenge amount MINUS the service fee has been refunded back into your Balance.', 'unread', '2021-02-24 10:43:02', NULL),
+(91, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 45.', 'unread', '2021-02-24 11:52:18', NULL),
+(92, 6, 'Challenge # 45 has been Cancelled by its owner. The Challenge amount MINUS the service fee has been refunded back into your Balance.', 'unread', '2021-02-24 11:52:36', NULL),
+(93, 5, 'Challenge # 26 has been Cancelled because the Challenge owner failed to Confirm the Challenge before the set Challenge date and time. The Challenge amount MINUS the service fee have been refunded to both players.', 'unread', '2021-02-24 11:53:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -251,6 +312,31 @@ INSERT INTO `points_difference` (`points_diff_id`, `level_diff`, `points_diff`, 
 (3, 2, 30, '2021-02-20 10:53:38', '2021-02-20 10:53:38'),
 (4, 3, 40, '2021-02-20 10:53:38', '2021-02-20 10:53:38'),
 (5, 4, 50, '2021-02-20 10:53:38', '2021-02-20 10:53:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `service_fees`
+--
+
+CREATE TABLE `service_fees` (
+  `service_fee_id` int(11) NOT NULL,
+  `min_amount` float NOT NULL,
+  `max_amount` float NOT NULL,
+  `service_fee` float NOT NULL,
+  `service_fee_type` varchar(255) NOT NULL,
+  `created_timestamp` timestamp NULL DEFAULT NULL,
+  `last_modified_timestamp` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `service_fees`
+--
+
+INSERT INTO `service_fees` (`service_fee_id`, `min_amount`, `max_amount`, `service_fee`, `service_fee_type`, `created_timestamp`, `last_modified_timestamp`) VALUES
+(1, 1, 3, 0.25, 'dollar', '2021-02-22 04:54:25', '2021-02-22 04:54:25'),
+(2, 3.01, 100, 10, 'percent', '2021-02-22 04:55:48', '2021-02-22 04:55:48'),
+(3, 100.01, 500, 15, 'percent', '2021-02-22 04:55:48', '2021-02-22 04:55:48');
 
 -- --------------------------------------------------------
 
@@ -352,8 +438,8 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `user
 (2, 'user 2', 'first 2', 'last 2', 'test2@email.com', '$2y$10$T/OyHhWYm9zB/ACaTdmamOEZeOTmTPvRho0VQc4xhd8cOzdJgQutK', '0.000000000000000000000000000000', 500),
 (3, 'user 3', 'first 3', 'last 3', 'test3@email.com', '$2y$10$FVoMLEU/M0SVFTw2BU6d9Oineo4RobFNTIelJ3HQcBkGWsVw3Vo5y', '85.000000000000000000000000000000', 500),
 (4, 'user 4', 'first 4', 'last 4', 'test4@email.com', '$2y$10$4a3OLSUtHmewGhh/siaIyuY/CgajvwrsIJ5yf5R.Ch4a/73RaV43e', '25.000000000000000000000000000000', 500),
-(5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '886.452222900000000000000000000000', 500),
-(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '170.456789900000000000000000000000', 500),
+(5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '577.702222900000000000000000000000', 500),
+(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '731.956789900000000000000000000000', 500),
 (7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$0yitpzEV6ofiGi9npHatYO7RbbtWTN.HBaMABQK/kjNMu4U9cwfcy', '905.000000000000000000000000000000', 500),
 (8, 'user 8', 'first 8', 'last 8', 'test07@email.com', '$2y$10$5KKCpf7ER6wMP.lRIZIC5u/HSwldm80iTORIIU0rdIvvNZ/oe7hK6', '0.000000000000000000000000000000', 500),
 (10, 'user new', 'first', 'last', 'new@email.com', '$2y$10$AE0y6PiCn3m/e2iu71rh6.QqGC/665Zkx8t3FeVoSL/FsULmTzusW', '0.000000000000000000000000000000', 500),
@@ -432,6 +518,12 @@ ALTER TABLE `points_difference`
   ADD PRIMARY KEY (`points_diff_id`);
 
 --
+-- Indexes for table `service_fees`
+--
+ALTER TABLE `service_fees`
+  ADD PRIMARY KEY (`service_fee_id`);
+
+--
 -- Indexes for table `skill_levels`
 --
 ALTER TABLE `skill_levels`
@@ -469,31 +561,37 @@ ALTER TABLE `withdrawal_log`
 -- AUTO_INCREMENT for table `challenges_log`
 --
 ALTER TABLE `challenges_log`
-  MODIFY `challenge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `challenge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `deposit_log`
 --
 ALTER TABLE `deposit_log`
-  MODIFY `deposit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `deposit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `meta_data`
 --
 ALTER TABLE `meta_data`
-  MODIFY `meta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `meta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `points_difference`
 --
 ALTER TABLE `points_difference`
   MODIFY `points_diff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `service_fees`
+--
+ALTER TABLE `service_fees`
+  MODIFY `service_fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `skill_levels`
