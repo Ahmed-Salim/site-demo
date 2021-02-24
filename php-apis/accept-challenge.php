@@ -7,6 +7,9 @@ include_once './clean-input.php';
 
 $response_msg = array();
 
+$response_msg['status'] = '';
+$response_msg['description'] = '';
+
 if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
     if (empty($_POST["challenge-id"])) {
         $response_msg['status'] = 'error';
@@ -121,11 +124,11 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                 $sql6 = "UPDATE users SET balance = (balance + $refund_amount) WHERE id = $challenge_by";
 
                                 if (mysqli_query($conn, $sql6)) {
-                                    $response_msg['status'] = 'error';
-                                    $response_msg['description'] .= $refund_msg;
+                                    //$response_msg['status'] = 'error';
+                                    //$response_msg['description'] .= $refund_msg;
 
                                     $notif_for = $challenge_by;
-                                    $notif_msg = 'Challenge # ' . $row['challenge_id'] . ' has been Cancelled because nobody Accepted your Challenge before the set Challenge date and time. The Challenge amount MINUS the service fee has been refunded.';
+                                    $notif_msg = 'Challenge # ' . $row['challenge_id'] . ' has been Cancelled because a player Accepted your Challenge after the set Challenge date and time. The Challenge amount MINUS the service fee has been refunded.';
 
                                     $sql7 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
 

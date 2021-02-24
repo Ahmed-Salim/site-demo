@@ -18,7 +18,7 @@ acceptChallengeButtons.forEach(function (acceptChallengeButton, currentIndex, li
                 if (JSON.parse(event.target.responseText).status === 'success') {
                     window.location.href = "../challenges";
                 } else {
-                    acceptChallengeButton.disabled = false;
+                    location.reload();
                 }
             });
 
