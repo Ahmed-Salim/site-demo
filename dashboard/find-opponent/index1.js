@@ -2,7 +2,7 @@ const acceptChallengeButtons = document.querySelectorAll('.accept-challenge-butt
 
 acceptChallengeButtons.forEach(function (acceptChallengeButton, currentIndex, listObj) {
     acceptChallengeButton.addEventListener('click', () => {
-        if (window.confirm("Are you sure you want to Accept this Challenge ?\nAccepting this Challenge will DEDUCT the Challenge ammount from your Balance.\nPress (OK) to Accept or (Cancel) to return back.")) {
+        if (window.confirm("Are you sure you want to Accept this Challenge ?\nAccepting this Challenge will DEDUCT the Challenge amount from your Balance.\nPress (OK) to Accept or (Cancel) to return back.")) {
             const XHR = new XMLHttpRequest();
             const FD = new FormData();
 
