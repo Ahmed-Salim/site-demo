@@ -90,11 +90,11 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                             $response_msg['status'] = 'error';
                             $response_msg['description'] .= 'Error: Challenge date time has been exceeded! This Challenge can no longer be Accepted!';
 
-                            $sql4 = "UPDATE challenges_log SET status = 'cancelled', cancelled_timestamp = NOW(), comments = 'Challenge date time exceeded' WHERE challenge_id = $challenge_id";
+                            $sql4 = "UPDATE challenges_log SET status = 'reset', reset_timestamp = NOW(), comments = 'Challenge date time exceeded' WHERE challenge_id = $challenge_id";
 
                             if (mysqli_query($conn, $sql4)) {
                                 $response_msg['status'] = 'error';
-                                $response_msg['description'] .= 'Error: Challenge cancelled!';
+                                $response_msg['description'] .= 'Error: Challenge Reset! The Challenge owner will have to Re-Open the Challenge.';
 
                                 $challenge_amount = $row['amount'];
 
@@ -115,10 +115,10 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 
                                 if ($service_fee_type === 'dollar') {
                                     $refund_amount = $challenge_amount - $service_fee;
-                                    $refund_msg = 'The Challenge amount MINUS the service fee has been refunded to the Challenge owner. ($' . $challenge_amount . ' - $' . $service_fee . ') = $' . $refund_amount;
+                                    //$refund_msg = 'The Challenge amount MINUS the service fee has been refunded to the Challenge owner. ($' . $challenge_amount . ' - $' . $service_fee . ') = $' . $refund_amount;
                                 } else {
                                     $refund_amount = $challenge_amount - ($challenge_amount * ($service_fee / 100));
-                                    $refund_msg = 'The Challenge amount MINUS the service fee has been refunded to the Challenge owner. ($' . $challenge_amount . ' - ' . $service_fee . '%) = $' . $refund_amount;
+                                    //$refund_msg = 'The Challenge amount MINUS the service fee has been refunded to the Challenge owner. ($' . $challenge_amount . ' - ' . $service_fee . '%) = $' . $refund_amount;
                                 }
 
                                 $sql6 = "UPDATE users SET balance = (balance + $refund_amount) WHERE id = $challenge_by";
@@ -128,7 +128,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                                     //$response_msg['description'] .= $refund_msg;
 
                                     $notif_for = $challenge_by;
-                                    $notif_msg = 'Challenge # ' . $row['challenge_id'] . ' has been Cancelled because a player Accepted your Challenge after the set Challenge date and time. The Challenge amount MINUS the service fee has been refunded.';
+                                    $notif_msg = 'Challenge # ' . $row['challenge_id'] . ' has been Reset because a player Accepted your Challenge after the set Challenge date and time. You can re-open the Challenge from your Challenges page. The Challenge amount MINUS the service fee has been refunded back into your Balance.';
 
                                     $sql7 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
 
