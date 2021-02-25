@@ -101,7 +101,7 @@
 
                 $user_id = $_SESSION['id'];
 
-                $sql = "SELECT COUNT(*) AS open_count FROM challenges_log WHERE challenge_by = $user_id AND status = 'open'";
+                $sql = "SELECT COUNT(*) AS open_count FROM challenges_log WHERE challenge_by = $user_id AND (status = 'open' OR status = 'reset')";
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
@@ -114,12 +114,12 @@
 
                 ?>
 
-                Open
+                Open / Reset
             </h1>
 
             <?php
 
-            $sql4 = "SELECT * FROM challenges_log WHERE challenge_by = $user_id AND status = 'open' ORDER BY created_timestamp DESC";
+            $sql4 = "SELECT * FROM challenges_log WHERE challenge_by = $user_id AND (status = 'open' OR status = 'reset') ORDER BY created_timestamp DESC";
             $result4 = mysqli_query($conn, $sql4);
 
             if (mysqli_num_rows($result4) > 0) {
@@ -149,21 +149,69 @@
                                         <th scope="row">Rules</th>
                                         <td><?php echo $row4['rules']; ?></td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">Challenge Date</th>
-                                        <td><?php echo $row4['challenge_date']; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Challenge Time</th>
-                                        <td><?php echo $row4['challenge_time']; ?></td>
-                                    </tr>
+
+                                    <?php if ($row4['status'] === 'open') { ?>
+                                        <tr>
+                                            <th scope="row">Challenge Date</th>
+                                            <td><?php echo $row4['challenge_date']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Challenge Time</th>
+                                            <td><?php echo $row4['challenge_time']; ?></td>
+                                        </tr>
                                 </tbody>
                             </table>
                             <p class="card-text">Waiting For Someone To Accept Your Challenge...</p>
                             <button type="button" class="cancel-challenge btn btn-secondary" data-challenge-id="<?php echo $row4['challenge_id']; ?>">Cancel</button>
+
+                        <?php } else { ?>
+
+                            <tr>
+                                <th scope="row">Comments</th>
+                                <td><?php echo $row4['comments']; ?></td>
+                            </tr>
+                            </tbody>
+                            </table>
+
+                            <form class="reopen-challenge-form">
+                                <fieldset>
+                                    <input type="hidden" name="challenge-id" value="<?php echo $row4['challenge_id']; ?>">
+
+                                    <div class="form-floating mb-3">
+                                        <input type="date" class="form-control" id="reopen-challenge-date" name="reopen-challenge-date" placeholder="Re Open Challenge Date" required>
+                                        <label for="reopen-challenge-date">Re Open Challenge Date</label>
+                                        <div class="form-text">Challenge Date Must be Greater than Today</div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="time" class="form-control" id="reopen-challenge-time" name="reopen-challenge-time" placeholder="Re Open Challenge Time" required>
+                                        <label for="reopen-challenge-time">Re Open Challenge Time</label>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Re Open</button>
+                                    <button type="button" class="cancel-challenge btn btn-secondary" data-challenge-id="<?php echo $row4['challenge_id']; ?>">Cancel</button>
+                                </fieldset>
+                            </form>
+
+                        <?php } ?>
+
                         </div>
                         <div class="card-footer text-muted">
                             Date Created: <?php echo $row4['created_timestamp']; ?>
+                            <br />
+
+                            <?php if (!empty($row4['reset_timestamp']) && !is_null($row4['reset_timestamp'])) { ?>
+
+                                Reset Date: <?php echo $row4['reset_timestamp']; ?>
+                                <br />
+
+                            <?php } ?>
+
+                            <?php if (!empty($row4['reopen_timestamp']) && !is_null($row4['reopen_timestamp'])) { ?>
+
+                                Re-Open Date: <?php echo $row4['reopen_timestamp']; ?>
+
+                            <?php } ?>
+
                         </div>
                     </div>
 

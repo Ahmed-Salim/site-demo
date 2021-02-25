@@ -27,7 +27,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 if ($row['challenge_by'] === $cancel_by_id) {
-                    if ($row['status'] === 'open' || $row['status'] === 'accepted') {
+                    if ($row['status'] === 'open' || $row['status'] === 'reset' || $row['status'] === 'accepted') {
                         $sql2 = "UPDATE challenges_log SET status = 'cancelled', cancelled_timestamp = NOW(), comments = 'Challenge cancelled by owner' WHERE challenge_id = $challenge_id";
 
                         if (mysqli_query($conn, $sql2)) {
@@ -60,7 +60,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                                 $refund_msg = 'The Challenge amount MINUS the service fee has been refunded. ($' . $challenge_amount . ' - ' . $service_fee . '%) = $' . $refund_amount;
                             }
 
-                            if ($row['status'] === 'open') {
+                            if ($row['status'] === 'open' || $row['status'] === 'reset') {
                                 $sql6 = "UPDATE users SET balance = (balance + $refund_amount) WHERE id = $challenge_by";
                             } else {
                                 $sql6 = "UPDATE users SET balance = (balance + $refund_amount) WHERE id = $challenge_by OR id = $accepted_by";
@@ -95,7 +95,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                         }
                     } else {
                         $response_msg['status'] = 'error';
-                        $response_msg['description'] .= 'Error: Only Open or Accepted Challenges can be cancelled!';
+                        $response_msg['description'] .= 'Error: Only Open, Reset or Accepted Challenges can be cancelled!';
                     }
                 } else {
                     $response_msg['status'] = 'error';

@@ -101,7 +101,7 @@ include '../../header.php';
 
                     <?php
 
-                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id AND status = 'open' ORDER BY challenges_log.created_timestamp DESC";
+                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id AND status = 'open' ORDER BY GREATEST(challenges_log.created_timestamp, challenges_log.reopen_timestamp) DESC";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -168,7 +168,17 @@ include '../../header.php';
                                     <button type="button" class="accept-challenge-button btn btn-primary" data-challenge-id="<?php echo $row['challenge_id']; ?>">Accept</button>
                                 </div>
 
-                                <div class="card-footer text-muted"><?php echo 'Created: ' . $row['created_timestamp']; ?></div>
+                                <div class="card-footer text-muted">
+                                    <?php echo 'Created: ' . $row['created_timestamp']; ?>
+                                    <br />
+
+                                    <?php if (!empty($row['reopen_timestamp']) && !is_null($row['reopen_timestamp'])) { ?>
+
+                                        Re-Open Date: <?php echo $row['reopen_timestamp']; ?>
+
+                                    <?php } ?>
+
+                                </div>
                             </div>
 
                     <?php

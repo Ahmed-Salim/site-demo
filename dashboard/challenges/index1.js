@@ -8,6 +8,54 @@ const challengeDate = document.querySelector('#challenge-date');
 const confirmChallengeButtons = document.querySelectorAll('button.confirm-challenge');
 const cancelChallengeButtons = document.querySelectorAll('button.cancel-challenge');
 
+const reopenChallengeForms = document.querySelectorAll('.reopen-challenge-form');
+
+window.addEventListener('load', (event) => {
+    reopenChallengeForms.forEach(function (reopenChallengeForm) {
+        let today = new Date();
+        reopenChallengeForm.querySelector('input#reopen-challenge-date').setAttribute('min', new Date(today.setDate(today.getDate() + 1)).toISOString().slice(0, 10))
+    });
+});
+
+reopenChallengeForms.forEach(function (reopenChallengeForm) {
+    reopenChallengeForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (window.confirm('Are you sure you want to Re-Open this Challenge ?\nRe-Opening this Challenge will deduct the Challenge amount from your Balance.\nPress (OK) to Re-Open or (Cancel) to return back.')) {
+            const XHR = new XMLHttpRequest();
+
+            // Bind the FormData object and the form element
+            const FD = new FormData(reopenChallengeForm);
+
+            reopenChallengeForm.querySelector('fieldset').disabled = true;
+            reopenChallengeForm.querySelector('button[type="submit"]').disabled = true;
+            reopenChallengeForm.querySelector('button.cancel-challenge').disabled = true;
+
+            // Define what happens on successful data submission
+            XHR.addEventListener("load", function (event) {
+                alert(JSON.parse(event.target.responseText).description);
+
+                location.reload();
+            });
+
+            // Define what happens in case of error
+            XHR.addEventListener("error", function (event) {
+                alert('Oops! Something went wrong.');
+
+                reopenChallengeForm.querySelector('fieldset').disabled = false;
+                reopenChallengeForm.querySelector('button[type="submit"]').disabled = false;
+                reopenChallengeForm.querySelector('button.cancel-challenge').disabled = false;
+            });
+
+            // Set up our request
+            XHR.open("POST", "../../php-apis/reopen-challenge.php");
+
+            // The data sent is what the user provided in the form
+            XHR.send(FD);
+        } else {
+        }
+    });
+});
+
 confirmChallengeButtons.forEach(function (confirmChallengeButton, currentIndex, listObj) {
     confirmChallengeButton.addEventListener('click', (event) => {
         if (window.confirm("Are you sure you want to confirm this Challenge ?\nOnce a Challenge is confirmed it can no longer be cancelled.\nPress (OK) to confirm or (Cancel) to return back.")) {
