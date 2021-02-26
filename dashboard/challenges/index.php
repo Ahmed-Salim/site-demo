@@ -119,7 +119,7 @@
 
             <?php
 
-            $sql4 = "SELECT * FROM challenges_log WHERE challenge_by = $user_id AND (status = 'open' OR status = 'reset') ORDER BY created_timestamp DESC";
+            $sql4 = "SELECT * FROM challenges_log WHERE challenge_by = $user_id AND (status = 'open' OR status = 'reset') ORDER BY GREATEST(COALESCE(created_timestamp, 0), COALESCE(reopen_timestamp, 0)) DESC";
             $result4 = mysqli_query($conn, $sql4);
 
             if (mysqli_num_rows($result4) > 0) {
@@ -349,6 +349,14 @@
                         <div class="card-footer text-muted">
                             Date Created: <?php echo $row5['created_timestamp']; ?>
                             <br />
+                            <?php if (!empty($row5['reset_timestamp']) && !is_null($row5['reset_timestamp'])) { ?>
+                                Reset Date: <?php echo $row5['reset_timestamp']; ?>
+                                <br />
+                            <?php } ?>
+                            <?php if (!empty($row5['reopen_timestamp']) && !is_null($row5['reopen_timestamp'])) { ?>
+                                Re-Open Date: <?php echo $row5['reopen_timestamp']; ?>
+                                <br />
+                            <?php } ?>
                             Date Accepted: <?php echo $row5['accepted_timestamp']; ?>
                         </div>
                     </div>
@@ -478,6 +486,14 @@
                         <div class="card-footer text-muted">
                             Date Created: <?php echo $row5['created_timestamp']; ?>
                             <br />
+                            <?php if (!empty($row5['reset_timestamp']) && !is_null($row5['reset_timestamp'])) { ?>
+                                Reset Date: <?php echo $row5['reset_timestamp']; ?>
+                                <br />
+                            <?php } ?>
+                            <?php if (!empty($row5['reopen_timestamp']) && !is_null($row5['reopen_timestamp'])) { ?>
+                                Re-Open Date: <?php echo $row5['reopen_timestamp']; ?>
+                                <br />
+                            <?php } ?>
                             Date Accepted: <?php echo $row5['accepted_timestamp']; ?>
                             <br />
                             Date Confirmed: <?php echo $row5['confirmed_timestamp']; ?>
