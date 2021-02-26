@@ -4,28 +4,28 @@ challengeResultButtons.forEach((challengeResultButton) => {
     challengeResultButton.addEventListener('click', () => {
         alert(challengeResultButton.dataset.result + ' | ' + challengeResultButton.dataset.challengeId);
 
-        const XHR = new XMLHttpRequest();
-        const FD = new FormData();
+        // const XHR = new XMLHttpRequest();
+        // const FD = new FormData();
 
-        // Push our data into our FormData object
-        FD.append('challenge-id', challengeId);
-        FD.append('result', result);
+        // // Push our data into our FormData object
+        // FD.append('challenge-id', challengeId);
+        // FD.append('result', result);
 
-        // Define what happens on successful data submission
-        XHR.addEventListener('load', function (event) {
-            alert('Yeah! Data sent and response loaded.');
-        });
+        // // Define what happens on successful data submission
+        // XHR.addEventListener('load', function (event) {
+        //     alert('Yeah! Data sent and response loaded.');
+        // });
 
-        // Define what happens in case of error
-        XHR.addEventListener(' error', function (event) {
-            alert('Oops! Something went wrong.');
-        });
+        // // Define what happens in case of error
+        // XHR.addEventListener(' error', function (event) {
+        //     alert('Oops! Something went wrong.');
+        // });
 
-        // Set up our request
-        XHR.open('POST', 'https://example.com/cors.php');
+        // // Set up our request
+        // XHR.open('POST', 'https://example.com/cors.php');
 
-        // Send our FormData object; HTTP headers are set automatically
-        XHR.send(FD);
+        // // Send our FormData object; HTTP headers are set automatically
+        // XHR.send(FD);
     });
 });
 
