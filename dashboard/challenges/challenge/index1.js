@@ -1,82 +1,113 @@
-const startChallengeButton = document.querySelector('button.start-challenge');
-const winButton = document.querySelector('button#win-button');
-const loseButton = document.querySelector('button#lose-button');
-let url = new URL(window.location.href);
-let challengeId = url.searchParams.get("challenge-id");
+const challengeResultButtons = document.querySelectorAll('button.challenge-result');
 
+challengeResultButtons.forEach((challengeResultButton) => {
+    challengeResultButton.addEventListener('click', () => {
+        alert(challengeResultButton.dataset.result + ' | ' + challengeResultButton.dataset.challengeId);
 
-if (document.body.contains(document.querySelector('button#win-button'))) {
-    winButton.addEventListener('click', (event) => {
-        claimResult('win');
-    });
-}
-
-if (document.body.contains(document.querySelector('button#lose-button'))) {
-    loseButton.addEventListener('click', (event) => {
-        claimResult('lose');
-    });
-}
-
-if (document.body.contains(document.querySelector('button.start-challenge'))) {
-    startChallengeButton.addEventListener('click', (event) => {
         const XHR = new XMLHttpRequest();
         const FD = new FormData();
 
         // Push our data into our FormData object
-        FD.append('challenge_id', startChallengeButton.dataset.challenge_id);
-
-        startChallengeButton.disabled = true;
+        FD.append('challenge-id', challengeId);
+        FD.append('result', result);
 
         // Define what happens on successful data submission
         XHR.addEventListener('load', function (event) {
-            alert(event.target.responseText);
-
-            location.reload();
+            alert('Yeah! Data sent and response loaded.');
         });
 
         // Define what happens in case of error
-        XHR.addEventListener('error', function (event) {
+        XHR.addEventListener(' error', function (event) {
             alert('Oops! Something went wrong.');
-
-            startChallengeButton.disabled = false;
         });
 
         // Set up our request
-        XHR.open('POST', '../../../php-apis/start-challenge.php');
+        XHR.open('POST', 'https://example.com/cors.php');
 
         // Send our FormData object; HTTP headers are set automatically
         XHR.send(FD);
     });
-}
+});
 
-function claimResult(claim) {
-    const XHR = new XMLHttpRequest();
-    const FD = new FormData();
+// const startChallengeButton = document.querySelector('button.start-challenge');
+// const winButton = document.querySelector('button#win-button');
+// const loseButton = document.querySelector('button#lose-button');
+// let url = new URL(window.location.href);
+// let challengeId = url.searchParams.get("challenge-id");
 
-    // Push our data into our FormData object
-    FD.append('claim', claim);
-    FD.append('challengeId', challengeId);
 
-    winButton.disabled = true;
-    loseButton.disabled = true;
+// if (document.body.contains(document.querySelector('button#win-button'))) {
+//     winButton.addEventListener('click', (event) => {
+//         claimResult('win');
+//     });
+// }
 
-    // Define what happens on successful data submission
-    XHR.addEventListener('load', function (event) {
-        alert(event.target.responseText);
+// if (document.body.contains(document.querySelector('button#lose-button'))) {
+//     loseButton.addEventListener('click', (event) => {
+//         claimResult('lose');
+//     });
+// }
 
-        location.reload();
-    });
+// if (document.body.contains(document.querySelector('button.start-challenge'))) {
+//     startChallengeButton.addEventListener('click', (event) => {
+//         const XHR = new XMLHttpRequest();
+//         const FD = new FormData();
 
-    // Define what happens in case of error
-    XHR.addEventListener('error', function (event) {
-        alert('Oops! Something went wrong.');
+//         // Push our data into our FormData object
+//         FD.append('challenge_id', startChallengeButton.dataset.challenge_id);
 
-        startChallengeButton.disabled = false;
-    });
+//         startChallengeButton.disabled = true;
 
-    // Set up our request
-    XHR.open('POST', '../../../php-apis/claim-challenge-result.php');
+//         // Define what happens on successful data submission
+//         XHR.addEventListener('load', function (event) {
+//             alert(event.target.responseText);
 
-    // Send our FormData object; HTTP headers are set automatically
-    XHR.send(FD);
-}
+//             location.reload();
+//         });
+
+//         // Define what happens in case of error
+//         XHR.addEventListener('error', function (event) {
+//             alert('Oops! Something went wrong.');
+
+//             startChallengeButton.disabled = false;
+//         });
+
+//         // Set up our request
+//         XHR.open('POST', '../../../php-apis/start-challenge.php');
+
+//         // Send our FormData object; HTTP headers are set automatically
+//         XHR.send(FD);
+//     });
+// }
+
+// function claimResult(claim) {
+//     const XHR = new XMLHttpRequest();
+//     const FD = new FormData();
+
+//     // Push our data into our FormData object
+//     FD.append('claim', claim);
+//     FD.append('challengeId', challengeId);
+
+//     winButton.disabled = true;
+//     loseButton.disabled = true;
+
+//     // Define what happens on successful data submission
+//     XHR.addEventListener('load', function (event) {
+//         alert(event.target.responseText);
+
+//         location.reload();
+//     });
+
+//     // Define what happens in case of error
+//     XHR.addEventListener('error', function (event) {
+//         alert('Oops! Something went wrong.');
+
+//         startChallengeButton.disabled = false;
+//     });
+
+//     // Set up our request
+//     XHR.open('POST', '../../../php-apis/claim-challenge-result.php');
+
+//     // Send our FormData object; HTTP headers are set automatically
+//     XHR.send(FD);
+// }

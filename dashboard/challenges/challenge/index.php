@@ -1,208 +1,244 @@
 <?php include '../../../header.php'; ?>
 
-<?php
+<div class="container my-5">
+    <div class="row">
+        <div class="col">
 
-if (isset($_GET['challenge-id']) && !empty($_GET['challenge-id'])) {
-    include_once '../../../php-apis/db-config.php';
-    include_once '../../../php-apis/clean-input.php';
+            <?php if (empty($_GET['challenge-id']) || is_null($_GET['challenge-id'])) { ?>
 
-    $challenge_id = mysqli_real_escape_string($conn, clean_input($_GET["challenge-id"]));
-
-?>
-
-    <div class="container my-5">
-        <h1 class="text-center my-5"><?php echo 'Challenge ID: ' . $challenge_id; ?></h1>
-
-        <?php
-
-        $sql = "SELECT * FROM challenges_log WHERE challenge_id = $challenge_id";
-        $result = mysqli_query($conn, $sql);
-
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-
-        ?>
-
-                <h2 class="text-center"><?php echo (($row['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row['game']))) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?></h2>
-
-                <table class="table table-borderless text-center fs-4">
-                    <tbody>
-                        <tr>
-                            <th scope="row" class="text-uppercase">
-                                <?php
-
-                                $challenge_by = $row['challenge_by'];
-
-                                $sql2 = "SELECT * FROM users WHERE id = $challenge_by";
-                                $result2 = mysqli_query($conn, $sql2);
-
-                                if (mysqli_num_rows($result2) > 0) {
-                                    while ($row2 = mysqli_fetch_assoc($result2)) {
-                                        echo $row2['username'];
-                                    }
-                                } else {
-                                    echo "<p class='text-danger'>User Not Found!</p>";
-                                }
-
-                                ?>
-                            </th>
-                            <th scope="row">VS</th>
-                            <th scope="row" class="text-uppercase">
-                                <?php
-
-                                $accepted_by = $row['accepted_by'];
-
-                                $sql3 = "SELECT * FROM users WHERE id = $accepted_by";
-                                $result3 = mysqli_query($conn, $sql3);
-
-                                if (mysqli_num_rows($result3) > 0) {
-                                    while ($row3 = mysqli_fetch_assoc($result3)) {
-                                        echo $row3['username'];
-                                    }
-                                } else {
-                                    echo "<p class='text-danger'>User Not Found!</p>";
-                                }
-
-                                ?>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td><?php echo '$' . $row['amount']; ?></td>
-                            <td></td>
-                            <td><?php echo '$' . $row['amount']; ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo 'Created Time: ' . $row['created_timestamp']; ?></td>
-                            <td></td>
-                            <td><?php echo 'Accepted Time: ' . $row['accepted_timestamp']; ?></td>
-                        </tr>
-                        <tr class="text-center">
-                            <th colspan="3">Game Mode</th>
-                        </tr>
-                        <tr class="text-center">
-                            <td colspan="3"><?php echo $row['game_mode']; ?></td>
-                        </tr>
-                        <tr class="text-center">
-                            <th colspan="3">Rules</th>
-                        </tr>
-                        <tr class="text-center">
-                            <td colspan="3"><?php echo $row['rules']; ?></td>
-                        </tr>
-                        <tr class="text-center">
-                            <th colspan="3">Challenge Date</th>
-                        </tr>
-                        <tr class="text-center">
-                            <td colspan="3"><?php echo $row['challenge_date']; ?></td>
-                        </tr>
-                        <tr class="text-center">
-                            <th colspan="3">Challenge Time</th>
-                        </tr>
-                        <tr class="text-center">
-                            <td colspan="3"><?php echo $row['challenge_time']; ?></td>
-                        </tr>
-
-                        <?php
-
-                        if ($_SESSION['id'] === $challenge_by || $_SESSION['id'] === $accepted_by) {
-                            if (($_SESSION['id'] === $challenge_by && !empty($row['challenge_by_start_timestamp']) && !is_null($row['challenge_by_start_timestamp'])) || ($_SESSION['id'] === $accepted_by && !empty($row['accepted_by_start_timestamp']) && !is_null($row['accepted_by_start_timestamp']))) {
-                                $button_disabled = 'disabled';
-                            } else {
-                                $button_disabled = '';
-                            }
-                        ?>
-
-                            <tr>
-                                <td colspan="3">
-                                    <button class="btn btn-primary btn-lg fs-1 text-uppercase start-challenge" data-challenge_id="<?php echo $challenge_id; ?>" <?php echo $button_disabled; ?>>Start</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="3">Start Timestamps</th>
-                            </tr>
-                            <tr>
-                                <td><?php echo $row['challenge_by_start_timestamp']; ?></td>
-                                <td></td>
-                                <td><?php echo $row['accepted_by_start_timestamp']; ?></td>
-                            </tr>
-
-                            <?php
-
-                            if ((!is_null($row['challenge_by_start_timestamp']) && !empty($row['challenge_by_start_timestamp'])) && (!is_null($row['accepted_by_start_timestamp']) && !empty($row['accepted_by_start_timestamp']))) {
-                                if (($_SESSION['id'] === $challenge_by && !is_null($row['challenge_by_claimed_result']) && !empty($row['challenge_by_claimed_result'])) || ($_SESSION['id'] === $accepted_by && !is_null($row['accepted_by_claimed_result']) && !empty($row['accepted_by_claimed_result']))) {
-                                    $claimButtonDisable = 'disabled';
-                                } else {
-                                    $claimButtonDisable = '';
-                                }
-
-                            ?>
-
-                                <tr>
-                                    <td colspan="3">
-                                        <button id="win-button" type="button" class="btn btn-lg btn-success text-uppercase fs-1" <?php echo $claimButtonDisable; ?>>I Won</button>
-                                        <button id="lose-button" type="button" class="btn btn-lg btn-danger text-uppercase fs-1" <?php echo $claimButtonDisable; ?>>I Lost</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th colspan="3">Claimed Results</th>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold text-uppercase">
-                                        <?php echo $row['challenge_by_claimed_result']; ?>
-                                        <br />
-                                        <?php echo $row['challenge_by_claim_timestamp']; ?>
-                                    </td>
-                                    <td></td>
-                                    <td class="fw-bold text-uppercase">
-                                        <?php echo $row['accepted_by_claimed_result']; ?>
-                                        <br />
-                                        <?php echo $row['accepted_by_claim_timestamp']; ?>
-                                    </td>
-                                </tr>
-
-                                <?php
-
-                                if ($row['status'] === 'disputed' || $row['status'] === 'completed') {
-                                    if ($row['status'] === 'disputed') {
-                                        echo '<tr><td colspan="3" class="fs-1 fw-bold text-danger">Results Disputed</td></tr>';
-                                    } else {
-                                        echo '<tr><td colspan="3" class="fs-1 fw-bold text-success">Challenge Completed<br />Challenge Amount Transfered To The Winning Player</td></tr>';
-                                    }
-                                } else {
-                                }
-
-                                ?>
-
-                            <?php
-
-                            } else {
-                            }
-
-                            ?>
-
-                    </tbody>
-                </table>
+                <h1 class="text-center">Challenge ID Missing</h1>
+                <p class="text-center">
+                    <a href="../" class="btn btn-primary">Go Back To Challenges...</a>
+                </p>
 
             <?php } else { ?>
 
-                </tbody>
-                </table>
+                <?php
+
+                include_once '../../../php-apis/db-config.php';
+                include_once '../../../php-apis/clean-input.php';
+
+                $logged_in_player_id = $_SESSION['id'];
+                $challenge_id = mysqli_real_escape_string($conn, clean_input($_GET["challenge-id"]));
+
+                $sql = "SELECT * FROM challenges_log WHERE challenge_id = $challenge_id";
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        if ($row['status'] === 'confirmed') {
+
+                ?>
+
+                            <h1 class="text-center">Challenge # <?php echo $row['challenge_id']; ?></h1>
+
+                            <h2 class="text-center my-5">
+                                <?php echo (($row['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row['game']))) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?>
+                            </h2>
+
+                            <table class="table table-borderless fs-4">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-uppercase text-start fw-bold">
+
+                                            <?php
+
+                                            $challenge_by = $row['challenge_by'];
+
+                                            $sql2 = "SELECT * FROM users WHERE id = $challenge_by";
+                                            $result2 = mysqli_query($conn, $sql2);
+
+                                            if (mysqli_num_rows($result2) > 0) {
+                                                while ($row2 = mysqli_fetch_assoc($result2)) {
+                                                    echo $row2['username'];
+                                                }
+                                            } else {
+                                                echo 'User Not Found!';
+                                            }
+
+                                            ?>
+
+                                        </td>
+                                        <td class="text-center fw-bold">VS</td>
+                                        <td class="text-uppercase text-end fw-bold">
+
+                                            <?php
+
+                                            $accepted_by = $row['accepted_by'];
+
+                                            $sql3 = "SELECT * FROM users WHERE id = $accepted_by";
+                                            $result3 = mysqli_query($conn, $sql3);
+
+                                            if (mysqli_num_rows($result3) > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo $row3['username'];
+                                                }
+                                            } else {
+                                                echo 'User Not Found!';
+                                            }
+
+                                            ?>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" colspan="3">Challenge Amount</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start"><?php echo '$' . $row['amount']; ?></td>
+                                        <td class="text-center"><?php echo '($' . ($row['amount'] * 2) . ')'; ?></td>
+                                        <td class="text-end"><?php echo '$' . $row['amount']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-center">Challenge Date Time</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="3"><?php echo $row['challenge_date'] . ' ' . $row['challenge_time'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" colspan="3">Game Mode</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="3">
+
+                                            <?php
+
+                                            if (empty($row['game_mode']) || is_null($row['game_mode'])) {
+                                                echo 'None';
+                                            } else {
+                                                echo $row['game_mode'];
+                                            }
+
+                                            ?>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" colspan="3">Rules</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="3">
+
+                                            <?php
+
+                                            if (empty($row['rules']) || is_null($row['rules'])) {
+                                                echo 'None';
+                                            } else {
+                                                echo $row['rules'];
+                                            }
+
+                                            ?>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" colspan="3">Timestamps</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="3">
+
+                                            <?php
+
+                                            echo 'Created: ' . $row['created_timestamp'] . '<br />';
+                                            echo (empty($row['reset_timestamp']) || is_null($row['reset_timestamp'])) ? ('') : ('Reset: ' . $row['reset_timestamp'] . '<br />');
+                                            echo (empty($row['reopen_timestamp']) || is_null($row['reopen_timestamp'])) ? ('') : ('Re-Open: ' . $row['reopen_timestamp'] . '<br />');
+                                            echo 'Accepted: ' . $row['accepted_timestamp'] . '<br />';
+                                            echo 'Confirmed: ' . $row['confirmed_timestamp'] . '<br />';
+
+                                            ?>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3">
+                                            <hr />
+                                        </td>
+                                    </tr>
+
+                                    <?php if ($logged_in_player_id === $row['challenge_by'] || $logged_in_player_id === $row['accepted_by']) { ?>
+
+                                        <?php
+
+                                        $sql4 = "SELECT NOW() AS now_timestamp";
+                                        $result4 = mysqli_query($conn, $sql4);
+
+                                        if (mysqli_num_rows($result4) > 0) {
+                                            while ($row4 = mysqli_fetch_assoc($result4)) {
+                                                $now_timestamp = $row4['now_timestamp'];
+                                            }
+                                        } else {
+                                            $now_timestamp = '0000-00-00 00:00:00';
+                                        }
+
+                                        ?>
+
+                                        <?php if (($row['challenge_date'] . ' ' . $row['challenge_time']) > $now_timestamp) { ?>
+
+                                            <tr>
+                                                <td class="text-center" colspan="3">Once the Challenge Starts Both Players Will Have One (1) Hour From The Set Challenge Date Time To Report Their Results</td>
+                                            </tr>
+
+                                        <?php } else { ?>
+
+                                            <tr>
+                                                <td class="text-center fs-1 fw-bold" colspan="3">The Challenge Has Begun!</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-capitalize text-center" colspan="3">You have within one (1) hour from the set challenge date and time to declare your result. Failing to do so will result in a loss</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center" colspan="3">
+                                                    <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-success" data-result="win" data-challenge-id="<?php echo $row['challenge_id']; ?>">I Won</button>
+                                                    <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-danger" data-result="loss" data-challenge-id="<?php echo $row['challenge_id']; ?>">I Lost</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center" colspan="3">
+                                                    <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-secondary" data-result="tie" data-challenge-id="<?php echo $row['challenge_id']; ?>">We Tied</button>
+                                                    <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-dark" data-result="no-play" data-challenge-id="<?php echo $row['challenge_id']; ?>">We Didn’t Play</button>
+                                                </td>
+                                            </tr>
+
+                                        <?php } ?>
+
+                                    <?php } else { ?>
+
+                                        <tr>
+                                            <td class="text-center" colspan="3">You Are Not A Part Of This Chalenge</td>
+                                        </tr>
+
+                                    <?php } ?>
+
+                                </tbody>
+                            </table>
+
+                        <?php } else { ?>
+
+                            <h1 class="text-center">Challenge # <?php echo $row['challenge_id']; ?> Not In Confirmed State</h1>
+                            <p class="text-center">
+                                <a href="../" class="btn btn-primary">Go Back To Challenges...</a>
+                            </p>
+
+                        <?php } ?>
+
+                    <?php } ?>
+
+                <?php } else { ?>
+
+                    <h1 class="text-center">Invalid Challenge ID</h1>
+                    <p class="text-center">
+                        <a href="../" class="btn btn-primary">Go Back To Challenges...</a>
+                    </p>
+
+                <?php } ?>
 
             <?php } ?>
 
-<?php
-
-            }
-        } else {
-            echo "<h2 class='text-center text-danger'>Invalid Challenge ID!</h2>";
-        }
-    } else {
-        echo 'Error: Challenge ID Missing!';
-    }
-
-?>
-
+        </div>
     </div>
+</div>
 
-    <script src="./index1.js"></script>
+<script src="./index1.js"></script>
 
-    <?php include '../../../footer.php'; ?>
+<?php include '../../../footer.php'; ?>

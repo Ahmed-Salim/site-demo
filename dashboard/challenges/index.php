@@ -481,7 +481,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <a href="#" class="btn btn-primary">Go to Challenge...</a>
+                            <a href="./challenge/?challenge-id=<?php echo $row5['challenge_id']; ?>" class="btn btn-primary">Go to Challenge...</a>
                         </div>
                         <div class="card-footer text-muted">
                             Date Created: <?php echo $row5['created_timestamp']; ?>
