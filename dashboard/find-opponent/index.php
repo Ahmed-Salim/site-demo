@@ -101,7 +101,7 @@ include '../../header.php';
 
                     <?php
 
-                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id AND status = 'open' ORDER BY GREATEST(challenges_log.created_timestamp, challenges_log.reopen_timestamp) DESC";
+                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id AND status = 'open' ORDER BY GREATEST(COALESCE(challenges_log.created_timestamp, 0), COALESCE(challenges_log.reopen_timestamp, 0)) DESC";
                     $result = mysqli_query($conn, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -174,7 +174,7 @@ include '../../header.php';
 
                                     <?php if (!empty($row['reopen_timestamp']) && !is_null($row['reopen_timestamp'])) { ?>
 
-                                        Re-Open Date: <?php echo $row['reopen_timestamp']; ?>
+                                        Re-Opened: <?php echo $row['reopen_timestamp']; ?>
 
                                     <?php } ?>
 
