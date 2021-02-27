@@ -150,13 +150,15 @@
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td colspan="3">
-                                            <hr />
-                                        </td>
-                                    </tr>
+                                </tbody>
+                            </table>
 
-                                    <?php if ($logged_in_player_id === $row['challenge_by'] || $logged_in_player_id === $row['accepted_by']) { ?>
+                            <hr />
+
+                            <?php if ($logged_in_player_id === $row['challenge_by'] || $logged_in_player_id === $row['accepted_by']) { ?>
+
+                                <table class="table table-borderless fs-4">
+                                    <tbody>
 
                                         <?php
 
@@ -181,37 +183,76 @@
 
                                         <?php } else { ?>
 
-                                            <tr>
-                                                <td class="text-center fs-1 fw-bold" colspan="3">The Challenge Has Begun!</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-capitalize text-center" colspan="3">You have within one (1) hour from the set challenge date and time to declare your result. Failing to do so will result in a loss</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center" colspan="3">
-                                                    <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-success" data-result="win" data-challenge-id="<?php echo $row['challenge_id']; ?>">I Won</button>
-                                                    <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-danger" data-result="loss" data-challenge-id="<?php echo $row['challenge_id']; ?>">I Lost</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center" colspan="3">
-                                                    <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-secondary" data-result="tie" data-challenge-id="<?php echo $row['challenge_id']; ?>">We Tied</button>
-                                                    <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-dark" data-result="no-play" data-challenge-id="<?php echo $row['challenge_id']; ?>">We Didn’t Play</button>
-                                                </td>
-                                            </tr>
+                                            <?php
+
+                                            if ($logged_in_player_id === $row['challenge_by']) {
+                                                if ((empty($row['challenge_by_claimed_result']) || is_null($row['challenge_by_claimed_result'])) && (empty($row['challenge_by_claim_timestamp']) || is_null($row['challenge_by_claim_timestamp']))) {
+                                                    $result_claimed = false;
+                                                } else {
+                                                    $result_claimed = true;
+                                                }
+                                            } else {
+                                                if ((empty($row['accepted_by_claimed_result']) || is_null($row['accepted_by_claimed_result'])) && (empty($row['accepted_by_claim_timestamp']) || is_null($row['accepted_by_claim_timestamp']))) {
+                                                    $result_claimed = false;
+                                                } else {
+                                                    $result_claimed = true;
+                                                }
+                                            }
+
+                                            ?>
+
+                                            <?php if ($result_claimed) { ?>
+
+                                                <tr>
+                                                    <td class="text-center fs-1 fw-bold" colspan="3">Claimed Results</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="text-uppercase fw-bold text-start"><?php echo $row['challenge_by_claimed_result']; ?></span>
+                                                        <br />
+                                                        <?php echo $row['challenge_by_claim_timestamp']; ?>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <span class="text-uppercase fw-bold text-end"><?php echo $row['accepted_by_claimed_result']; ?></span>
+                                                        <br />
+                                                        <?php echo $row['accepted_by_claim_timestamp']; ?>
+                                                    </td>
+                                                </tr>
+
+                                            <?php } else { ?>
+
+                                                <tr>
+                                                    <td class="text-center fs-1 fw-bold" colspan="3">The Challenge Has Begun!</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-capitalize text-center" colspan="3">You have within one (1) hour from the set challenge date and time to declare your result. Failing to do so will result in a loss</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center" colspan="3">
+                                                        <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-success" data-result="win" data-challenge-id="<?php echo $row['challenge_id']; ?>">I Won</button>
+                                                        <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-danger" data-result="loss" data-challenge-id="<?php echo $row['challenge_id']; ?>">I Lost</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center" colspan="3">
+                                                        <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-secondary" data-result="tie" data-challenge-id="<?php echo $row['challenge_id']; ?>">We Tied</button>
+                                                        <button type="button" class="challenge-result fs-1 text-uppercase btn btn-lg btn-dark" data-result="no-play" data-challenge-id="<?php echo $row['challenge_id']; ?>">We Didn’t Play</button>
+                                                    </td>
+                                                </tr>
+
+                                            <?php } ?>
 
                                         <?php } ?>
 
-                                    <?php } else { ?>
+                                    </tbody>
+                                </table>
 
-                                        <tr>
-                                            <td class="text-center" colspan="3">You Are Not A Part Of This Chalenge</td>
-                                        </tr>
+                            <?php } else { ?>
 
-                                    <?php } ?>
+                                <p class="text-center fs-4">You Are Not A Part Of This Challenge</p>
 
-                                </tbody>
-                            </table>
+                            <?php } ?>
 
                         <?php } else { ?>
 
