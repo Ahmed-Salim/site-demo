@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2021 at 12:53 PM
+-- Generation Time: Feb 27, 2021 at 01:04 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -80,7 +80,7 @@ INSERT INTO `challenges_log` (`challenge_id`, `challenge_by`, `game`, `console`,
 (21, 5, 'fortnite', 'ps4', 100, 'no mod', 'no rules', 'cancelled', 'Challenge cancelled by owner', '2021-02-20 08:25:05', 6, '2021-02-23 06:09:39', NULL, NULL, NULL, '2021-02-24 10:30:38', NULL, NULL, '', '', NULL, NULL),
 (22, 6, 'fifa_21', 'pc', 10, '', '', 'cancelled', 'Challenge cancelled by owner', '2021-02-22 10:00:20', 5, '2021-02-23 06:14:57', '2021-02-23', '15:00:00', NULL, '2021-02-24 10:33:00', NULL, NULL, '', '', NULL, NULL),
 (23, 6, 'fortnite', 'ps4', 15, 'testing123', 'testing123', 'cancelled', 'Challenge cancelled by owner', '2021-02-22 10:01:29', 5, '2021-02-23 06:07:20', '2021-01-26', '15:01:00', NULL, '2021-02-25 11:21:23', '2021-02-25 11:01:23', NULL, '', '', NULL, NULL),
-(24, 5, 'clash_of_clans', 'pc', 250, 'dsas', 'dasdas', 'confirmed', '', '2021-02-22 11:01:14', 6, '2021-02-23 06:15:36', '2021-02-26', '14:59:00', '2021-02-23 11:39:32', NULL, NULL, NULL, '', '', NULL, NULL),
+(24, 5, 'clash_of_clans', 'pc', 250, 'dsas', 'dasdas', 'confirmed', '', '2021-02-22 11:01:14', 6, '2021-02-23 06:15:36', '2021-02-27', '16:59:00', '2021-02-23 11:39:32', NULL, NULL, NULL, 'win', '', '2021-02-27 12:01:15', NULL),
 (25, 5, 'fortnite', 'xbox', 15, 'daasd', 'asdasd', 'cancelled', 'Challenge cancelled by owner', '2021-02-22 11:51:08', 6, '2021-02-23 06:03:36', '2021-02-24', '16:51:00', NULL, '2021-02-24 10:34:16', NULL, NULL, '', '', NULL, NULL),
 (26, 6, 'fifa_21', 'ps4', 15, 'adasd', 'asdasd', 'cancelled', 'Challenge date time exceeded', '2021-02-23 06:15:59', 5, '2021-02-23 06:16:10', '2021-01-26', '11:15:00', NULL, '2021-02-24 11:53:56', NULL, NULL, '', '', NULL, NULL),
 (27, 5, 'fifa_21', 'pc', 25, 'ddgd', 'fgdfgd', 'confirmed', '', '2021-02-23 06:18:08', 6, '2021-02-23 06:18:22', '2021-02-27', '02:21:00', NULL, NULL, NULL, NULL, '', '', NULL, NULL),
