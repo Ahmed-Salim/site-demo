@@ -206,14 +206,14 @@
                                                 <tr>
                                                     <td class="text-center fs-1 fw-bold" colspan="3">Claimed Results</td>
                                                 </tr>
-                                                <tr>
+                                                <tr class="text-start">
                                                     <td>
                                                         <span class="text-uppercase fw-bold text-start"><?php echo $row['challenge_by_claimed_result']; ?></span>
                                                         <br />
                                                         <?php echo $row['challenge_by_claim_timestamp']; ?>
                                                     </td>
                                                     <td></td>
-                                                    <td>
+                                                    <td class="text-end">
                                                         <span class="text-uppercase fw-bold text-end"><?php echo $row['accepted_by_claimed_result']; ?></span>
                                                         <br />
                                                         <?php echo $row['accepted_by_claim_timestamp']; ?>
