@@ -64,6 +64,21 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                                         $response_msg['status'] = 'success';
                                         $response_msg['description'] .= 'Success: Challenge result claimed successfully!';
 
+                                        //Send Notification to Opponent----------------------------------------------------------------------------------------------------------
+
+                                        $notif_for = ($claim_by_id === $row['challenge_by']) ? ($row['accepted_by']) : ($row['challenge_by']);
+                                        $notif_msg = 'Your Opponent have claimed their result for Challenge # ' . $row['challenge_id'] . '.';
+
+                                        $sql3 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                                        if (mysqli_query($conn, $sql3)) {
+                                            $response_msg['status'] = 'error';
+                                            $response_msg['description'] .= 'Success: Notification sent successfully!';
+                                        } else {
+                                            $response_msg['status'] = 'error';
+                                            $response_msg['description'] .= 'Error: ' . mysqli_error($conn);
+                                        }
+
                                         //Determine Challenge Result-------------------------------------------------------------------------------------------------------------
                                     } else {
                                         $response_msg['status'] = 'error';
@@ -82,6 +97,21 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                                     if (mysqli_query($conn, $sql2)) {
                                         $response_msg['status'] = 'error';
                                         $response_msg['description'] .= 'Error: A loss has been declared for You!';
+
+                                        //Send Notification to Opponent----------------------------------------------------------------------------------------------------------
+
+                                        $notif_for = ($claim_by_id === $row['challenge_by']) ? ($row['accepted_by']) : ($row['challenge_by']);
+                                        $notif_msg = 'Your Opponent have claimed their result for Challenge # ' . $row['challenge_id'] . '.';
+
+                                        $sql3 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                                        if (mysqli_query($conn, $sql3)) {
+                                            $response_msg['status'] = 'error';
+                                            $response_msg['description'] .= 'Success: Notification sent successfully!';
+                                        } else {
+                                            $response_msg['status'] = 'error';
+                                            $response_msg['description'] .= 'Error: ' . mysqli_error($conn);
+                                        }
 
                                         //Determine Challenge Result-------------------------------------------------------------------------------------------------------------
                                     } else {
