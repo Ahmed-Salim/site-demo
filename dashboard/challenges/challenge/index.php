@@ -26,7 +26,7 @@
 
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-                        if ($row['status'] === 'confirmed') {
+                        if ($row['status'] === 'confirmed' || $row['status'] === 'completed' || $row['status'] === 'tie' || $row['status'] === 'disputed') {
 
                 ?>
 
@@ -219,6 +219,59 @@
                                                         <?php echo $row['accepted_by_claim_timestamp']; ?>
                                                     </td>
                                                 </tr>
+
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <hr />
+                                                    </td>
+                                                </tr>
+
+                                                <?php if ($row['status'] === 'completed' || $row['status'] === 'tie' || $row['status'] === 'disputed') { ?>
+
+                                                    <tr>
+                                                        <td class="text-center fs-1 fw-bold" colspan="3">The Challenge Has Ended!</td>
+                                                    </tr>
+
+                                                    <?php if ($row['status'] === 'completed') { ?>
+
+                                                        <?php
+
+                                                        if ($row['challenge_by_claimed_result'] === 'win') {
+                                                            $won_by = $row['challenge_by'];
+                                                            $lost_by = $row['accepted_by'];
+                                                        } else {
+                                                            $won_by = $row['accepted_by'];
+                                                            $lost_by = $row['challenge_by'];
+                                                        }
+
+                                                        $sql5 = "SELECT * FROM users WHERE id = $won_by";
+                                                        $result5 = mysqli_query($conn, $sql5);
+
+                                                        if (mysqli_num_rows($result5) > 0) {
+                                                            while ($row5 = mysqli_fetch_assoc($result5)) {
+                                                                $won_by_username = $row5['username'];
+                                                            }
+                                                        } else {
+                                                            $won_by_username = 'User Not Found!';
+                                                        }
+
+                                                        ?>
+
+                                                        <tr>
+                                                            <td class="text-center text-success fs-2 fw-bold" colspan="3">The Challenge Is Won By <?php echo $won_by_username; ?></td>
+                                                        </tr>
+
+                                                    <?php } elseif ($row['status'] === 'tie') { ?>
+                                                        <tr>
+                                                            <td class="text-center text-secondary fs-2 fw-bold" colspan="3">The Challenge Has Ended With A Tie</td>
+                                                        </tr>
+                                                    <?php } else { ?>
+                                                        <tr>
+                                                            <td class="text-center text-danger fs-2 fw-bold" colspan="3">The Challenge Has Ended With A Dispute</td>
+                                                        </tr>
+                                                    <?php } ?>
+
+                                                <?php } ?>
 
                                             <?php } else { ?>
 
