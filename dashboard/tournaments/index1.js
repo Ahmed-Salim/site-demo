@@ -1,10 +1,13 @@
 const createTourneyForm = document.querySelector('#create-tourney-form');
 const createTourneyFieldset = document.querySelector('#create-tourney-form > fieldset');
+const tourneyStartDate = createTourneyForm.querySelector('input[type="date"]');
 const createTourneyButton = document.querySelector('button[form="create-tourney-form"]');
 const tourneyGameSelect = document.querySelector('#tourney-game');
 var createTourneyModal = document.getElementById('createTourneyModal');
 
 createTourneyModal.addEventListener('shown.bs.modal', function (event) {
+    let today = new Date();
+    tourneyStartDate.setAttribute('min', new Date(today.setDate(today.getDate() + 1)).toISOString().slice(0, 10));
     tourneyGameSelect.focus();
 });
 

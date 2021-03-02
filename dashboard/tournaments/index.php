@@ -1,6 +1,4 @@
-<?php
-include '../../header.php';
-?>
+<?php include '../../header.php'; ?>
 
 <link rel="stylesheet" href="./index.css">
 
@@ -17,34 +15,56 @@ include '../../header.php';
                     <fieldset>
                         <div class="row mb-3">
                             <div class="col">
-                                <select class="form-select" aria-label="Default select example" id="tourney-game" name="tourney-game" required>
-                                    <option value="">Select Game</option>
-                                    <option value="fifa_21">FIFA 21</option>
-                                    <option value="fortnite">Fortnite</option>
-                                    <option value="clash_of_clans">Clash of Clans</option>
-                                </select>
-                                <div class="invalid-feedback">Required Field</div>
+                                <div class="form-floating">
+                                    <select class="form-select" id="tourney-game" name="tourney-game" required>
+                                        <option value=""></option>
+                                        <option value="fifa_21">FIFA 21</option>
+                                        <option value="fortnite">Fortnite</option>
+                                        <option value="clash_of_clans">Clash of Clans</option>
+                                    </select>
+                                    <label for="tourney-game" class="text-danger">Tourney Game</label>
+                                    <div class="invalid-feedback">Required Field</div>
+                                </div>
                             </div>
                             <div class="col">
-                                <select class="form-select" aria-label="Default select example" name="tourney-console" required>
-                                    <option value="">Select Console</option>
-                                    <option value="ps4">PS4</option>
-                                    <option value="pc">PC</option>
-                                    <option value="xbox">Xbox</option>
-                                    <option value="nintendo">Nintendo</option>
-                                </select>
-                                <div class="invalid-feedback">Required Field</div>
+                                <div class="form-floating">
+                                    <select class="form-select" id="tourney-console" name="tourney-console" required>
+                                        <option value=""></option>
+                                        <option value="ps4">PS4</option>
+                                        <option value="pc">PC</option>
+                                        <option value="xbox">Xbox</option>
+                                        <option value="nintendo">Nintendo</option>
+                                    </select>
+                                    <label for="tourney-console" class="text-danger">Tourney Console</label>
+                                    <div class="invalid-feedback">Required Field</div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" min="2" class="form-control" id="tourney-players" name="tourney-players" placeholder="# of Players" required>
-                            <div class="invalid-feedback">Minimum 2 Players Required</div>
-                            <label class="text-uppercase" for="tourney-players"># of Players</label>
+                            <input type="number" min="2" step="2" class="form-control" id="tourney-players" name="tourney-players" placeholder="# of Players" required>
+                            <div class="invalid-feedback">Even Number of Players Required. (Minimum 2)</div>
+                            <label class="text-uppercase text-danger" for="tourney-players"># of Players</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" min="10" step="any" class="form-control" id="tourney-amount" name="tourney-amount" placeholder="Amount" required>
-                            <div class="invalid-feedback">Minimum $10 Required</div>
-                            <label class="text-uppercase" for="tourney-amount">Amount</label>
+                            <input type="number" min="1" max="500" class="form-control" id="tourney-amount" name="tourney-amount" placeholder="Amount" required>
+                            <div class="invalid-feedback">Required Field. Between $1 and $500</div>
+                            <label class="text-uppercase text-danger" for="tourney-amount">Amount</label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="tourney-start-date" name="tourney-start-date" placeholder="Start Date" required>
+                                    <label for="tourney-start-date" class="text-danger">Start Date</label>
+                                    <div class="invalid-feedback">Required Field. Date Should Be Greater Than Today</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="time" class="form-control" id="tourney-start-time" name="tourney-start-time" placeholder="Start Time" required>
+                                    <label for="tourney-start-time" class="text-danger">Start Time</label>
+                                    <div class="invalid-feedback">Required Field</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="tourney-game-mode" name="tourney-game-mode" placeholder="SPECIFY GAME MODE (OPTIONAL)">
@@ -163,6 +183,4 @@ include '../../header.php';
 
 <script src="./index1.js"></script>
 
-<?php
-include '../../footer.php';
-?>
+<?php include '../../footer.php'; ?>
