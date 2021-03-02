@@ -122,7 +122,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                                                         if ($challenge_result === 'completed' || $challenge_result === 'tie') {
                                                             $total_challenge_amount = ($row4['amount'] * 2);
 
-                                                            $sql6 = "SELECT * FROM service_fees WHERE $amount BETWEEN min_amount AND max_amount";
+                                                            $sql6 = "SELECT * FROM service_fees WHERE $total_challenge_amount BETWEEN min_amount AND max_amount";
                                                             $result6 = mysqli_query($conn, $sql6);
 
                                                             if (mysqli_num_rows($result6) > 0) {
@@ -298,7 +298,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                                                         if ($challenge_result === 'completed' || $challenge_result === 'tie') {
                                                             $total_challenge_amount = ($row4['amount'] * 2);
 
-                                                            $sql6 = "SELECT * FROM service_fees WHERE $amount BETWEEN min_amount AND max_amount";
+                                                            $sql6 = "SELECT * FROM service_fees WHERE $total_challenge_amount BETWEEN min_amount AND max_amount";
                                                             $result6 = mysqli_query($conn, $sql6);
 
                                                             if (mysqli_num_rows($result6) > 0) {
