@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2021 at 12:49 PM
+-- Generation Time: Mar 04, 2021 at 12:57 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -423,7 +423,8 @@ INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `consol
 (1, 5, 'fifa_21', 'ps4', 10, 10, '2021-03-13', '17:55:00', '', '', 'open', '2021-03-02 12:55:49'),
 (2, 5, 'fortnite', 'pc', 15, 14, '2021-03-26', '17:57:00', '', '', 'open', '2021-03-02 12:57:09'),
 (3, 5, 'clash_of_clans', 'xbox', 20, 20, '2021-03-20', '17:58:00', '', '', 'open', '2021-03-02 12:58:13'),
-(4, 5, 'fifa_21', 'ps4', 30, 30, '2021-03-20', '18:01:00', 'testing 123', 'testing 123', 'open', '2021-03-02 13:02:06');
+(4, 5, 'fifa_21', 'ps4', 30, 30, '2021-03-20', '18:01:00', 'testing 123', 'testing 123', 'open', '2021-03-02 13:02:06'),
+(5, 6, 'fortnite', 'ps4', 10, 10, '2021-03-18', '10:57:00', 'sadhkjasdh', 'kjhasdkjh', 'open', '2021-03-04 05:57:07');
 
 -- --------------------------------------------------------
 
@@ -446,7 +447,8 @@ INSERT INTO `tourney_players` (`serial_number`, `tourney_id`, `player_id`, `ente
 (1, 1, 5, '2021-03-02 12:55:49'),
 (2, 2, 5, '2021-03-02 12:57:09'),
 (3, 3, 5, '2021-03-02 12:58:13'),
-(4, 4, 5, '2021-03-02 13:02:06');
+(4, 4, 5, '2021-03-02 13:02:06'),
+(5, 5, 6, '2021-03-04 05:57:07');
 
 -- --------------------------------------------------------
 
@@ -475,7 +477,7 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `user
 (3, 'user 3', 'first 3', 'last 3', 'test3@email.com', '$2y$10$FVoMLEU/M0SVFTw2BU6d9Oineo4RobFNTIelJ3HQcBkGWsVw3Vo5y', '85.000000000000000000000000000000', 500),
 (4, 'user 4', 'first 4', 'last 4', 'test4@email.com', '$2y$10$4a3OLSUtHmewGhh/siaIyuY/CgajvwrsIJ5yf5R.Ch4a/73RaV43e', '25.000000000000000000000000000000', 500),
 (5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '540.702222900000000000000000000000', 510),
-(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '752.456789900000000000000000000000', 490),
+(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '742.456789900000000000000000000000', 490),
 (7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$0yitpzEV6ofiGi9npHatYO7RbbtWTN.HBaMABQK/kjNMu4U9cwfcy', '905.000000000000000000000000000000', 500),
 (8, 'user 8', 'first 8', 'last 8', 'test07@email.com', '$2y$10$5KKCpf7ER6wMP.lRIZIC5u/HSwldm80iTORIIU0rdIvvNZ/oe7hK6', '0.000000000000000000000000000000', 500),
 (10, 'user new', 'first', 'last', 'new@email.com', '$2y$10$AE0y6PiCn3m/e2iu71rh6.QqGC/665Zkx8t3FeVoSL/FsULmTzusW', '0.000000000000000000000000000000', 500),
@@ -639,13 +641,13 @@ ALTER TABLE `skill_levels`
 -- AUTO_INCREMENT for table `tournaments_log`
 --
 ALTER TABLE `tournaments_log`
-  MODIFY `tournament_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `tournament_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tourney_players`
 --
 ALTER TABLE `tourney_players`
-  MODIFY `serial_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `serial_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
