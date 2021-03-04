@@ -1,12 +1,134 @@
 const acceptChallengeButtons = document.querySelectorAll('.accept-challenge-button');
+const tourneyPlayersModal = document.getElementById('tourney-players-modal');
+const enterTourneyModal = document.getElementById('enter-tourney-modal');
+const enterTourneyButton = enterTourneyModal.querySelector('button.enter-tourney');
 
-var tourneyPlayersModal = document.getElementById('tourney-players-modal');
+enterTourneyButton.addEventListener('click', () => {
+    const XHR = new XMLHttpRequest();
+    const FD = new FormData();
+
+    // Push our data into our FormData object
+    FD.append('tourney-id', enterTourneyButton.dataset.tourneyId);
+
+    // Define what happens on successful data submission
+    XHR.addEventListener('load', function (event) {
+        alert('Yeah! Data sent and response loaded.');
+    });
+
+    // Define what happens in case of error
+    XHR.addEventListener(' error', function (event) {
+        alert('Oops! Something went wrong.');
+    });
+
+    // Set up our request
+    XHR.open('POST', '../../php-apis/enter-tournament.php');
+
+    // Send our FormData object; HTTP headers are set automatically
+    XHR.send(FD);
+});
+
+enterTourneyModal.addEventListener('hide.bs.modal', function (event) {
+    enterTourneyButton.removeAttribute('data-tourney-id');
+});
+
+enterTourneyModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    let button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    let tourneyId = button.getAttribute('data-bs-tourneyId');
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+
+    let modalTitle = enterTourneyModal.querySelector('.modal-title');
+    let modalBody = enterTourneyModal.querySelector('.modal-body');
+
+    modalTitle.innerHTML = '';
+    modalBody.innerHTML = '';
+
+    const XHR = new XMLHttpRequest();
+    const FD = new FormData();
+
+    // Push our data into our FormData object
+    FD.append('tourney-id', tourneyId);
+
+    // Define what happens on successful data submission
+    XHR.addEventListener('load', function (event) {
+        console.log(event.target.responseText);
+
+        try {
+            let responseMsg = JSON.parse(event.target.responseText);
+
+            if (responseMsg.status === 'success') {
+                let tourney_details = responseMsg.tourney_details;
+
+                let gameConsole = ((tourney_details.game === 'fifa_21') ? (tourney_details.game.replaceAll("_", " ").toUpperCase()) : (tourney_details.game.replaceAll("_", " ").toUpperCase())) + ' - ' + ((tourney_details.console === 'ps4' || tourney_details.console === 'pc') ? (tourney_details.console.toUpperCase()) : (tourney_details.console.toUpperCase()));
+                modalTitle.textContent = 'Enter Tournament # ' + tourney_details.tournament_id + ' (' + gameConsole + ')';
+
+                let p = document.createElement('p');
+                p.textContent = 'Are you sure you want to enter in this Tournament ?';
+                modalBody.appendChild(p);
+
+                let ul = document.createElement('ul');
+
+                let li1 = document.createElement('li');
+                li1.textContent = 'Entering in this Tournament will deduct the Tournament amount from your Balance.';
+                ul.appendChild(li1);
+
+                let li2 = document.createElement('li');
+                li2.textContent = 'You need to have atleast $' + tourney_details.amount + ' in your Balance.';
+                ul.appendChild(li2);
+
+                modalBody.appendChild(ul);
+
+                let p2 = document.createElement('p');
+                p2.textContent = 'Press (Enter Tournament) to continue.';
+                modalBody.appendChild(p2);
+
+                enterTourneyButton.dataset.tourneyId = tourney_details.tournament_id;
+            } else {
+                let span = document.createElement('span');
+                span.classList.add('text-danger');
+                span.textContent = 'Error!';
+                modalTitle.appendChild(span);
+
+                responseMsg.error_msgs.forEach((error_msg) => {
+                    let p = document.createElement('p');
+                    p.classList.add('text-danger');
+                    p.textContent = error_msg;
+                    modalBody.appendChild(p);
+                });
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+    // Define what happens in case of error
+    XHR.addEventListener('error', function (event) {
+        let span = document.createElement('span');
+        span.classList.add('text-danger');
+        span.textContent = 'Error!';
+        modalTitle.appendChild(span);
+
+        let span2 = document.createElement('span');
+        span2.classList.add('text-center', 'text-danger');
+        span2.textContent = 'Oops! Something went wrong. Please try again!';
+        modalBody.appendChild(span2);
+    });
+
+    // Set up our request
+    XHR.open('POST', '../../php-apis/get-tourney-details.php');
+
+    // Send our FormData object; HTTP headers are set automatically
+    XHR.send(FD);
+
+});
 
 tourneyPlayersModal.addEventListener('show.bs.modal', function (event) {
     // Button that triggered the modal
-    var button = event.relatedTarget;
+    let button = event.relatedTarget;
     // Extract info from data-bs-* attributes
-    var tourneyId = button.getAttribute('data-bs-tourneyId');
+    let tourneyId = button.getAttribute('data-bs-tourneyId');
     // If necessary, you could initiate an AJAX request here
     // and then do the updating in a callback.
     //
@@ -30,7 +152,7 @@ tourneyPlayersModal.addEventListener('show.bs.modal', function (event) {
 
             let gameConsole = ((tourney_details.game === 'fifa_21') ? (tourney_details.game.replaceAll("_", " ").toUpperCase()) : (tourney_details.game.replaceAll("_", " ").toUpperCase())) + ' - ' + ((tourney_details.console === 'ps4' || tourney_details.console === 'pc') ? (tourney_details.console.toUpperCase()) : (tourney_details.console.toUpperCase()));
 
-            tourneyPlayersModalTitle.textContent = 'Tournament # ' + tourney_details.tournament_id + ' (' + gameConsole + ')';
+            tourneyPlayersModalTitle.textContent = 'Tournament # ' + tourney_details.tournament_id + ' (' + gameConsole + ') Players';
 
             tourney_details.tourney_players.forEach((tourney_player, index) => {
                 let tr = document.createElement('tr');
@@ -90,7 +212,7 @@ tourneyPlayersModal.addEventListener('show.bs.modal', function (event) {
     });
 
     // Define what happens in case of error
-    XHR.addEventListener(' error', function (event) {
+    XHR.addEventListener('error', function (event) {
         alert('Oops! Something went wrong.');
     });
 

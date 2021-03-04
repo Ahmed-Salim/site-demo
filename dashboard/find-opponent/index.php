@@ -34,6 +34,23 @@ include '../../header.php';
     </div>
 </div>
 
+<!-- Enter Tourney Modal -->
+<div class="modal fade" id="enter-tourney-modal" tabindex="-1" aria-labelledby="enter-tourney-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="enter-tourney-modal-label"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="enter-tourney btn btn-primary">Enter Tournament</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="hero container-fluid bg-dark position-relative">
     <div class="row">
         <div class="col">
@@ -281,7 +298,9 @@ include '../../header.php';
                                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tourney-players-modal" data-bs-tourneyId="<?php echo $row4['tournament_id']; ?>">
                                             Players
                                         </button>
-                                        <button type="button" class="btn btn-primary ms-auto">Enter</button>
+
+                                        <!-- Enter Tourney Button trigger modal -->
+                                        <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#enter-tourney-modal" data-bs-tourneyId="<?php echo $row4['tournament_id']; ?>">Enter</button>
                                     </div>
                                 </div>
                                 <div class="card-footer text-muted">

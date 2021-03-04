@@ -29,6 +29,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                 $tourney_details['tournament_by'] = $row['tournament_by'];
                 $tourney_details['game'] = $row['game'];
                 $tourney_details['console'] = $row['console'];
+                $tourney_details['amount'] = $row['amount'];
 
                 $sql2 = "SELECT * FROM tourney_players INNER JOIN users ON tourney_players.player_id = users.id WHERE tourney_players.tourney_id = $tourney_id";
                 $result2 = mysqli_query($conn, $sql2);
