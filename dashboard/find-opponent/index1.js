@@ -42,7 +42,15 @@ tourneyPlayersModal.addEventListener('show.bs.modal', function (event) {
 
                 let td2 = document.createElement('td');
                 td2.textContent = tourney_player.username.toUpperCase();
+                if (tourney_details.tournament_by === tourney_player.player_id) {
+                    let span = document.createElement('span');
+                    span.classList.add('badge', 'bg-secondary', 'ms-2');
+                    span.textContent = 'Owner';
+                    td2.appendChild(span);
+                } else {
+                }
                 tr.appendChild(td2);
+
 
                 let td3 = document.createElement('td');
                 td3.textContent = tourney_player.skill_level.toUpperCase();

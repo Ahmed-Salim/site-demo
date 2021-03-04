@@ -52,6 +52,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
 
                         $tourney_player = [];
 
+                        $tourney_player['player_id'] = $row2['player_id'];
                         $tourney_player['enter_timestamp'] = $row2['enter_timestamp'];
                         $tourney_player['username'] = $row2['username'];
                         $tourney_player['skill_points'] = $row2['skill_points'];
