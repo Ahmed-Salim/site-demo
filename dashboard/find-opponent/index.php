@@ -4,6 +4,36 @@ include '../../header.php';
 
 <link rel="stylesheet" href="./index.css">
 
+<!-- Tourney Players Modal -->
+<div class="modal fade" id="tourney-players-modal" tabindex="-1" aria-labelledby="tourney-players-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tourney-players-modal-label"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Player Username</th>
+                            <th scope="col">Skill Level</th>
+                            <th scope="col">Skill Points</th>
+                            <th scope="col">Entered Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="hero container-fluid bg-dark position-relative">
     <div class="row">
         <div class="col">
@@ -59,12 +89,12 @@ include '../../header.php';
 
                             $user_id = $_SESSION['id'];
 
-                            $sql = "SELECT COUNT(*) AS total_tournaments FROM tournaments_log WHERE tournament_by <> $user_id";
-                            $result = mysqli_query($conn, $sql);
+                            $sql2 = "SELECT COUNT(*) AS total_tournaments FROM tournaments_log WHERE tournament_by <> $user_id";
+                            $result2 = mysqli_query($conn, $sql2);
 
-                            if (mysqli_num_rows($result) > 0) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo $row['total_tournaments'];
+                            if (mysqli_num_rows($result2) > 0) {
+                                while ($row2 = mysqli_fetch_assoc($result2)) {
+                                    echo $row2['total_tournaments'];
                                 }
                             } else {
                                 echo "0";
@@ -101,12 +131,12 @@ include '../../header.php';
 
                     <?php
 
-                    $sql = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id AND status = 'open' ORDER BY GREATEST(COALESCE(challenges_log.created_timestamp, 0), COALESCE(challenges_log.reopen_timestamp, 0)) DESC";
-                    $result = mysqli_query($conn, $sql);
+                    $sql3 = "SELECT * FROM users INNER JOIN challenges_log ON users.id = challenges_log.challenge_by WHERE challenges_log.challenge_by <> $user_id AND status = 'open' ORDER BY GREATEST(COALESCE(challenges_log.created_timestamp, 0), COALESCE(challenges_log.reopen_timestamp, 0)) DESC";
+                    $result3 = mysqli_query($conn, $sql3);
 
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $skill_points = $row['skill_points'];
+                    if (mysqli_num_rows($result3) > 0) {
+                        while ($row3 = mysqli_fetch_assoc($result3)) {
+                            $skill_points = $row3['skill_points'];
 
                             $sql1 = "SELECT * FROM skill_levels WHERE $skill_points BETWEEN min_points AND max_points";
                             $result1 = mysqli_query($conn, $sql1);
@@ -125,10 +155,10 @@ include '../../header.php';
                                 <h4 class="card-header">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <?php echo (($row['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row['game']))) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?>
+                                            <?php echo (($row3['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row3['game']))) : (ucwords(str_replace("_", " ", $row3['game'])))) . ' - ' . (($row3['console'] === 'ps4' || $row3['console'] === 'pc') ? (strtoupper($row3['console'])) : (ucwords($row3['console']))); ?>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <?php echo '$' . $row['amount']; ?>
+                                            <?php echo '$' . $row3['amount']; ?>
                                         </div>
                                     </div>
                                 </h4>
@@ -137,7 +167,7 @@ include '../../header.php';
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Challenge By</th>
-                                                <td><?php echo ucwords($row['username']); ?></td>
+                                                <td><?php echo ucwords($row3['username']); ?></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Skill Level</th>
@@ -149,32 +179,32 @@ include '../../header.php';
                                             </tr>
                                             <tr>
                                                 <th scope="row">Challenge Date</th>
-                                                <td><?php echo $row['challenge_date']; ?></td>
+                                                <td><?php echo $row3['challenge_date']; ?></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Challenge Time</th>
-                                                <td><?php echo $row['challenge_time']; ?></td>
+                                                <td><?php echo $row3['challenge_time']; ?></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Game Mode</th>
-                                                <td><?php echo $row['game_mode']; ?></td>
+                                                <td><?php echo $row3['game_mode']; ?></td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Rules</th>
-                                                <td><?php echo $row['rules']; ?></td>
+                                                <td><?php echo $row3['rules']; ?></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button type="button" class="accept-challenge-button btn btn-primary" data-challenge-id="<?php echo $row['challenge_id']; ?>">Accept</button>
+                                    <button type="button" class="accept-challenge-button btn btn-primary" data-challenge-id="<?php echo $row3['challenge_id']; ?>">Accept</button>
                                 </div>
 
                                 <div class="card-footer text-muted">
-                                    <?php echo 'Created: ' . $row['created_timestamp']; ?>
+                                    <?php echo 'Created: ' . $row3['created_timestamp']; ?>
                                     <br />
 
-                                    <?php if (!empty($row['reopen_timestamp']) && !is_null($row['reopen_timestamp'])) { ?>
+                                    <?php if (!empty($row3['reopen_timestamp']) && !is_null($row3['reopen_timestamp'])) { ?>
 
-                                        Re-Opened: <?php echo $row['reopen_timestamp']; ?>
+                                        Re-Opened: <?php echo $row3['reopen_timestamp']; ?>
 
                                     <?php } ?>
 
@@ -198,34 +228,65 @@ include '../../header.php';
 
                     <?php
 
-                    $sql = "SELECT * FROM users INNER JOIN tournaments_log ON users.id = tournaments_log.tournament_by WHERE tournaments_log.tournament_by <> $user_id ORDER BY tournaments_log.created_timestamp DESC";
-                    $result = mysqli_query($conn, $sql);
+                    $sql4 = "SELECT * FROM users INNER JOIN tournaments_log ON users.id = tournaments_log.tournament_by WHERE tournaments_log.tournament_by <> $user_id AND status = 'open' ORDER BY tournaments_log.created_timestamp DESC";
+                    $result4 = mysqli_query($conn, $sql4);
 
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
+                    if (mysqli_num_rows($result4) > 0) {
+                        while ($row4 = mysqli_fetch_assoc($result4)) {
 
                     ?>
 
-                            <div class="card mb-3">
-                                <h4 class="card-header">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <?php echo (($row['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row['game']))) : (ucwords(str_replace("_", " ", $row['game'])))) . ' - ' . (($row['console'] === 'ps4' || $row['console'] === 'pc') ? (strtoupper($row['console'])) : (ucwords($row['console']))); ?>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <?php echo '$' . $row['amount']; ?>
-                                            <button type="button" class="btn btn-primary text-uppercase ms-2">Enter</button>
-                                        </div>
-                                    </div>
-                                </h4>
-                                <div class="card-body d-flex align-items-center justify-content-between">
-                                    <h5 class="card-title">
-                                        <i class="bi bi-file-person-fill"></i>
-                                        <?php echo ucwords($row['username']); ?>
-                                    </h5>
-                                    <button type="button" class="btn btn-primary text-uppercase">Players</button>
+                            <div class="card mb-5">
+                                <div class="card-header">
+                                    Tournament # <?php echo $row4['tournament_id']; ?>
                                 </div>
-                                <div class="card-footer text-muted"><?php echo 'Created: ' . $row['created_timestamp']; ?></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <?php echo (($row4['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row4['game']))) : (ucwords(str_replace("_", " ", $row4['game'])))) . ' - ' . (($row4['console'] === 'ps4' || $row4['console'] === 'pc') ? (strtoupper($row4['console'])) : (ucwords($row4['console']))); ?>
+                                    </h5>
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Tournament By</th>
+                                                <td class="text-capitalize"><?php echo $row4['username']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Amount</th>
+                                                <td><?php echo '$' . $row4['amount']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Players</th>
+                                                <td><?php echo $row4['players']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Start Date</th>
+                                                <td><?php echo $row4['start_date'] ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Start Time</th>
+                                                <td><?php echo $row4['start_time']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Game Mode</th>
+                                                <td><?php echo $row4['game_mode']; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Rules</th>
+                                                <td><?php echo $row4['rules']; ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-flex">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tourney-players-modal" data-bs-tourneyId="<?php echo $row4['tournament_id']; ?>">
+                                            Players
+                                        </button>
+                                        <button type="button" class="btn btn-primary ms-auto">Enter</button>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    Created: <?php echo $row4['created_timestamp']; ?>
+                                </div>
                             </div>
 
                     <?php
