@@ -40,9 +40,10 @@ tourneyPlayersModal.addEventListener('show.bs.modal', function (event) {
             tourney_details.tourney_players.forEach((tourney_player, index) => {
                 let tr = document.createElement('tr');
 
-                let td1 = document.createElement('td');
-                td1.textContent = (index + 1);
-                tr.appendChild(td1);
+                let th = document.createElement('th');
+                th.setAttribute('scope', 'row');
+                th.textContent = (index + 1);
+                tr.appendChild(th);
 
                 let td2 = document.createElement('td');
                 td2.textContent = tourney_player.username.toUpperCase();
