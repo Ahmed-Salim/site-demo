@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2021 at 12:57 PM
+-- Generation Time: Mar 05, 2021 at 01:19 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -412,19 +412,20 @@ CREATE TABLE `tournaments_log` (
   `game_mode` varchar(255) NOT NULL,
   `rules` text NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT 'open',
-  `created_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ready_timestamp` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tournaments_log`
 --
 
-INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `console`, `amount`, `players`, `start_date`, `start_time`, `game_mode`, `rules`, `status`, `created_timestamp`) VALUES
-(1, 5, 'fifa_21', 'ps4', 10, 10, '2021-03-13', '17:55:00', '', '', 'open', '2021-03-02 12:55:49'),
-(2, 5, 'fortnite', 'pc', 15, 14, '2021-03-26', '17:57:00', '', '', 'open', '2021-03-02 12:57:09'),
-(3, 5, 'clash_of_clans', 'xbox', 20, 20, '2021-03-20', '17:58:00', '', '', 'open', '2021-03-02 12:58:13'),
-(4, 5, 'fifa_21', 'ps4', 30, 30, '2021-03-20', '18:01:00', 'testing 123', 'testing 123', 'open', '2021-03-02 13:02:06'),
-(5, 6, 'fortnite', 'ps4', 10, 10, '2021-03-18', '10:57:00', 'sadhkjasdh', 'kjhasdkjh', 'open', '2021-03-04 05:57:07');
+INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `console`, `amount`, `players`, `start_date`, `start_time`, `game_mode`, `rules`, `status`, `created_timestamp`, `ready_timestamp`) VALUES
+(1, 5, 'fifa_21', 'ps4', 10, 10, '2021-03-13', '17:55:00', '', '', 'open', '2021-03-02 12:55:49', NULL),
+(2, 5, 'fortnite', 'pc', 15, 14, '2021-03-26', '17:57:00', '', '', 'open', '2021-03-02 12:57:09', NULL),
+(3, 5, 'clash_of_clans', 'xbox', 20, 20, '2021-03-20', '17:58:00', '', '', 'open', '2021-03-02 12:58:13', NULL),
+(4, 5, 'fifa_21', 'ps4', 30, 30, '2021-03-20', '18:01:00', 'testing 123', 'testing 123', 'open', '2021-03-02 13:02:06', NULL),
+(5, 6, 'fortnite', 'ps4', 10, 10, '2021-03-18', '10:57:00', 'sadhkjasdh', 'kjhasdkjh', 'open', '2021-03-04 05:57:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -448,7 +449,8 @@ INSERT INTO `tourney_players` (`serial_number`, `tourney_id`, `player_id`, `ente
 (2, 2, 5, '2021-03-02 12:57:09'),
 (3, 3, 5, '2021-03-02 12:58:13'),
 (4, 4, 5, '2021-03-02 13:02:06'),
-(5, 5, 6, '2021-03-04 05:57:07');
+(5, 5, 6, '2021-03-04 05:57:07'),
+(6, 3, 6, '2021-03-05 12:17:05');
 
 -- --------------------------------------------------------
 
@@ -477,7 +479,7 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `user
 (3, 'user 3', 'first 3', 'last 3', 'test3@email.com', '$2y$10$FVoMLEU/M0SVFTw2BU6d9Oineo4RobFNTIelJ3HQcBkGWsVw3Vo5y', '85.000000000000000000000000000000', 500),
 (4, 'user 4', 'first 4', 'last 4', 'test4@email.com', '$2y$10$4a3OLSUtHmewGhh/siaIyuY/CgajvwrsIJ5yf5R.Ch4a/73RaV43e', '25.000000000000000000000000000000', 500),
 (5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '540.702222900000000000000000000000', 510),
-(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '742.456789900000000000000000000000', 490),
+(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '722.456789900000000000000000000000', 490),
 (7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$0yitpzEV6ofiGi9npHatYO7RbbtWTN.HBaMABQK/kjNMu4U9cwfcy', '905.000000000000000000000000000000', 500),
 (8, 'user 8', 'first 8', 'last 8', 'test07@email.com', '$2y$10$5KKCpf7ER6wMP.lRIZIC5u/HSwldm80iTORIIU0rdIvvNZ/oe7hK6', '0.000000000000000000000000000000', 500),
 (10, 'user new', 'first', 'last', 'new@email.com', '$2y$10$AE0y6PiCn3m/e2iu71rh6.QqGC/665Zkx8t3FeVoSL/FsULmTzusW', '0.000000000000000000000000000000', 500),
@@ -647,7 +649,7 @@ ALTER TABLE `tournaments_log`
 -- AUTO_INCREMENT for table `tourney_players`
 --
 ALTER TABLE `tourney_players`
-  MODIFY `serial_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `serial_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
