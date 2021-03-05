@@ -10,14 +10,22 @@ enterTourneyButton.addEventListener('click', () => {
     // Push our data into our FormData object
     FD.append('tourney-id', enterTourneyButton.dataset.tourneyId);
 
+    enterTourneyButton.disabled = true;
+
     // Define what happens on successful data submission
     XHR.addEventListener('load', function (event) {
-        alert('Yeah! Data sent and response loaded.');
+        console.log(event.target.responseText);
     });
 
     // Define what happens in case of error
     XHR.addEventListener(' error', function (event) {
-        alert('Oops! Something went wrong.');
+        let alert = document.createElement('div');
+        alert.classList.add('alert', 'alert-danger');
+        alert.setAttribute('role', 'alert');
+        alert.textContent = 'Oops! Something went wrong. Please try again.';
+
+        enterTourneyModal.querySelector('.modal-body').appendChild(alert);
+        enterTourneyModal.handleUpdate();
     });
 
     // Set up our request
@@ -29,6 +37,7 @@ enterTourneyButton.addEventListener('click', () => {
 
 enterTourneyModal.addEventListener('hide.bs.modal', function (event) {
     enterTourneyButton.removeAttribute('data-tourney-id');
+    enterTourneyButton.disabled = false;
 });
 
 enterTourneyModal.addEventListener('show.bs.modal', function (event) {

@@ -1,84 +1,161 @@
 <?php
 
-// session_start();
+session_start();
 
-// include_once './db-config.php';
-// include_once './clean-input.php';
+include_once './db-config.php';
+include_once './clean-input.php';
 
-// $response_msg = [];
-// $success_msgs = [];
-// $error_msgs = [];
+$response_msg = [];
+$success_msgs = [];
+$error_msgs = [];
 
-// if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
-//     $response_msg['status'] = 'error';
-//     $error_msgs[] = 'Error: Session ID empty! Please login again to continue!';
-// } else {
-//     if (empty($_POST["tourney-id"]) || is_null($_POST["tourney-id"])) {
-//         $response_msg['status'] = 'error';
-//         $error_msgs[] = 'Error: Tournament ID Missing!';
-//     } else {
-//         $tourney_id = mysqli_real_escape_string($conn, clean_input($_POST["tourney-id"]));
+if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
+    $response_msg['status'] = 'error';
+    $error_msgs[] = 'Error: Session ID empty! Please login again to continue!';
+} else {
+    if (empty($_POST["tourney-id"]) || is_null($_POST["tourney-id"])) {
+        $response_msg['status'] = 'error';
+        $error_msgs[] = 'Error: Tournament ID Missing!';
+    } else {
+        $entering_player_id = $_SESSION['id'];
+        $tourney_id = mysqli_real_escape_string($conn, clean_input($_POST["tourney-id"]));
 
-//         $sql = "SELECT * FROM tournaments_log WHERE tournament_id = $tourney_id";
-//         $result = mysqli_query($conn, $sql);
+        $sql = "SELECT * FROM tournaments_log WHERE tournament_id = $tourney_id";
+        $result = mysqli_query($conn, $sql);
 
-//         if (mysqli_num_rows($result) > 0) {
-//             while ($row = mysqli_fetch_assoc($result)) {
-//                 $tourney_details['tournament_id'] = $row['tournament_id'];
-//                 $tourney_details['tournament_by'] = $row['tournament_by'];
-//                 $tourney_details['game'] = $row['game'];
-//                 $tourney_details['console'] = $row['console'];
-//                 $tourney_details['amount'] = $row['amount'];
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                if ($row['status'] === 'open') {
+                    $sql1 = "SELECT NOW() AS now_timestamp";
+                    $result1 = mysqli_query($conn, $sql1);
 
-//                 $sql2 = "SELECT * FROM tourney_players INNER JOIN users ON tourney_players.player_id = users.id WHERE tourney_players.tourney_id = $tourney_id";
-//                 $result2 = mysqli_query($conn, $sql2);
+                    if (mysqli_num_rows($result1) > 0) {
+                        while ($row1 = mysqli_fetch_assoc($result1)) {
+                            $now_timestamp = $row1['now_timestamp'];
+                        }
+                    } else {
+                        $now_timestamp = '0000-00-00 00:00:00';
+                    }
 
-//                 if (mysqli_num_rows($result2) > 0) {
-//                     $tourney_players = [];
+                    if (($row['start_date'] . ' ' . $row['start_time']) >= $now_timestamp) {
+                        $sql4 = "SELECT COUNT(*) AS entered_players FROM tourney_players WHERE tourney_id = $tourney_id";
+                        $result4 = mysqli_query($conn, $sql4);
 
-//                     while ($row2 = mysqli_fetch_assoc($result2)) {
-//                         $skill_points = $row2['skill_points'];
+                        if (mysqli_num_rows($result4) > 0) {
+                            while ($row4 = mysqli_fetch_assoc($result4)) {
+                                if ($row['players'] > $row4['entered_players']) {
+                                    $sql2 = "SELECT * FROM tourney_players WHERE tourney_id = $tourney_id AND player_id = $entering_player_id";
+                                    $result2 = mysqli_query($conn, $sql2);
 
-//                         $sql3 = "SELECT * FROM skill_levels WHERE $skill_points BETWEEN min_points AND max_points";
-//                         $result3 = mysqli_query($conn, $sql3);
+                                    if (mysqli_num_rows($result2) > 0) {
+                                        while ($row2 = mysqli_fetch_assoc($result2)) {
+                                            $response_msg['status'] = 'error';
+                                            $error_msgs[] = 'Error: You have already entered in this Tournament!';
+                                        }
+                                    } else {
+                                        $sql3 = "SELECT * FROM users WHERE id = $entering_player_id";
+                                        $result3 = mysqli_query($conn, $sql3);
 
-//                         if (mysqli_num_rows($result3) > 0) {
-//                             while ($row3 = mysqli_fetch_assoc($result3)) {
-//                                 $skill_level = $row3['level_name'];
-//                             }
-//                         } else {
-//                             $skill_level = 'undefined';
-//                         }
+                                        if (mysqli_num_rows($result3) > 0) {
+                                            while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                if ($row3['balance'] >= $row['amount']) {
+                                                    $tourney_amount = $row['amount'];
 
-//                         $tourney_player = [];
+                                                    $sql5 = "UPDATE users SET balance = (balance - $tourney_amount) WHERE id = $entering_player_id";
 
-//                         $tourney_player['player_id'] = $row2['player_id'];
-//                         $tourney_player['enter_timestamp'] = $row2['enter_timestamp'];
-//                         $tourney_player['username'] = $row2['username'];
-//                         $tourney_player['skill_points'] = $row2['skill_points'];
-//                         $tourney_player['skill_level'] = $skill_level;
+                                                    if (mysqli_query($conn, $sql5)) {
+                                                        $response_msg['status'] = 'success';
+                                                        $success_msgs[] = 'Success: Balance updated successfully!';
 
-//                         $tourney_players[] = $tourney_player;
-//                     }
+                                                        $sql6 = "INSERT INTO tourney_players (tourney_id, player_id) VALUES ($tourney_id, $entering_player_id)";
 
-//                     $tourney_details['tourney_players'] = $tourney_players;
-//                 } else {
-//                     $response_msg['status'] = 'error';
-//                     $error_msgs[] = 'Error: No Players In Tournament!';
-//                 }
-//             }
+                                                        if (mysqli_query($conn, $sql6)) {
+                                                            $response_msg['status'] = 'success';
+                                                            $success_msgs[] = 'Success: Tournament entered successfully!';
 
-//             $response_msg['status'] = 'success';
-//             $response_msg['tourney_details'] = $tourney_details;
-//         } else {
-//             $response_msg['status'] = 'error';
-//             $error_msgs[] = 'Error: Invalid Tournament ID!';
-//         }
-//     }
-// }
+                                                            $sql7 = "SELECT COUNT(*) AS entered_players FROM tourney_players WHERE tourney_id = $tourney_id";
+                                                            $result7 = mysqli_query($conn, $sql7);
 
-// $response_msg['error_msgs'] = $error_msgs;
+                                                            if (mysqli_num_rows($result7) > 0) {
+                                                                while ($row7 = mysqli_fetch_assoc($result7)) {
+                                                                    if ($row7['entered_players'] >= $row['players']) {
+                                                                        $sql8 = "UPDATE tournaments_log SET status = 'ready', ready_timestamp = NOW() WHERE tournament_id = $tourney_id";
 
-// mysqli_close($conn);
+                                                                        if (mysqli_query($conn, $sql8)) {
+                                                                            $response_msg['status'] = 'success';
+                                                                            $success_msgs[] = 'Success: Tournament ready to be confirmed by its Owner!';
 
-// echo json_encode($response_msg);
+                                                                            $notif_for = $row['tournament_by'];
+                                                                            $notif_msg = 'The number of players in your Tournament are full. Go to your Tournaments page to confirm the Tournament. Tournament # ' . $tourney_id;
+
+                                                                            $sql8 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                                                                            if (mysqli_query($conn, $sql8)) {
+                                                                                $response_msg['status'] = 'success';
+                                                                                $success_msgs[] = 'Success: Confirmation notification sent to the Tournament Owner!';
+                                                                            } else {
+                                                                                $response_msg['status'] = 'error';
+                                                                                $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                                                                            }
+                                                                        } else {
+                                                                            $response_msg['status'] = 'error';
+                                                                            $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                                                                        }
+                                                                    } else {
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                $response_msg['status'] = 'error';
+                                                                $error_msgs[] = 'Error: Invalid Tournament ID!';
+                                                            }
+                                                        } else {
+                                                            $response_msg['status'] = 'error';
+                                                            $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                                                        }
+                                                    } else {
+                                                        $response_msg['status'] = 'error';
+                                                        $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                                                    }
+                                                } else {
+                                                    $response_msg['status'] = 'error';
+                                                    $error_msgs[] = 'Error: You dont have enough Balance to enter in this Tournament!';
+                                                }
+                                            }
+                                        } else {
+                                            $response_msg['status'] = 'error';
+                                            $error_msgs[] = 'Error: Invalid Session ID! Please login again to continue.';
+                                        }
+                                    }
+                                } else {
+                                    $response_msg['status'] = 'error';
+                                    $error_msgs[] = 'Error: Tournament players limit reached!';
+                                }
+                            }
+                        } else {
+                            $response_msg['status'] = 'error';
+                            $error_msgs[] = 'Error: Invalid Tournament ID!';
+                        }
+                    } else {
+                        $response_msg['status'] = 'error';
+                        $error_msgs[] = 'Error: Tournament start date and time exceeded!';
+
+                        //reset tournament---------------------------------------------------------------------------------------------------------------------------------------
+                    }
+                } else {
+                    $response_msg['status'] = 'error';
+                    $error_msgs[] = 'Error: Tournament not in Open state!';
+                }
+            }
+        } else {
+            $response_msg['status'] = 'error';
+            $error_msgs[] = 'Error: Invalid Tournament ID!';
+        }
+    }
+}
+
+$response_msg['success_msgs'] = $success_msgs;
+$response_msg['error_msgs'] = $error_msgs;
+
+mysqli_close($conn);
+
+echo json_encode($response_msg);

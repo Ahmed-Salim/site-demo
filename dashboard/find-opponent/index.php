@@ -101,11 +101,6 @@ include '../../header.php';
                         <a class="nav-link text-uppercase text-nowrap" id="pills-tournaments-tab" data-bs-toggle="pill" href="#pills-tournaments" role="tab" aria-controls="pills-tournaments" aria-selected="false">
                             <?php
 
-                            include_once '../../php-apis/db-config.php';
-                            include_once '../../php-apis/clean-input.php';
-
-                            $user_id = $_SESSION['id'];
-
                             $sql2 = "SELECT COUNT(*) AS total_tournaments FROM tournaments_log WHERE tournament_by <> $user_id";
                             $result2 = mysqli_query($conn, $sql2);
 
@@ -258,8 +253,12 @@ include '../../header.php';
                                     Tournament # <?php echo $row4['tournament_id']; ?>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">
+                                    <h5 class="card-title d-flex">
                                         <?php echo (($row4['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row4['game']))) : (ucwords(str_replace("_", " ", $row4['game'])))) . ' - ' . (($row4['console'] === 'ps4' || $row4['console'] === 'pc') ? (strtoupper($row4['console'])) : (ucwords($row4['console']))); ?>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-secondary ms-auto" data-bs-toggle="modal" data-bs-target="#tourney-players-modal" data-bs-tourneyId="<?php echo $row4['tournament_id']; ?>">
+                                            Players
+                                        </button>
                                     </h5>
                                     <table class="table">
                                         <tbody>
@@ -293,29 +292,21 @@ include '../../header.php';
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="d-flex">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tourney-players-modal" data-bs-tourneyId="<?php echo $row4['tournament_id']; ?>">
-                                            Players
-                                        </button>
-
-                                        <!-- Enter Tourney Button trigger modal -->
-                                        <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#enter-tourney-modal" data-bs-tourneyId="<?php echo $row4['tournament_id']; ?>">Enter</button>
-                                    </div>
+                                    <!-- Enter Tourney Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#enter-tourney-modal" data-bs-tourneyId="<?php echo $row4['tournament_id']; ?>">Enter</button>
                                 </div>
                                 <div class="card-footer text-muted">
                                     Created: <?php echo $row4['created_timestamp']; ?>
                                 </div>
                             </div>
 
-                    <?php
+                        <?php } ?>
 
-                        }
-                    } else {
-                        echo "<p class='fs-4 text-danger'>No Tournaments Available!</p>";
-                    }
+                    <?php } else { ?>
 
-                    ?>
+                        <p class='fs-4 text-danger'>No Tournaments Available!</p>
+
+                    <?php } ?>
 
                 </div>
 
