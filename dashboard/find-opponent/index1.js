@@ -15,8 +15,6 @@ enterTourneyButton.addEventListener('click', () => {
 
     // Define what happens on successful data submission
     XHR.addEventListener('load', function (event) {
-        //console.log(event.target.responseText);
-
         try {
             let responseMsg = JSON.parse(event.target.responseText);
 
@@ -29,7 +27,17 @@ enterTourneyButton.addEventListener('click', () => {
 
                     enterTourneyModal.querySelector('.response-div').appendChild(alert);
                 });
+
+                let p = document.createElement('p');
+                p.textContent = 'You will be redirect to the Tournaments page in 5 seconds...';
+                enterTourneyModal.querySelector('.response-div').appendChild(p);
+
+                setTimeout(function () {
+                    window.location.href = '../tournaments';
+                }, 5000);
             } else {
+                let reload = false;
+
                 responseMsg.error_msgs.forEach((error_msg) => {
                     let alert = document.createElement('div');
                     alert.classList.add('alert', 'alert-danger');
@@ -37,7 +45,20 @@ enterTourneyButton.addEventListener('click', () => {
                     alert.textContent = error_msg;
 
                     enterTourneyModal.querySelector('.response-div').appendChild(alert);
+
+                    reload = ((error_msg.includes('Error: Tournament has been reset!')) ? (true) : (false));
                 });
+
+                if (reload) {
+                    let p = document.createElement('p');
+                    p.textContent = 'This page will reload in 5 seconds...';
+                    enterTourneyModal.querySelector('.response-div').appendChild(p);
+
+                    setTimeout(function () {
+                        location.reload();
+                    }, 5000);
+                } else {
+                }
             }
 
             bootstrap.Modal.getInstance(enterTourneyModal).handleUpdate();
