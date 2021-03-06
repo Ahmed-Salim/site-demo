@@ -10,11 +10,50 @@ enterTourneyButton.addEventListener('click', () => {
     // Push our data into our FormData object
     FD.append('tourney-id', enterTourneyButton.dataset.tourneyId);
 
+    enterTourneyModal.querySelector('.response-div').innerHTML = '';
     enterTourneyButton.disabled = true;
 
     // Define what happens on successful data submission
     XHR.addEventListener('load', function (event) {
-        console.log(event.target.responseText);
+        //console.log(event.target.responseText);
+
+        try {
+            let responseMsg = JSON.parse(event.target.responseText);
+
+            if (responseMsg.status === 'success') {
+                responseMsg.success_msgs.forEach((success_msg) => {
+                    let alert = document.createElement('div');
+                    alert.classList.add('alert', 'alert-success');
+                    alert.setAttribute('role', 'alert');
+                    alert.textContent = success_msg;
+
+                    enterTourneyModal.querySelector('.response-div').appendChild(alert);
+                });
+            } else {
+                responseMsg.error_msgs.forEach((error_msg) => {
+                    let alert = document.createElement('div');
+                    alert.classList.add('alert', 'alert-danger');
+                    alert.setAttribute('role', 'alert');
+                    alert.textContent = error_msg;
+
+                    enterTourneyModal.querySelector('.response-div').appendChild(alert);
+                });
+            }
+
+            bootstrap.Modal.getInstance(enterTourneyModal).handleUpdate();
+
+            enterTourneyButton.disabled = false;
+        } catch (error) {
+            let alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-danger');
+            alert.setAttribute('role', 'alert');
+            alert.textContent = error;
+
+            enterTourneyModal.querySelector('.response-div').appendChild(alert);
+            bootstrap.Modal.getInstance(enterTourneyModal).handleUpdate();
+
+            enterTourneyButton.disabled = false;
+        }
     });
 
     // Define what happens in case of error
@@ -24,8 +63,10 @@ enterTourneyButton.addEventListener('click', () => {
         alert.setAttribute('role', 'alert');
         alert.textContent = 'Oops! Something went wrong. Please try again.';
 
-        enterTourneyModal.querySelector('.modal-body').appendChild(alert);
-        enterTourneyModal.handleUpdate();
+        enterTourneyModal.querySelector('.response-div').appendChild(alert);
+        bootstrap.Modal.getInstance(enterTourneyModal).handleUpdate();
+
+        enterTourneyButton.disabled = false;
     });
 
     // Set up our request
@@ -62,8 +103,6 @@ enterTourneyModal.addEventListener('show.bs.modal', function (event) {
 
     // Define what happens on successful data submission
     XHR.addEventListener('load', function (event) {
-        console.log(event.target.responseText);
-
         try {
             let responseMsg = JSON.parse(event.target.responseText);
 
@@ -92,6 +131,10 @@ enterTourneyModal.addEventListener('show.bs.modal', function (event) {
                 let p2 = document.createElement('p');
                 p2.textContent = 'Press (Enter Tournament) to continue.';
                 modalBody.appendChild(p2);
+
+                let responseDiv = document.createElement('div');
+                responseDiv.classList.add('response-div');
+                modalBody.appendChild(responseDiv);
 
                 enterTourneyButton.dataset.tourneyId = tourney_details.tournament_id;
             } else {
