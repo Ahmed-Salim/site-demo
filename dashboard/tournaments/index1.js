@@ -94,7 +94,7 @@ tourneyPlayersModal.addEventListener('show.bs.modal', function (event) {
     });
 
     // Define what happens in case of error
-    XHR.addEventListener(' error', function (event) {
+    XHR.addEventListener('error', function (event) {
         alert('Oops! Something went wrong.');
     });
 

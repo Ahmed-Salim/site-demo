@@ -18,7 +18,7 @@ challengeResultButtons.forEach((challengeResultButton) => {
             });
 
             // Define what happens in case of error
-            XHR.addEventListener(' error', function (event) {
+            XHR.addEventListener('error', function (event) {
                 alert('Oops! Something went wrong.');
             });
 

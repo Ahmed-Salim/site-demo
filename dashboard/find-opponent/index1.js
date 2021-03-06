@@ -18,7 +18,7 @@ enterTourneyButton.addEventListener('click', () => {
     });
 
     // Define what happens in case of error
-    XHR.addEventListener(' error', function (event) {
+    XHR.addEventListener('error', function (event) {
         let alert = document.createElement('div');
         alert.classList.add('alert', 'alert-danger');
         alert.setAttribute('role', 'alert');
