@@ -103,7 +103,7 @@ include '../../header.php';
                         <a class="nav-link text-uppercase text-nowrap" id="pills-tournaments-tab" data-bs-toggle="pill" href="#pills-tournaments" role="tab" aria-controls="pills-tournaments" aria-selected="false">
                             <?php
 
-                            $sql2 = "SELECT COUNT(*) AS total_tournaments FROM tournaments_log WHERE tournament_by <> $user_id";
+                            $sql2 = "SELECT COUNT(*) AS total_tournaments FROM tournaments_log WHERE tournament_by <> $user_id AND status = 'open'";
                             $result2 = mysqli_query($conn, $sql2);
 
                             if (mysqli_num_rows($result2) > 0) {

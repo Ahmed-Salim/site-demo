@@ -139,7 +139,68 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                         $response_msg['status'] = 'error';
                         $error_msgs[] = 'Error: Tournament start date and time exceeded!';
 
-                        //reset tournament---------------------------------------------------------------------------------------------------------------------------------------
+                        $sql4 = "UPDATE tournaments_log SET status = 'reset', reset_timestamp = NOW() WHERE tournament_id = $tourney_id";
+
+                        if (mysqli_query($conn, $sql4)) {
+                            $response_msg['status'] = 'error';
+                            $error_msgs[] = 'Error: Tournament has been reset!';
+
+                            $tournament_by = $row['tournament_by'];
+
+                            $sql5 = "SELECT * FROM tourney_players WHERE tourney_id = $tourney_id AND player_id <> $tournament_by";
+                            $result5 = mysqli_query($conn, $sql5);
+
+                            if (mysqli_num_rows($result5) > 0) {
+                                $tourney_amount = $row['amount'];
+
+                                while ($row5 = mysqli_fetch_assoc($result5)) {
+                                    $tourney_player = $row5['player_id'];
+
+                                    $sql6 = "DELETE FROM tourney_players WHERE tourney_id = $tourney_id AND player_id = $tourney_player";
+
+                                    if (mysqli_query($conn, $sql6)) {
+                                        $notif_for = $tourney_player;
+                                        $notif_msg = 'Tournament # ' . $tourney_id . ' has ben Reset. You have been removed from the Tournament.';
+
+                                        $sql7 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                                        if (mysqli_query($conn, $sql7)) {
+                                            //echo "New record created successfully";
+                                        } else {
+                                            // $response_msg['status'] = 'error';
+                                            // $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                                        }
+
+                                        $sql8 = "UPDATE users SET balance = (balance + $tourney_amount) WHERE id = $tourney_player";
+
+                                        if (mysqli_query($conn, $sql8)) {
+                                            $notif_for = $tourney_player;
+                                            $notif_msg = 'Tournament # ' . $tourney_id . ' amount ($' . $tourney_amount . ') has been refunded back into your Balance!';
+
+                                            $sql9 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                                            if (mysqli_query($conn, $sql9)) {
+                                                //echo "New record created successfully";
+                                            } else {
+                                                // $response_msg['status'] = 'error';
+                                                // $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                                            }
+                                        } else {
+                                            //echo "Error updating record: " . mysqli_error($conn);
+                                        }
+                                    } else {
+                                        // $response_msg['status'] = 'error';
+                                        // $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                                    }
+                                }
+                            } else {
+                                // $response_msg['status'] = 'error';
+                                // $error_msgs[] = 'Error: Invalid Tournament ID or player ID!';
+                            }
+                        } else {
+                            $response_msg['status'] = 'error';
+                            $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                        }
                     }
                 } else {
                     $response_msg['status'] = 'error';
