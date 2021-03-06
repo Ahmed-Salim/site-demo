@@ -145,6 +145,18 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                             $response_msg['status'] = 'error';
                             $error_msgs[] = 'Error: Tournament has been reset!';
 
+                            $notif_for = $row['tournament_by'];
+                            $notif_msg = 'Your Tournament has been Reset! You can Re-Open your Tournament from your Tournaments page. Tournament # ' . $tourney_id;
+
+                            $sql10 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
+
+                            if (mysqli_query($conn, $sql10)) {
+                                //echo "New record created successfully";
+                            } else {
+                                // $response_msg['status'] = 'error';
+                                // $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                            }
+
                             $tournament_by = $row['tournament_by'];
 
                             $sql5 = "SELECT * FROM tourney_players WHERE tourney_id = $tourney_id AND player_id <> $tournament_by";
@@ -160,7 +172,7 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
 
                                     if (mysqli_query($conn, $sql6)) {
                                         $notif_for = $tourney_player;
-                                        $notif_msg = 'Tournament # ' . $tourney_id . ' has ben Reset. You have been removed from the Tournament.';
+                                        $notif_msg = 'Tournament # ' . $tourney_id . ' has been Reset. You have been removed from the Tournament.';
 
                                         $sql7 = "INSERT INTO notifications (notif_for, notif_msg) VALUES ($notif_for, '$notif_msg')";
 
