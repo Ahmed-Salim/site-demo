@@ -127,6 +127,7 @@
                 <ul>
                     <li>Canceling this Tournament will remove all the players that entered in this Tournament.</li>
                     <li>You will refunded back the Tournament amount <strong>MINUS</strong> the Service Fee.</li>
+                    <li>This action cannot be undone.</li>
                 </ul>
                 Press (Cancel Tournament) to continue...
                 <div class="response-div mt-3"></div>

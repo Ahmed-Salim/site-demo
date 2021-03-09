@@ -8,6 +8,81 @@ const tourneyPlayersModal = document.getElementById('tourney-players-modal');
 const cancelTourneyModal = document.getElementById('cancel-tourney-modal');
 const reopenTourneyModal = document.getElementById('reopen-tourney-modal');
 
+cancelTourneyModal.querySelector('button.cancel-tourney').addEventListener('click', () => {
+    const XHR = new XMLHttpRequest();
+    const FD = new FormData();
+
+    // Push our data into our FormData object
+    FD.append('tourney-id', cancelTourneyModal.querySelector('button.cancel-tourney').dataset.tourneyId);
+
+    cancelTourneyModal.querySelector('.response-div').innerHTML = '';
+    cancelTourneyModal.querySelector('button.cancel-tourney').disabled = true;
+
+    // Define what happens on successful data submission
+    XHR.addEventListener('load', function (event) {
+        try {
+            let responseMsg = JSON.parse(event.target.responseText);
+
+            if (responseMsg.status === 'success') {
+                responseMsg.success_msgs.forEach((success_msg) => {
+                    let alert = document.createElement('div');
+                    alert.classList.add('alert', 'alert-success');
+                    alert.setAttribute('role', 'alert');
+                    alert.textContent = success_msg;
+                    cancelTourneyModal.querySelector('.response-div').appendChild(alert);
+                });
+
+                let p = document.createElement('p');
+                p.textContent = 'This page will reload in 10 seconds...';
+                cancelTourneyModal.querySelector('.response-div').appendChild(p);
+
+                setTimeout(function () {
+                    location.reload();
+                }, 10000);
+            } else {
+                responseMsg.error_msgs.forEach((error_msg) => {
+                    let alert = document.createElement('div');
+                    alert.classList.add('alert', 'alert-danger');
+                    alert.setAttribute('role', 'alert');
+                    alert.textContent = error_msg;
+                    cancelTourneyModal.querySelector('.response-div').appendChild(alert);
+                });
+
+                cancelTourneyModal.querySelector('button.cancel-tourney').disabled = false;
+            }
+        } catch (error) {
+            let alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-danger');
+            alert.setAttribute('role', 'alert');
+            alert.textContent = error;
+            cancelTourneyModal.querySelector('.response-div').appendChild(alert);
+
+            cancelTourneyModal.querySelector('button.cancel-tourney').disabled = false;
+        }
+
+        bootstrap.Modal.getInstance(cancelTourneyModal).handleUpdate();
+    });
+
+    // Define what happens in case of error
+    XHR.addEventListener(' error', function (event) {
+        let alert = document.createElement('div');
+        alert.classList.add('alert', 'alert-danger');
+        alert.setAttribute('role', 'alert');
+        alert.textContent = 'Oops! Something went wrong. Please try again.';
+        cancelTourneyModal.querySelector('.response-div').appendChild(alert);
+
+        bootstrap.Modal.getInstance(cancelTourneyModal).handleUpdate();
+
+        cancelTourneyModal.querySelector('button.cancel-tourney').disabled = false;
+    });
+
+    // Set up our request
+    XHR.open('POST', '../../php-apis/cancel-tournament.php');
+
+    // Send our FormData object; HTTP headers are set automatically
+    XHR.send(FD);
+});
+
 cancelTourneyModal.addEventListener('show.bs.modal', function (event) {
     // Button that triggered the modal
     var button = event.relatedTarget
