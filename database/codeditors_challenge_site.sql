@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2021 at 02:23 PM
+-- Generation Time: Mar 09, 2021 at 02:31 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -334,7 +334,12 @@ INSERT INTO `notifications` (`notif_id`, `notif_for`, `notif_msg`, `notif_status
 (128, 7, 'Tournament # 7 amount ($10) has been refunded back into your Balance!', 'unread', '2021-03-06 13:06:41', NULL),
 (129, 5, 'USER 6 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 52.', 'unread', '2021-03-07 04:25:51', NULL),
 (130, 6, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 49.', 'unread', '2021-03-07 04:30:07', NULL),
-(131, 6, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 53.', 'unread', '2021-03-07 07:02:00', NULL);
+(131, 6, 'USER 5 has accepted your Challenge! Waiting for your confirmation. Challenge ID: 53.', 'unread', '2021-03-07 07:02:00', NULL),
+(132, 6, 'Tournament # 3 was cancelled by its owner. The Tournament amount (20) has been refunded back into your Balance.', 'unread', '2021-03-09 11:50:31', NULL),
+(133, 7, 'Tournament # 3 was cancelled by its owner. The Tournament amount (20) has been refunded back into your Balance.', 'unread', '2021-03-09 11:50:31', NULL),
+(134, 5, 'Tournament # 8 was cancelled by its owner. The Tournament amount ($10) has been refunded back into your Balance.', 'unread', '2021-03-09 11:58:19', NULL),
+(135, 6, 'Tournament # 2 was cancelled by its owner. The Tournament amount ($15) has been refunded back into your Balance.', 'unread', '2021-03-09 12:00:10', NULL),
+(136, 7, 'Tournament # 2 was cancelled by its owner. The Tournament amount ($15) has been refunded back into your Balance.', 'unread', '2021-03-09 12:00:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -432,22 +437,24 @@ CREATE TABLE `tournaments_log` (
   `status` varchar(255) NOT NULL DEFAULT 'open',
   `created_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `ready_timestamp` timestamp NULL DEFAULT NULL,
-  `reset_timestamp` timestamp NULL DEFAULT NULL
+  `reset_timestamp` timestamp NULL DEFAULT NULL,
+  `cancelled_timestamp` timestamp NULL DEFAULT NULL,
+  `reopen_timestamp` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tournaments_log`
 --
 
-INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `console`, `amount`, `players`, `start_date`, `start_time`, `game_mode`, `rules`, `status`, `created_timestamp`, `ready_timestamp`, `reset_timestamp`) VALUES
-(1, 5, 'fifa_21', 'ps4', 10, 10, '2021-02-13', '17:55:00', '', '', 'reset', '2021-03-02 12:55:49', NULL, '2021-03-06 12:02:17'),
-(2, 5, 'fortnite', 'pc', 15, 14, '2021-03-26', '17:57:00', '', '', 'open', '2021-03-02 12:57:09', NULL, NULL),
-(3, 5, 'clash_of_clans', 'xbox', 20, 20, '2021-03-20', '17:58:00', '', '', 'open', '2021-03-02 12:58:13', NULL, NULL),
-(4, 5, 'fifa_21', 'ps4', 30, 30, '2021-02-20', '18:01:00', 'testing 123', 'testing 123', 'reset', '2021-02-02 13:02:06', NULL, '2021-03-06 13:01:52'),
-(5, 6, 'fortnite', 'ps4', 10, 10, '2021-02-18', '10:57:00', 'sadhkjasdh', 'kjhasdkjh', 'reset', '2021-03-04 05:57:07', NULL, '2021-03-06 10:55:42'),
-(6, 5, 'fifa_21', 'pc', 10, 2, '2021-03-26', '16:02:00', '', '', 'ready', '2021-03-06 11:02:20', '2021-03-06 11:02:34', NULL),
-(7, 5, 'fifa_21', 'ps4', 10, 4, '2021-02-19', '18:05:00', 'test', 'test', 'reset', '2021-03-06 13:05:39', NULL, '2021-03-06 13:06:41'),
-(8, 6, 'fifa_21', 'pc', 10, 10, '2021-03-20', '11:22:00', '', '', 'open', '2021-03-07 06:22:18', NULL, NULL);
+INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `console`, `amount`, `players`, `start_date`, `start_time`, `game_mode`, `rules`, `status`, `created_timestamp`, `ready_timestamp`, `reset_timestamp`, `cancelled_timestamp`, `reopen_timestamp`) VALUES
+(1, 5, 'fifa_21', 'ps4', 10, 10, '2021-03-18', '18:29:00', '', '', 'open', '2021-03-02 12:55:49', NULL, '2021-03-06 12:02:17', NULL, '2021-03-09 13:29:35'),
+(2, 5, 'fortnite', 'pc', 15, 14, '2021-03-26', '17:57:00', '', '', 'cancelled', '2021-03-02 12:57:09', NULL, NULL, '2021-03-09 12:00:10', NULL),
+(3, 5, 'clash_of_clans', 'xbox', 20, 20, '2021-03-20', '17:58:00', '', '', 'cancelled', '2021-03-02 12:58:13', NULL, NULL, '2021-03-09 11:50:31', NULL),
+(4, 5, 'fifa_21', 'ps4', 30, 30, '2021-02-20', '18:01:00', 'testing 123', 'testing 123', 'cancelled', '2021-02-02 13:02:06', NULL, '2021-03-06 13:01:52', '2021-03-09 11:59:09', NULL),
+(5, 6, 'fortnite', 'ps4', 10, 10, '2021-02-18', '10:57:00', 'sadhkjasdh', 'kjhasdkjh', 'cancelled', '2021-03-04 05:57:07', NULL, '2021-03-06 10:55:42', '2021-03-09 11:56:01', NULL),
+(6, 5, 'fifa_21', 'pc', 10, 2, '2021-03-26', '16:02:00', '', '', 'ready', '2021-03-06 11:02:20', '2021-03-06 11:02:34', NULL, NULL, NULL),
+(7, 5, 'fifa_21', 'ps4', 10, 4, '2021-02-19', '18:05:00', 'test', 'test', 'cancelled', '2021-03-06 13:05:39', NULL, '2021-03-06 13:06:41', '2021-03-09 11:56:32', NULL),
+(8, 6, 'fifa_21', 'pc', 10, 10, '2021-03-20', '11:22:00', '', '', 'cancelled', '2021-03-07 06:22:18', NULL, NULL, '2021-03-09 11:58:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -468,18 +475,8 @@ CREATE TABLE `tourney_players` (
 
 INSERT INTO `tourney_players` (`serial_number`, `tourney_id`, `player_id`, `enter_timestamp`) VALUES
 (1, 1, 5, '2021-03-02 12:55:49'),
-(2, 2, 5, '2021-03-02 12:57:09'),
-(3, 3, 5, '2021-03-02 12:58:13'),
-(4, 4, 5, '2021-03-02 13:02:06'),
-(5, 5, 6, '2021-03-04 05:57:07'),
-(6, 3, 6, '2021-03-05 12:17:05'),
-(8, 2, 6, '2021-03-06 07:28:52'),
 (12, 6, 5, '2021-03-06 11:02:20'),
-(13, 6, 7, '2021-03-06 11:02:34'),
-(14, 3, 7, '2021-03-06 12:01:03'),
-(15, 2, 7, '2021-03-06 12:01:45'),
-(16, 7, 5, '2021-03-06 13:05:39'),
-(18, 8, 6, '2021-03-07 06:22:18');
+(13, 6, 7, '2021-03-06 11:02:34');
 
 -- --------------------------------------------------------
 
@@ -507,9 +504,9 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `user
 (2, 'user 2', 'first 2', 'last 2', 'test2@email.com', '$2y$10$T/OyHhWYm9zB/ACaTdmamOEZeOTmTPvRho0VQc4xhd8cOzdJgQutK', '0.000000000000000000000000000000', 500),
 (3, 'user 3', 'first 3', 'last 3', 'test3@email.com', '$2y$10$FVoMLEU/M0SVFTw2BU6d9Oineo4RobFNTIelJ3HQcBkGWsVw3Vo5y', '85.000000000000000000000000000000', 500),
 (4, 'user 4', 'first 4', 'last 4', 'test4@email.com', '$2y$10$4a3OLSUtHmewGhh/siaIyuY/CgajvwrsIJ5yf5R.Ch4a/73RaV43e', '25.000000000000000000000000000000', 500),
-(5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '475.702222900000000000000000000000', 510),
-(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '677.456789900000000000000000000000', 490),
-(7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$0yitpzEV6ofiGi9npHatYO7RbbtWTN.HBaMABQK/kjNMu4U9cwfcy', '860.000000000000000000000000000000', 500),
+(5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '543.202222900000000000000000000000', 510),
+(6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '730.456789900000000000000000000000', 490),
+(7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$0yitpzEV6ofiGi9npHatYO7RbbtWTN.HBaMABQK/kjNMu4U9cwfcy', '895.000000000000000000000000000000', 500),
 (8, 'user 8', 'first 8', 'last 8', 'test07@email.com', '$2y$10$5KKCpf7ER6wMP.lRIZIC5u/HSwldm80iTORIIU0rdIvvNZ/oe7hK6', '0.000000000000000000000000000000', 500),
 (10, 'user new', 'first', 'last', 'new@email.com', '$2y$10$AE0y6PiCn3m/e2iu71rh6.QqGC/665Zkx8t3FeVoSL/FsULmTzusW', '0.000000000000000000000000000000', 500),
 (11, 'hello', 'hello', 'world', 'hello@world.com', '$2y$10$MVcurLqKIS9sPxCO.BW2ZuqLiDuqZYIbL3bFIiH1KaDS8G0qh7A0q', '55.000000000000000000000000000000', 500),
@@ -648,7 +645,7 @@ ALTER TABLE `meta_data`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `points_difference`
@@ -678,7 +675,7 @@ ALTER TABLE `tournaments_log`
 -- AUTO_INCREMENT for table `tourney_players`
 --
 ALTER TABLE `tourney_players`
-  MODIFY `serial_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `serial_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
