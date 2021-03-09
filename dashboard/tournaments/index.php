@@ -156,29 +156,32 @@
 
                 <hr />
 
-                <form>
-                    <input id="tourney-id" name="tourney-id" type="hidden" required>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <div class="form-floating">
-                                <input type="date" class="form-control" id="tourney-reopen-start-date" name="tourney-reopen-start-date" placeholder="Start Date" required>
-                                <label for="tourney-reopen-start-date">Start Date <span class="text-danger">*</span></label>
+                <form id="reopen-tourney-form">
+                    <fieldset>
+                        <input id="tourney-id" name="tourney-id" type="hidden" required>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="tourney-reopen-start-date" name="tourney-reopen-start-date" placeholder="Start Date" required>
+                                    <label for="tourney-reopen-start-date">Start Date <span class="text-danger">*</span></label>
+                                    <div class="form-text">Start Date should be greater than today.</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="time" class="form-control" id="tourney-reopen-start-time" name="tourney-reopen-start-time" placeholder="Start Time" required>
+                                    <label for="tourney-reopen-start-time">Start Time <span class="text-danger">*</span></label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="form-floating">
-                                <input type="time" class="form-control" id="tourney-reopen-start-time" name="tourney-reopen-start-time" placeholder="Start Time" required>
-                                <label for="tourney-reopen-start-time">Start Time <span class="text-danger">*</span></label>
-                            </div>
-                        </div>
-                    </div>
+                    </fieldset>
                 </form>
 
                 Press (Re-Open Tournament) to continue...
                 <div class="response-div mt-3"></div>
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="reopen-tourney btn btn-primary">Re-Open Tournament</button>
+                <button type="submit" form="reopen-tourney-form" class="reopen-tourney btn btn-primary">Re-Open Tournament</button>
                 <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
