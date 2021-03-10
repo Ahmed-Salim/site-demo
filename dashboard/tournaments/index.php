@@ -188,6 +188,31 @@
     </div>
 </div>
 
+<!-- Confirm Tourney Modal -->
+<div class="modal fade" id="confirm-tourney-modal" tabindex="-1" aria-labelledby="confirm-tourney-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirm-tourney-modal-label"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to Confirm this Tournament ?
+                <ul>
+                    <li>Confirming a Tournament will create all the Tournament Rounds to be played.</li>
+                    <li>Once a Tournament is Confirmed it can no longer be Cancelled.</li>
+                </ul>
+                Press (Confirm Tournament) to continue...
+                <div class="response-div mt-3"></div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="confirm-tourney btn btn-primary">Confirm Tournament</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="hero d-flex align-items-end">
     <h1 class="ms-5 text-white display-5 fw-bold">My Tournaments</h1>
 </div>
@@ -235,11 +260,23 @@
 
             <?php
 
-            $sql4 = "SELECT * FROM tournaments_log WHERE tournament_by = $user_id AND (status = 'open' OR status = 'reset') ORDER BY created_timestamp DESC";
+            $sql4 = "SELECT * FROM tournaments_log WHERE tournament_by = $user_id AND (status = 'open' OR status = 'reset') ORDER BY GREATEST(COALESCE(created_timestamp, 0), COALESCE(reopen_timestamp, 0)) DESC";
             $result4 = mysqli_query($conn, $sql4);
 
             if (mysqli_num_rows($result4) > 0) {
                 while ($row4 = mysqli_fetch_assoc($result4)) {
+                    $tournament_by = $row4['tournament_by'];
+
+                    $sql1 = "SELECT * FROM users WHERE id = $tournament_by";
+                    $result1 = mysqli_query($conn, $sql1);
+
+                    if (mysqli_num_rows($result1) > 0) {
+                        while ($row1 = mysqli_fetch_assoc($result1)) {
+                            $tournament_by_username = $row1['username'];
+                        }
+                    } else {
+                        $tournament_by_username = 'Error: User Not Found';
+                    }
 
             ?>
 
@@ -261,6 +298,11 @@
                             </h5>
                             <table class="table">
                                 <tbody>
+                                    <tr>
+                                        <th scope="row">Created By</th>
+                                        <td class="text-capitalize <?php echo ($tournament_by_username === 'Error: User Not Found') ? ('text-danger') : (''); ?>"><?php echo $tournament_by_username; ?>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <th scope="row">Amount</th>
                                         <td><?php echo '$' . $row4['amount']; ?></td>
@@ -315,6 +357,25 @@
                         </div>
                         <div class="card-footer text-muted">
                             Created: <?php echo $row4['created_timestamp']; ?>
+
+                            <?php if (empty($row4['reset_timestamp']) || is_null($row4['reset_timestamp'])) { ?>
+
+                            <?php } else { ?>
+
+                                <br />
+                                Reset: <?php echo $row4['reset_timestamp']; ?>
+
+                            <?php } ?>
+
+                            <?php if (empty($row4['reopen_timestamp']) || is_null($row4['reopen_timestamp'])) { ?>
+
+                            <?php } else { ?>
+
+                                <br />
+                                Re Open: <?php echo $row4['reopen_timestamp']; ?>
+
+                            <?php } ?>
+
                         </div>
                     </div>
 
@@ -332,7 +393,7 @@
 
                 <?php
 
-                $sql2 = "SELECT COUNT(*) AS entered_count FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.tournament_by <> $user_id)";
+                $sql2 = "SELECT COUNT(*) AS entered_count FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.tournament_by <> $user_id AND tournaments_log.status <> 'ready')";
                 $result2 = mysqli_query($conn, $sql2);
 
                 if (mysqli_num_rows($result2) > 0) {
@@ -352,15 +413,105 @@
 
             <?php
 
-            $sql5 = "SELECT * FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.tournament_by <> $user_id)";
+            $sql5 = "SELECT * FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.tournament_by <> $user_id AND tournaments_log.status <> 'ready') ORDER BY tourney_players.enter_timestamp DESC";
             $result5 = mysqli_query($conn, $sql5);
 
             if (mysqli_num_rows($result5) > 0) {
                 while ($row5 = mysqli_fetch_assoc($result5)) {
+                    $tournament_by = $row5['tournament_by'];
+
+                    $sql7 = "SELECT * FROM users WHERE id = $tournament_by";
+                    $result7 = mysqli_query($conn, $sql7);
+
+                    if (mysqli_num_rows($result7) > 0) {
+                        while ($row7 = mysqli_fetch_assoc($result7)) {
+                            $tournament_by_username = $row7['username'];
+                        }
+                    } else {
+                        $tournament_by_username = 'Error: User Not Found';
+                    }
 
             ?>
 
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Tournament # <?php echo $row5['tournament_id']; ?>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <div class="d-flex">
+                                    <span>
+                                        <?php echo (($row5['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row5['game']))) : (ucwords(str_replace("_", " ", $row5['game'])))) . ' - ' . (($row5['console'] === 'ps4' || $row5['console'] === 'pc') ? (strtoupper($row5['console'])) : (ucwords($row5['console']))); ?>
+                                    </span>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-dark ms-auto" data-bs-toggle="modal" data-bs-target="#tourney-players-modal" data-bs-tourneyId="<?php echo $row5['tournament_id']; ?>">
+                                        Players
+                                    </button>
+                                </div>
+                            </h5>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Created By</th>
+                                        <td class="text-capitalize <?php echo ($tournament_by_username === 'Error: User Not Found') ? ('text-danger') : (''); ?>"><?php echo $tournament_by_username; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Amount</th>
+                                        <td><?php echo '$' . $row5['amount']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Players</th>
+                                        <td><?php echo $row5['players']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Start Date</th>
+                                        <td><?php echo $row5['start_date'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Start Time</th>
+                                        <td><?php echo $row5['start_time']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Game Mode</th>
+                                        <td><?php echo $row5['game_mode']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Rules</th>
+                                        <td><?php echo $row5['rules']; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
+                            <p class="card-text">Waiting for Players to fill in the Tournament...</p>
+
+                        </div>
+                        <div class="card-footer text-muted">
+                            Created: <?php echo $row5['created_timestamp']; ?>
+
+                            <?php if (empty($row5['reset_timestamp']) || is_null($row5['reset_timestamp'])) { ?>
+
+                            <?php } else { ?>
+
+                                <br />
+                                Reset: <?php echo $row5['reset_timestamp']; ?>
+
+                            <?php } ?>
+
+                            <?php if (empty($row5['reopen_timestamp']) || is_null($row5['reopen_timestamp'])) { ?>
+
+                            <?php } else { ?>
+
+                                <br />
+                                Re Open: <?php echo $row5['reopen_timestamp']; ?>
+
+                            <?php } ?>
+
+                            <br />
+                            Entered: <?php echo $row5['enter_timestamp']; ?>
+
+                        </div>
+                    </div>
 
                 <?php } ?>
 
@@ -377,7 +528,7 @@
 
                 <?php
 
-                $sql3 = "SELECT COUNT(*) AS ready_count FROM tournaments_log WHERE tournament_by = $user_id AND status = 'ready'";
+                $sql3 = "SELECT COUNT(*) AS ready_count FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.status = 'ready')";
                 $result3 = mysqli_query($conn, $sql3);
 
                 if (mysqli_num_rows($result3) > 0) {
@@ -394,6 +545,136 @@
             </h2>
 
             <hr />
+
+            <?php
+
+            $sql8 = "SELECT * FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.status = 'ready') ORDER BY tournaments_log.ready_timestamp DESC";
+            $result8 = mysqli_query($conn, $sql8);
+
+            if (mysqli_num_rows($result8) > 0) {
+                while ($row8 = mysqli_fetch_assoc($result8)) {
+                    $tournament_by = $row8['tournament_by'];
+
+                    $sql9 = "SELECT * FROM users WHERE id = $tournament_by";
+                    $result9 = mysqli_query($conn, $sql9);
+
+                    if (mysqli_num_rows($result9) > 0) {
+                        while ($row9 = mysqli_fetch_assoc($result9)) {
+                            $tournament_by_username = $row9['username'];
+                        }
+                    } else {
+                        $tournament_by_username = 'Error: User Not Found';
+                    }
+
+            ?>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Tournament # <?php echo $row8['tournament_id']; ?>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <div class="d-flex">
+                                    <span>
+                                        <?php echo (($row8['game'] === 'fifa_21') ? (strtoupper(str_replace("_", " ", $row8['game']))) : (ucwords(str_replace("_", " ", $row8['game'])))) . ' - ' . (($row8['console'] === 'ps4' || $row8['console'] === 'pc') ? (strtoupper($row8['console'])) : (ucwords($row8['console']))); ?>
+                                    </span>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-dark ms-auto" data-bs-toggle="modal" data-bs-target="#tourney-players-modal" data-bs-tourneyId="<?php echo $row8['tournament_id']; ?>">
+                                        Players
+                                    </button>
+                                </div>
+                            </h5>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Created By</th>
+                                        <td class="text-capitalize <?php echo ($tournament_by_username === 'Error: User Not Found') ? ('text-danger') : (''); ?>"><?php echo $tournament_by_username; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Amount</th>
+                                        <td><?php echo '$' . $row8['amount']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Players</th>
+                                        <td><?php echo $row8['players']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Start Date</th>
+                                        <td><?php echo $row8['start_date'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Start Time</th>
+                                        <td><?php echo $row8['start_time']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Game Mode</th>
+                                        <td><?php echo $row8['game_mode']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Rules</th>
+                                        <td><?php echo $row8['rules']; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <?php if ($row8['tournament_by'] === $user_id) { ?>
+
+                                <p class="card-text">Your Tournament is Ready to begin! Press Confirm to proceed...</p>
+
+                                <!-- Confirm Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirm-tourney-modal" data-bs-tourneyId="<?php echo $row8['tournament_id']; ?>">
+                                    Confirm
+                                </button>
+                                <!-- Cancel Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancel-tourney-modal" data-bs-tourneyId="<?php echo $row8['tournament_id']; ?>">
+                                    Cancel
+                                </button>
+
+                            <?php } else { ?>
+
+                                <p class="card-text">Waiting for the Tournament owner to Confirm this Tournament...</p>
+
+                            <?php } ?>
+
+                        </div>
+                        <div class="card-footer text-muted">
+                            Created: <?php echo $row8['created_timestamp']; ?>
+
+                            <?php if (empty($row8['reset_timestamp']) || is_null($row8['reset_timestamp'])) { ?>
+
+                            <?php } else { ?>
+
+                                <br />
+                                Reset: <?php echo $row8['reset_timestamp']; ?>
+
+                            <?php } ?>
+
+                            <?php if (empty($row8['reopen_timestamp']) || is_null($row8['reopen_timestamp'])) { ?>
+
+                            <?php } else { ?>
+
+                                <br />
+                                Re Open: <?php echo $row8['reopen_timestamp']; ?>
+
+                            <?php } ?>
+
+                            <br />
+                            Entered: <?php echo $row8['enter_timestamp']; ?>
+
+                            <br />
+                            Ready: <?php echo $row8['ready_timestamp']; ?>
+
+                        </div>
+                    </div>
+
+                <?php } ?>
+
+            <?php } else { ?>
+
+                <h3 class="text-center text-danger">No Ready Tournaments</h3>
+
+            <?php } ?>
 
         </div>
 

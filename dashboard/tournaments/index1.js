@@ -7,6 +7,169 @@ const createTourneyModal = document.getElementById('createTourneyModal');
 const tourneyPlayersModal = document.getElementById('tourney-players-modal');
 const cancelTourneyModal = document.getElementById('cancel-tourney-modal');
 const reopenTourneyModal = document.getElementById('reopen-tourney-modal');
+const confirmTourneyModal = document.getElementById('confirm-tourney-modal');
+
+confirmTourneyModal.querySelector('button.confirm-tourney').addEventListener('click', () => {
+    const XHR = new XMLHttpRequest();
+    const FD = new FormData();
+
+    // Push our data into our FormData object
+    FD.append('tourney-id', confirmTourneyModal.querySelector('button.confirm-tourney').dataset.tourneyId);
+
+    confirmTourneyModal.querySelector('.response-div').innerHTML = '';
+    confirmTourneyModal.querySelector('button.confirm-tourney').disabled = true;
+
+    // Define what happens on successful data submission
+    XHR.addEventListener('load', function (event) {
+        try {
+            let responseMsg = JSON.parse(event.target.responseText);
+
+            if (responseMsg.status === 'success') {
+                responseMsg.success_msgs.forEach((success_msg) => {
+                    let alert = document.createElement('div');
+                    alert.classList.add('alert', 'alert-success');
+                    alert.setAttribute('role', 'alert');
+                    alert.textContent = success_msg;
+                    confirmTourneyModal.querySelector('.response-div').appendChild(alert);
+                });
+
+                let p = document.createElement('p');
+                p.textContent = 'This page will reload in 3 seconds...';
+                confirmTourneyModal.querySelector('.response-div').appendChild(p);
+
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+            } else {
+                responseMsg.error_msgs.forEach((error_msg) => {
+                    let alert = document.createElement('div');
+                    alert.classList.add('alert', 'alert-danger');
+                    alert.setAttribute('role', 'alert');
+                    alert.textContent = error_msg;
+                    confirmTourneyModal.querySelector('.response-div').appendChild(alert);
+                });
+
+                confirmTourneyModal.querySelector('button.confirm-tourney').disabled = false;
+            }
+        } catch (error) {
+            let alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-danger');
+            alert.setAttribute('role', 'alert');
+            alert.textContent = error;
+            confirmTourneyModal.querySelector('.response-div').appendChild(alert);
+
+            confirmTourneyModal.querySelector('button.confirm-tourney').disabled = false;
+        }
+
+        bootstrap.Modal.getInstance(confirmTourneyModal).handleUpdate();
+    });
+
+    // Define what happens in case of error
+    XHR.addEventListener('error', function (event) {
+        let alert = document.createElement('div');
+        alert.classList.add('alert', 'alert-danger');
+        alert.setAttribute('role', 'alert');
+        alert.textContent = 'Oops! Something went wrong. Please try again.';
+        confirmTourneyModal.querySelector('.response-div').appendChild(alert);
+
+        bootstrap.Modal.getInstance(confirmTourneyModal).handleUpdate();
+
+        confirmTourneyModal.querySelector('button.confirm-tourney').disabled = false;
+    });
+
+    // Set up our request
+    XHR.open('POST', '../../php-apis/confirm-tournament.php');
+
+    // Send our FormData object; HTTP headers are set automatically
+    XHR.send(FD);
+});
+
+confirmTourneyModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    var button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    var tourneyId = button.getAttribute('data-bs-tourneyId')
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+
+    const XHR = new XMLHttpRequest();
+    const FD = new FormData();
+
+    // Push our data into our FormData object
+    FD.append('tourney-id', tourneyId);
+
+    // Define what happens on successful data submission
+    XHR.addEventListener('load', function (event) {
+        try {
+            let responseMsg = JSON.parse(event.target.responseText);
+
+            if (responseMsg.status === 'success') {
+                let tourney_details = responseMsg.tourney_details;
+
+                let gamePlusConsole = ((tourney_details.game === 'fifa_21') ? (tourney_details.game.replaceAll("_", " ").toUpperCase()) : (tourney_details.game.replaceAll("_", " ").toUpperCase())) + ' - ' + ((tourney_details.console === 'ps4' || tourney_details.console === 'pc') ? (tourney_details.console.toUpperCase()) : (tourney_details.console.toUpperCase()));
+                confirmTourneyModal.querySelector('.modal-title').textContent = 'Confirm Tournament # ' + tourney_details.tournament_id + ' (' + gamePlusConsole + ')';
+
+                confirmTourneyModal.querySelector('button.confirm-tourney').dataset.tourneyId = tourney_details.tournament_id;
+            } else {
+                let span = document.createElement('span');
+                span.classList.add('text-danger');
+                span.textContent = 'Error!';
+                confirmTourneyModal.querySelector('.modal-title').appendChild(span);
+
+                responseMsg.error_msgs.forEach((error_msg) => {
+                    let alert = document.createElement('div');
+                    alert.classList.add('alert', 'alert-danger');
+                    alert.setAttribute('role', 'alert');
+                    alert.textContent = error_msg;
+                    confirmTourneyModal.querySelector('.response-div').appendChild(alert);
+                });
+
+                bootstrap.Modal.getInstance(confirmTourneyModal).handleUpdate();
+            }
+        } catch (error) {
+            let span = document.createElement('span');
+            span.classList.add('text-danger');
+            span.textContent = 'Error!';
+            confirmTourneyModal.querySelector('.modal-title').appendChild(span);
+
+            let alert = document.createElement('div');
+            alert.classList.add('alert', 'alert-danger');
+            alert.setAttribute('role', 'alert');
+            alert.textContent = error;
+            confirmTourneyModal.querySelector('.response-div').appendChild(alert);
+
+            bootstrap.Modal.getInstance(confirmTourneyModal).handleUpdate();
+        }
+    });
+
+    // Define what happens in case of error
+    XHR.addEventListener('error', function (event) {
+        let span = document.createElement('span');
+        span.classList.add('text-danger');
+        span.textContent = 'Error!';
+        confirmTourneyModal.querySelector('.modal-title').appendChild(span);
+
+        let alert = document.createElement('div');
+        alert.classList.add('alert', 'alert-danger');
+        alert.setAttribute('role', 'alert');
+        alert.textContent = 'Oops! Something went wrong. Please try again.';
+        confirmTourneyModal.querySelector('.response-div').appendChild(alert);
+
+        bootstrap.Modal.getInstance(confirmTourneyModal).handleUpdate();
+    });
+
+    // Set up our request
+    XHR.open('POST', '../../php-apis/get-tourney-details.php');
+
+    // Send our FormData object; HTTP headers are set automatically
+    XHR.send(FD);
+});
+
+confirmTourneyModal.addEventListener('hidden.bs.modal', function (event) {
+    confirmTourneyModal.querySelector('.modal-title').innerHTML = '';
+    confirmTourneyModal.querySelector('.response-div').innerHTML = '';
+    confirmTourneyModal.querySelector('button.confirm-tourney').removeAttribute('data-tourney-id');
+});
 
 reopenTourneyModal.querySelector('form#reopen-tourney-form').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -144,7 +307,7 @@ cancelTourneyModal.querySelector('button.cancel-tourney').addEventListener('clic
     });
 
     // Define what happens in case of error
-    XHR.addEventListener(' error', function (event) {
+    XHR.addEventListener('error', function (event) {
         let alert = document.createElement('div');
         alert.classList.add('alert', 'alert-danger');
         alert.setAttribute('role', 'alert');
@@ -260,6 +423,10 @@ cancelTourneyModal.addEventListener('hidden.bs.modal', function (event) {
     cancelTourneyModal.querySelector('.response-div').innerHTML = '';
     cancelTourneyModal.querySelector('button.cancel-tourney').disabled = false;
     cancelTourneyModal.querySelector('button.cancel-tourney').removeAttribute('data-tourney-id');
+});
+
+reopenTourneyModal.addEventListener('shown.bs.modal', function (event) {
+    reopenTourneyModal.querySelector('form#reopen-tourney-form input[name="tourney-reopen-start-date"]').focus();
 });
 
 reopenTourneyModal.addEventListener('show.bs.modal', function (event) {
