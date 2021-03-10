@@ -22,8 +22,6 @@ reopenTourneyModal.querySelector('form#reopen-tourney-form').addEventListener('s
 
     // Define what happens on successful data submission
     XHR.addEventListener("load", function (event) {
-        console.log(event.target.responseText);
-
         try {
             let responseMsg = JSON.parse(event.target.responseText);
 
