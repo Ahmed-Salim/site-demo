@@ -39,6 +39,24 @@ if (empty($_SESSION['id']) || is_null($_SESSION['id'])) {
                         }
 
                         if (($row['start_date'] . ' ' . $row['start_time']) >= $now_timestamp) {
+                            // $sql2 = "UPDATE tournaments_log SET status = 'confirmed', confirmed_timestamp = NOW() WHERE tournament_id = $tourney_id";
+
+                            // if (mysqli_query($conn, $sql2)) {
+                            //     $response_msg['status'] = 'success';
+                            //     $success_msgs[] = 'Success: Tournament Confirmed successfully!';
+
+                            //     $sql3 = "SELECT * FROM tourney_players WHERE tourney_id = $tourney_id AND player_id <> $confirming_player_id";
+                            //     $result3 = mysqli_query($conn, $sql3);
+
+                            //     if (mysqli_num_rows($result3) > 0) {
+                            //         while ($row3 = mysqli_fetch_assoc($result3)) {
+                            //         }
+                            //     } else {
+                            //     }
+                            // } else {
+                            //     $response_msg['status'] = 'error';
+                            //     $error_msgs[] = 'Error: ' . mysqli_error($conn);
+                            // }
                         } else {
                         }
                     } else {
