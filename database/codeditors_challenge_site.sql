@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2021 at 02:34 PM
+-- Generation Time: Mar 11, 2021 at 01:12 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -444,28 +444,29 @@ CREATE TABLE `tournaments_log` (
   `ready_timestamp` timestamp NULL DEFAULT NULL,
   `reset_timestamp` timestamp NULL DEFAULT NULL,
   `cancelled_timestamp` timestamp NULL DEFAULT NULL,
-  `reopen_timestamp` timestamp NULL DEFAULT NULL
+  `reopen_timestamp` timestamp NULL DEFAULT NULL,
+  `confirmed_timestamp` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tournaments_log`
 --
 
-INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `console`, `amount`, `players`, `start_date`, `start_time`, `game_mode`, `rules`, `status`, `created_timestamp`, `ready_timestamp`, `reset_timestamp`, `cancelled_timestamp`, `reopen_timestamp`) VALUES
-(1, 5, 'fifa_21', 'ps4', 10, 10, '2021-03-18', '18:29:00', '', '', 'cancelled', '2021-03-02 12:55:49', NULL, '2021-03-06 12:02:17', '2021-03-09 13:32:46', '2021-03-09 13:29:35'),
-(2, 5, 'fortnite', 'pc', 15, 14, '2021-03-26', '17:57:00', '', '', 'cancelled', '2021-03-02 12:57:09', NULL, NULL, '2021-03-09 12:00:10', NULL),
-(3, 5, 'clash_of_clans', 'xbox', 20, 20, '2021-03-20', '17:58:00', '', '', 'cancelled', '2021-03-02 12:58:13', NULL, NULL, '2021-03-09 11:50:31', NULL),
-(4, 5, 'fifa_21', 'ps4', 30, 30, '2021-02-20', '18:01:00', 'testing 123', 'testing 123', 'cancelled', '2021-02-02 13:02:06', NULL, '2021-03-06 13:01:52', '2021-03-09 11:59:09', NULL),
-(5, 6, 'fortnite', 'ps4', 10, 10, '2021-02-18', '10:57:00', 'sadhkjasdh', 'kjhasdkjh', 'cancelled', '2021-03-04 05:57:07', NULL, '2021-03-06 10:55:42', '2021-03-09 11:56:01', NULL),
-(6, 5, 'fifa_21', 'pc', 10, 2, '2021-03-26', '16:02:00', '', '', 'cancelled', '2021-03-06 11:02:20', '2021-03-06 11:02:34', NULL, '2021-03-10 11:32:50', NULL),
-(7, 5, 'fifa_21', 'ps4', 10, 4, '2021-02-19', '18:05:00', 'test', 'test', 'cancelled', '2021-03-06 13:05:39', NULL, '2021-03-06 13:06:41', '2021-03-09 11:56:32', NULL),
-(8, 6, 'fifa_21', 'pc', 10, 10, '2021-03-20', '11:22:00', '', '', 'cancelled', '2021-03-07 06:22:18', NULL, NULL, '2021-03-09 11:58:19', NULL),
-(9, 5, 'fifa_21', 'ps4', 10, 10, '2021-03-12', '18:33:00', 'test', 'test', 'open', '2021-03-09 13:33:12', NULL, '2021-03-09 13:33:38', NULL, '2021-03-09 13:33:55'),
-(10, 5, 'fortnite', 'pc', 10, 6, '2021-02-19', '09:50:00', 'test', 'test', 'reset', '2021-03-10 04:50:22', NULL, '2021-03-10 04:51:26', NULL, NULL),
-(11, 5, 'clash_of_clans', 'xbox', 10, 10, '2021-03-27', '09:50:00', 'test123', 'test123', 'open', '2021-03-10 04:50:46', NULL, NULL, NULL, NULL),
-(12, 6, 'clash_of_clans', 'nintendo', 20, 4, '2021-03-26', '09:56:00', 'test', 'test', 'open', '2021-03-10 04:56:10', NULL, NULL, NULL, NULL),
-(13, 6, 'fortnite', 'xbox', 10, 2, '2021-03-26', '12:08:00', 'test', 'test', 'ready', '2021-03-10 07:08:28', '2021-03-10 07:08:37', NULL, NULL, NULL),
-(14, 5, 'clash_of_clans', 'nintendo', 20, 2, '2021-03-27', '16:33:00', 'test', 'test', 'ready', '2021-03-10 11:33:38', '2021-03-10 11:33:48', NULL, NULL, NULL);
+INSERT INTO `tournaments_log` (`tournament_id`, `tournament_by`, `game`, `console`, `amount`, `players`, `start_date`, `start_time`, `game_mode`, `rules`, `status`, `created_timestamp`, `ready_timestamp`, `reset_timestamp`, `cancelled_timestamp`, `reopen_timestamp`, `confirmed_timestamp`) VALUES
+(1, 5, 'fifa_21', 'ps4', 10, 10, '2021-03-18', '18:29:00', '', '', 'cancelled', '2021-03-02 12:55:49', NULL, '2021-03-06 12:02:17', '2021-03-09 13:32:46', '2021-03-09 13:29:35', NULL),
+(2, 5, 'fortnite', 'pc', 15, 14, '2021-03-26', '17:57:00', '', '', 'cancelled', '2021-03-02 12:57:09', NULL, NULL, '2021-03-09 12:00:10', NULL, NULL),
+(3, 5, 'clash_of_clans', 'xbox', 20, 20, '2021-03-20', '17:58:00', '', '', 'cancelled', '2021-03-02 12:58:13', NULL, NULL, '2021-03-09 11:50:31', NULL, NULL),
+(4, 5, 'fifa_21', 'ps4', 30, 30, '2021-02-20', '18:01:00', 'testing 123', 'testing 123', 'cancelled', '2021-02-02 13:02:06', NULL, '2021-03-06 13:01:52', '2021-03-09 11:59:09', NULL, NULL),
+(5, 6, 'fortnite', 'ps4', 10, 10, '2021-02-18', '10:57:00', 'sadhkjasdh', 'kjhasdkjh', 'cancelled', '2021-03-04 05:57:07', NULL, '2021-03-06 10:55:42', '2021-03-09 11:56:01', NULL, NULL),
+(6, 5, 'fifa_21', 'pc', 10, 2, '2021-03-26', '16:02:00', '', '', 'cancelled', '2021-03-06 11:02:20', '2021-03-06 11:02:34', NULL, '2021-03-10 11:32:50', NULL, NULL),
+(7, 5, 'fifa_21', 'ps4', 10, 4, '2021-02-19', '18:05:00', 'test', 'test', 'cancelled', '2021-03-06 13:05:39', NULL, '2021-03-06 13:06:41', '2021-03-09 11:56:32', NULL, NULL),
+(8, 6, 'fifa_21', 'pc', 10, 10, '2021-03-20', '11:22:00', '', '', 'cancelled', '2021-03-07 06:22:18', NULL, NULL, '2021-03-09 11:58:19', NULL, NULL),
+(9, 5, 'fifa_21', 'ps4', 10, 10, '2021-03-12', '18:33:00', 'test', 'test', 'open', '2021-03-09 13:33:12', NULL, '2021-03-09 13:33:38', NULL, '2021-03-09 13:33:55', NULL),
+(10, 5, 'fortnite', 'pc', 10, 6, '2021-02-19', '09:50:00', 'test', 'test', 'reset', '2021-03-10 04:50:22', NULL, '2021-03-10 04:51:26', NULL, NULL, NULL),
+(11, 5, 'clash_of_clans', 'xbox', 10, 10, '2021-03-27', '09:50:00', 'test123', 'test123', 'open', '2021-03-10 04:50:46', NULL, NULL, NULL, NULL, NULL),
+(12, 6, 'clash_of_clans', 'nintendo', 20, 4, '2021-03-26', '09:56:00', 'test', 'test', 'open', '2021-03-10 04:56:10', NULL, NULL, NULL, NULL, NULL),
+(13, 6, 'fortnite', 'xbox', 10, 2, '2021-03-26', '12:08:00', 'test', 'test', 'ready', '2021-03-10 07:08:28', '2021-03-10 07:08:37', NULL, NULL, NULL, NULL),
+(14, 5, 'clash_of_clans', 'nintendo', 20, 2, '2021-03-27', '16:33:00', 'test', 'test', 'ready', '2021-03-10 11:33:38', '2021-03-10 11:33:48', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -525,7 +526,7 @@ INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `user
 (4, 'user 4', 'first 4', 'last 4', 'test4@email.com', '$2y$10$4a3OLSUtHmewGhh/siaIyuY/CgajvwrsIJ5yf5R.Ch4a/73RaV43e', '25.000000000000000000000000000000', 500),
 (5, 'user 5', 'first 5', 'last 5', 'test5@email.com', '$2y$10$XKvtqT/BxmE2ZMovzAiiCupkg64hTg58iGgfQYh8CA89T801eGAiy', '481.202222900000000000000000000000', 510),
 (6, 'user 6', 'first 6', 'last 6', 'test6@email.com', '$2y$10$IOZhOTW3906AtM5HP/zGi.VDE25AbhztbGP3Vkysk1p5tvx6eNOFK', '660.456789900000000000000000000000', 490),
-(7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$0yitpzEV6ofiGi9npHatYO7RbbtWTN.HBaMABQK/kjNMu4U9cwfcy', '905.000000000000000000000000000000', 500),
+(7, 'user 7', 'first 7', 'last 7', 'test7@email.com', '$2y$10$zD.3HekY6rHzyc7/qZ5Sc.tSZv3GqsmgH3DbaM5o16itsMIHGkos6', '905.000000000000000000000000000000', 500),
 (8, 'user 8', 'first 8', 'last 8', 'test07@email.com', '$2y$10$5KKCpf7ER6wMP.lRIZIC5u/HSwldm80iTORIIU0rdIvvNZ/oe7hK6', '0.000000000000000000000000000000', 500),
 (10, 'user new', 'first', 'last', 'new@email.com', '$2y$10$AE0y6PiCn3m/e2iu71rh6.QqGC/665Zkx8t3FeVoSL/FsULmTzusW', '0.000000000000000000000000000000', 500),
 (11, 'hello', 'hello', 'world', 'hello@world.com', '$2y$10$MVcurLqKIS9sPxCO.BW2ZuqLiDuqZYIbL3bFIiH1KaDS8G0qh7A0q', '55.000000000000000000000000000000', 500),
