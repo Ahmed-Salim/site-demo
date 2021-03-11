@@ -393,7 +393,22 @@
 
                 <?php
 
-                $sql2 = "SELECT COUNT(*) AS entered_count FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.tournament_by <> $user_id AND tournaments_log.status <> 'ready')";
+                $sql10 = "SELECT * FROM tourney_players WHERE player_id = $user_id";
+                $result10 = mysqli_query($conn, $sql10);
+
+                if (mysqli_num_rows($result10) > 0) {
+                    $tourney_ids = '';
+
+                    while ($row10 = mysqli_fetch_assoc($result10)) {
+                        $tourney_ids .= $row10['tourney_id'] . ',';
+                    }
+
+                    $tourney_ids = rtrim($tourney_ids, ',');
+                } else {
+                    $tourney_ids = '0';
+                }
+
+                $sql2 = "SELECT COUNT(*) AS entered_count FROM tournaments_log WHERE tournament_id IN ($tourney_ids) AND tournament_by <> $user_id AND status = 'open'";
                 $result2 = mysqli_query($conn, $sql2);
 
                 if (mysqli_num_rows($result2) > 0) {
@@ -413,7 +428,7 @@
 
             <?php
 
-            $sql5 = "SELECT * FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.tournament_by <> $user_id AND tournaments_log.status <> 'ready') ORDER BY tourney_players.enter_timestamp DESC";
+            $sql5 = "SELECT * FROM tournaments_log WHERE tournament_id IN ($tourney_ids) AND tournament_by <> $user_id AND status = 'open' ORDER BY GREATEST(COALESCE(created_timestamp, 0), COALESCE(reopen_timestamp, 0)) DESC";
             $result5 = mysqli_query($conn, $sql5);
 
             if (mysqli_num_rows($result5) > 0) {
@@ -429,6 +444,19 @@
                         }
                     } else {
                         $tournament_by_username = 'Error: User Not Found';
+                    }
+
+                    $entered_tournament_id = $row5['tournament_id'];
+
+                    $sql11 = "SELECT * FROM tourney_players WHERE tourney_id = $entered_tournament_id AND player_id = $user_id";
+                    $result11 = mysqli_query($conn, $sql11);
+
+                    if (mysqli_num_rows($result11) > 0) {
+                        while ($row11 = mysqli_fetch_assoc($result11)) {
+                            $enter_timestamp = $row11['enter_timestamp'];
+                        }
+                    } else {
+                        $enter_timestamp = '0000-00-00 00:00:00';
                     }
 
             ?>
@@ -508,7 +536,7 @@
                             <?php } ?>
 
                             <br />
-                            Entered: <?php echo $row5['enter_timestamp']; ?>
+                            Entered: <?php echo $enter_timestamp; ?>
 
                         </div>
                     </div>
@@ -528,7 +556,7 @@
 
                 <?php
 
-                $sql3 = "SELECT COUNT(*) AS ready_count FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.status = 'ready')";
+                $sql3 = "SELECT COUNT(*) AS ready_count FROM tournaments_log WHERE tournament_id IN ($tourney_ids) AND status = 'ready'";
                 $result3 = mysqli_query($conn, $sql3);
 
                 if (mysqli_num_rows($result3) > 0) {
@@ -548,7 +576,7 @@
 
             <?php
 
-            $sql8 = "SELECT * FROM tournaments_log INNER JOIN tourney_players ON tournaments_log.tournament_id = tourney_players.tourney_id WHERE (tourney_players.player_id = $user_id AND tournaments_log.status = 'ready') ORDER BY tournaments_log.ready_timestamp DESC";
+            $sql8 = "SELECT * FROM tournaments_log WHERE tournament_id IN ($tourney_ids) AND status = 'ready' ORDER BY ready_timestamp DESC";
             $result8 = mysqli_query($conn, $sql8);
 
             if (mysqli_num_rows($result8) > 0) {
@@ -564,6 +592,19 @@
                         }
                     } else {
                         $tournament_by_username = 'Error: User Not Found';
+                    }
+
+                    $ready_tournament_id = $row8['tournament_id'];
+
+                    $sql12 = "SELECT * FROM tourney_players WHERE tourney_id = $ready_tournament_id AND player_id = $user_id";
+                    $result12 = mysqli_query($conn, $sql12);
+
+                    if (mysqli_num_rows($result12) > 0) {
+                        while ($row12 = mysqli_fetch_assoc($result12)) {
+                            $enter_timestamp = $row12['enter_timestamp'];
+                        }
+                    } else {
+                        $enter_timestamp = '0000-00-00 00:00:00';
                     }
 
             ?>
@@ -660,7 +701,7 @@
                             <?php } ?>
 
                             <br />
-                            Entered: <?php echo $row8['enter_timestamp']; ?>
+                            Entered: <?php echo $enter_timestamp; ?>
 
                             <br />
                             Ready: <?php echo $row8['ready_timestamp']; ?>
